@@ -1,5 +1,8 @@
 TurnierList::Application.routes.draw do
 
+  match "/contact" => "home#contact"
+  match "/impressum" => "home#impressum"
+
   devise_for :users
 
   root :to => "home#index"
