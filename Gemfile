@@ -9,6 +9,8 @@ gem 'simple_form'
 gem 'acts-as-taggable-on'
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'mechanize'
+gem 'nokogiri'
 
 group :production do
 	gem 'pg'

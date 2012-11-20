@@ -1,5 +1,6 @@
 class TournamentsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :enhance_informations, only: [:create]
 
   # GET /tournaments
   # GET /tournaments.json
@@ -42,7 +43,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new(params[:tournament])
+    @tournament = Tournament.new(@all_params)
 
     respond_to do |format|
       if @tournament.save
@@ -81,5 +82,34 @@ class TournamentsController < ApplicationController
       format.html { redirect_to tournaments_url }
       format.json { head :no_content }
     end
+  end
+
+  def enhance_informations
+    @all_params = params[:tournament].merge!(find_by_number(params[:tournament][:number]))
+  end
+
+  def find_by_number(number)
+    agent = Mechanize.new
+    agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
+    form = agent.page.forms.last
+    form.nr = number
+    form.submit
+
+    out = {}
+
+    agent.page.search(".veranstaltung").each do |event|
+      event.search(".ort a").each do |link|
+        url = link.attributes["href"].value
+        out[:address] = url.slice(30..url.length)
+      end
+      out[:date] = event.search(".kategorie").first.text.slice(0..9)
+    end
+    agent.page.search(".markierung").each do |item|
+      out[:kind] = item.search(".turnier").first.text
+      out[:time] = item.search(".uhrzeit").first.text
+      out[:notes] = item.search(".bemerkung").first.text
+    end
+
+    return out
   end
 end
