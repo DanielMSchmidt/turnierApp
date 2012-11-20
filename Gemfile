@@ -2,11 +2,24 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'will_paginate', '~> 3.0'
+gem 'thin' #more solid webserver
+gem 'haml'
+gem 'simple_form'
+gem 'acts-as-taggable-on'
+gem 'devise'
 
-gem 'sqlite3'
+group :production do
+	gem 'pg'
+	gem 'therubyracer'
+end
 
+group :development, :test do
+  gem 'sqlite3'
+  gem 'bullet'
+  gem 'brakeman'
+  gem "rails_best_practices"
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
