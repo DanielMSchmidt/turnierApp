@@ -33,6 +33,7 @@ GEM
     arel (3.0.2)
     awesome_print (1.1.0)
     bcrypt-ruby (3.0.1)
+    bootstrap-sass (2.0.1)
     brakeman (1.8.3)
       activesupport
       erubis (~> 2.6)
@@ -167,6 +168,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
+  bootstrap-sass
   brakeman
   bullet
   coffee-rails (~> 3.2.1)

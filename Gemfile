@@ -8,6 +8,7 @@ gem 'haml'
 gem 'simple_form'
 gem 'acts-as-taggable-on'
 gem 'devise'
+gem 'bootstrap-sass'
 
 group :production do
 	gem 'pg'
