@@ -1,5 +1,7 @@
 TurnierList::Application.routes.draw do
 
+  resources :tournaments
+
   match "/contact" => "home#contact"
   match "/impressum" => "home#impressum"
 
