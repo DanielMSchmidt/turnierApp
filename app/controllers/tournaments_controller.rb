@@ -84,6 +84,11 @@ class TournamentsController < ApplicationController
     end
   end
 
+  def of_user
+    @user = User.find(params[:id])
+    @tournaments = @user.tournaments
+  end
+
   def enhance_informations
     @all_params = params[:tournament].merge!(find_by_number(params[:tournament][:number]))
   end
@@ -109,7 +114,6 @@ class TournamentsController < ApplicationController
       out[:time] = item.search(".uhrzeit").first.text
       out[:notes] = item.search(".bemerkung").first.text
     end
-
     return out
   end
 end
