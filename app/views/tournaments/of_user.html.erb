@@ -1,5 +1,8 @@
 <h1>Listing tournaments for user <%= @user.id%></h1>
 
+<h4>Statistiken:</h4>
+<%= raw(print_stats @tournaments) %>
+
 <table class="tournament-list">
   <tr>
     <th>Turniernummer</th>
@@ -13,15 +16,14 @@
     <th></th>
     <th></th>
   </tr>
-
 <% @tournaments.each do |tournament| %>
   <tr>
     <td><%= tournament.number %></td>
     <td><%= tournament.user_id %></td>
     <td><%= tournament.place %> von <%= tournament.participants %></td>
     <td><%= raw tournament.address.split(", ").join("<br />") %></td>
-    <td><%= tournament.date %></td>
-    <td><%= tournament.time %></td>
+    <td><%= DateTime.parse(tournament.date).strftime("%d.%m.%Y") %></td>
+    <td><%= DateTime.parse(tournament.date).strftime("%H:%M") %></td>
     <td><%= tournament.kind %></td>
     <% if current_user == @user %>
       <td><%= link_to 'Show', tournament %></td>

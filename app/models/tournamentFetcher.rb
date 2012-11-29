@@ -14,14 +14,15 @@ class TournamentFetcher
         out[url] = link.attributes["href"].value
         out[address] = url.slice(30..url.length)
       end
-      out[date] = event.search(".kategorie").first.text.slice(0..9)
+      date = event.search(".kategorie").first.text.slice(0..9)
     end
     agent.page.search(".markierung").each do |item|
       out[tournament] = item.search(".turnier").first.text
-      out[time] = item.search(".uhrzeit").first.text
+      time = item.search(".uhrzeit").first.text
       out[notes] = item.search(".bemerkung").first.text
     end
 
+    out[date] = Date.parse "#{date} #{time}"
     return out
   end
 end

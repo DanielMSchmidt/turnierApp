@@ -1,5 +1,6 @@
 class Tournament < ActiveRecord::Base
-  attr_accessible :number, :participants, :place, :user_id, :address, :date, :time, :kind, :notes
+  default_scope order("date DESC")
+  attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes
   belongs_to :user
 
   validates :number, :participants, :place, presence: true, numericality: true
