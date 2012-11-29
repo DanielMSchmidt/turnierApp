@@ -1,0 +1,44 @@
+<h1>Show tournaments by users: </h1>
+<h2>Tänzer</h2>
+<br />
+<ul>
+<% @users.each do |user| %>
+  <li><%= link_to("zu #{user.name}" , user_tournaments_path(user)) %></li>
+<% end %>
+</ul>
+
+<h1>Listing all tournaments</h1>
+
+<table class="tournament-list">
+  <tr>
+    <th>Turniernummer</th>
+    <th>Paar</th>
+    <th>Platz</th>
+    <th>Adresse</th>
+    <th>Datum</th>
+    <th>Zeit</th>
+    <th>Art</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tournaments.each do |tournament| %>
+  <tr>
+    <td><%= tournament.number %></td>
+    <td><%= tournament.user_id %></td>
+    <td><%= tournament.place %> von <%= tournament.participants %></td>
+    <td><%= raw tournament.address.split(", ").join("<br />") %></td>
+    <td><%= DateTime.parse(tournament.date).strftime("%d.%m.%Y") %></td>
+    <td><%= DateTime.parse(tournament.date).strftime("%H:%M") %></td>
+    <td><%= tournament.kind %></td>
+    <td><%= link_to 'Show', tournament %></td>
+    <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
+    <td><%= link_to 'Destroy', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tournament', new_tournament_path %>

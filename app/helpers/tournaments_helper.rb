@@ -1,0 +1,59 @@
+module TournamentsHelper
+  def print_stats(tournaments = [])
+    return "Ohne Turniere gibt es keine Statistik" if tournaments.empty?
+    str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th>"
+
+    tournaments_by_year(tournaments).each do |year|
+      str += print_year(year)
+    end
+
+    str += "</table>"
+    return str
+  end
+
+  def tournaments_by_year(tournaments)
+    out = []
+    tournaments.each do |tournament|
+      thisYear = DateTime.parse(tournament.date).year
+      out[thisYear] ||= []
+      out[thisYear].push(tournament)
+    end
+    return out.compact.reverse
+    #return out.reject! { |t| t.nil? }
+  end
+
+  def print_year(tournaments_of_year)
+    return "<tr>
+    <th>#{DateTime.parse(tournaments_of_year.first.date).year}</th>
+    <td>#{tournaments_of_year.count}</td>
+    <td>#{placings(tournaments_of_year)}</td>
+    <td>#{points(tournaments_of_year)}</td>
+    </tr>"
+  end
+
+  def placings(tournaments)
+    count = 0
+    tournaments.each do |tournament|
+      place_for_placing = 3
+      place_for_placing = 5 if start_class(tournament) == 'C'
+      place_for_placing = 6 if start_class(tournament) == 'D'
+      count += 1 if (tournament.place <= place_for_placing)
+    end
+
+    return count
+  end
+
+  def start_class(tournament)
+    return tournament.kind.split(" ")[1]
+  end
+
+  def points(tournaments)
+    sum = 0
+    tournaments.each do |t|
+      sum += [(t.participants - t.place), 20].min
+      puts [(t.participants - t.place), 20].min
+    end
+
+    return sum
+  end
+end

@@ -1,0 +1,31 @@
+!!!
+%html
+  %head
+    %title TurnierList
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    = hidden_field('Navigation', 'active', value: @active_page || 'Start')
+    .navbar
+      .navbar-inner
+        .container
+          = link_to 'TurnierApp', root_path, class: 'brand'
+          .nav-collapse.collapse.navbar-responsive-collapse
+            %ul.nav
+              %li
+              %li= link_to 'Vereine ansehen', clubs_path
+              - if user_signed_in?
+                %li= link_to 'Turnier hinzufügen', new_tournament_path
+                %li= link_to 'Alle Turniere', tournaments_path
+                %li= link_to "Logged in as #{current_user.email}", edit_user_registration_path
+                %li= link_to "Abmelden", destroy_user_session_path, method: :delete
+              - else
+                %li= link_to "Registrieren", new_user_registration_path
+                %li= link_to "Anmelden", new_user_session_path
+              %li
+                = link_to 'Kontakt', contact_path
+              %li
+                = link_to 'Impressum', impressum_path
+    .container
+      = yield
