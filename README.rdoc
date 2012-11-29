@@ -1,3 +1,15 @@
 ==Turnierapp
 
 This app is build for Dancesport Couples to manage their results at competitions and to see all results of their club
+
+=Versions
+v0.1-beta
+  Only shows last competitions with results
+  Differs between different clubs
+
+Todo
+  v0.1
+    Bugfixes, Frontend
+
+  v0.2
+    Ability to plan competitions for the future
