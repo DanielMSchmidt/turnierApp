@@ -14,12 +14,11 @@ module TournamentsHelper
   def tournaments_by_year(tournaments)
     out = []
     tournaments.each do |tournament|
-      thisYear = DateTime.parse(tournament.date).year
+      thisYear = tournament.date.to_datetime.year
       out[thisYear] ||= []
       out[thisYear].push(tournament)
     end
     return out.compact.reverse
-    #return out.reject! { |t| t.nil? }
   end
 
   def print_year(tournaments_of_year)
