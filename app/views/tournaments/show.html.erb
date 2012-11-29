@@ -1,43 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Turniernummer:</b>
-  <%= @tournament.number %>
-</p>
+<table class="tournament-list">
+  <tr>
+    <th>Turniernummer</th>
+    <th>Paar</th>
+    <th>Platz</th>
+    <th>Adresse</th>
+    <th>Datum</th>
+    <th>Zeit</th>
+    <th>Art</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
 
-<p>
-  <b>Paar:</b>
-  <%= @tournament.user.name %>
-</p>
+  <%= render @tournament %>
+</table>
 
-<p>
-  <b>Platz:</b>
-  <%= @tournament.try(:place) %> von <%= @tournament.try(:participants) %>
-</p>
-
-<p>
-  <b>Adresse:</b>
-  <%= @tournament.try(:address) %>
-</p>
-
-<p>
-  <b>Datum:</b>
-  <%= @tournament.try(:date).to_datetime.strftime("%d.%m.%Y") %>
-</p>
-
-<p>
-  <b>Zeit:</b>
-  <%= @tournament.try(:date).to_datetime.strftime("%H:%M") %>
-</p>
-
-<p>
-  <b>Art:</b>
-  <%= @tournament.try(:kind) %>
-</p>
-
-<p>
-  <b>Notizen:</b>
-  <%= @tournament.try(:notes) %>
-</p>
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to 'Back', tournaments_path %>
