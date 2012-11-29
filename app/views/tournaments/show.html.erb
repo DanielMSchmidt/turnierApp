@@ -22,12 +22,12 @@
 
 <p>
   <b>Datum:</b>
-  <%= @tournament.try(:date).strftime("%d.%m.%Y") %>
+  <%= @tournament.try(:date) %>
 </p>
 
 <p>
   <b>Zeit:</b>
-  <%= @tournament.try(:date).strftime("%H:%M") %>
+  <%= @tournament.try(:date) %>
 </p>
 
 <p>
