@@ -2,7 +2,7 @@
 <h1>Turniere des <%= @club.name %></h1>
 
 <% @users.each do |user| %>
-  <h3>Listing tournaments for user <%= user.id%></h3>
+  <h3>Listing tournaments for <%= user.name%></h3>
   <br />
   <h4>Statistiken:</h4>
   <%= raw(print_stats user.tournaments) %>
