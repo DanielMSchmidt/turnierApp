@@ -4,6 +4,12 @@ class Tournament < ActiveRecord::Base
   belongs_to :user
 
   validates :number, :participants, :place, presence: true, numericality: true
+  validate :no_double_tournaments_are_allowed
+
+   def no_double_tournaments_are_allowed
+     puts Tournament.where(:number => number, :user_id => user_id).size == 0
+     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
+   end
 
   def with_tag(tagname)
     tournaments = []
