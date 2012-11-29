@@ -23,7 +23,7 @@ module TournamentsHelper
 
   def print_year(tournaments_of_year)
     return "<tr>
-    <th>#{tournaments_of_year.to_datetime.first.date).year}</th>
+    <th>#{tournaments_of_year.to_datetime.first.date.year}</th>
     <td>#{tournaments_of_year.count}</td>
     <td>#{placings(tournaments_of_year)}</td>
     <td>#{points(tournaments_of_year)}</td>
