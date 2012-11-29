@@ -7,37 +7,37 @@
 
 <p>
   <b>Paar:</b>
-  <%= @tournament.user_id %>
+  <%= @tournament.user.name %>
 </p>
 
 <p>
   <b>Platz:</b>
-  <%= @tournament.place %> von <%= @tournament.participants %>
+  <%= @tournament.try(:place) %> von <%= @tournament.try(:participants) %>
 </p>
 
 <p>
   <b>Adresse:</b>
-  <%= @tournament.address %>
+  <%= @tournament.try(:address) %>
 </p>
 
 <p>
   <b>Datum:</b>
-  <%= @tournament.date %>
+  <%= DateTime.parse(@tournament.try(:date)).strftime("%d.%m.%Y") %>
 </p>
 
 <p>
   <b>Zeit:</b>
-  <%= DateTime.parse(@tournament.date).strftime("%H:%M") %>
+  <%= DateTime.parse(@tournament.try(:date)).strftime("%H:%M") %>
 </p>
 
 <p>
   <b>Art:</b>
-  <%= @tournament.kind %>
+  <%= @tournament.try(:kind) %>
 </p>
 
 <p>
   <b>Notizen:</b>
-  <%= @tournament.notes %>
+  <%= @tournament.try(:notes) %>
 </p>
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to 'Back', tournaments_path %>

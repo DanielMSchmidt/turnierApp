@@ -26,7 +26,7 @@
 <% @tournaments.each do |tournament| %>
   <tr>
     <td><%= tournament.number %></td>
-    <td><%= tournament.user_id %></td>
+    <td><%= tournament.user.name %></td>
     <td><%= tournament.place %> von <%= tournament.participants %></td>
     <td><%= raw tournament.address.split(", ").join("<br />") %></td>
     <td><%= DateTime.parse(tournament.date).strftime("%d.%m.%Y") %></td>
