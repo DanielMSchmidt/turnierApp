@@ -6,7 +6,6 @@ gem 'will_paginate', '~> 3.0'
 gem 'thin' #more solid webserver
 gem 'haml'
 gem 'simple_form'
-gem 'acts-as-taggable-on'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'mechanize'
@@ -14,7 +13,6 @@ gem 'nokogiri'
 
 group :production do
 	gem 'pg'
-	gem 'therubyracer'
 end
 
 group :development, :test do
@@ -31,7 +29,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
 end
