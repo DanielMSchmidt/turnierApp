@@ -3,9 +3,6 @@ class HomeController < ApplicationController
     @users = User.all
   end
 
-  def contact
-  end
-
   def impressum
   end
 end
