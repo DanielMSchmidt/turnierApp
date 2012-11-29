@@ -55,4 +55,16 @@ module TournamentsHelper
 
     return sum
   end
+
+  def tournament_date(tournament)
+    tournament.date.to_datetime.strftime("%d.%m.%Y")
+  end
+
+  def tournament_time(tournament)
+    tournament.date.to_datetime.strftime("%H:%M")
+  end
+
+  def tournament_adress(tournament)
+    raw tournament.address.split(", ").join("<br />")
+  end
 end
