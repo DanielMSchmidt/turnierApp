@@ -11,6 +11,19 @@
     <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
   </div>
 
+  <div class="form-inputs">
+    <% if @clubs.nil?%>
+      <p><strong>Es gibt leider noch keine Vereine, bitte trage einen ein.</strong></p>
+    <% else %>
+      <% @clubs.each do |club|  %>
+        <%= link_to "#{club.name} zu deinen Vereinen hinzufügen", add_club_path(:club_id => club.id, :user_id => current_user.id) %>
+      <% end %>
+      <% @own_clubs.each do |club|  %>
+        <%= link_to "#{club.name} aus deinen Vereinen entfernen ", delete_club_path(:club_id => club.id, :user_id => current_user.id) %>
+      <% end %>
+    <% end %>
+  </div>
+
   <div class="form-actions">
     <%= f.button :submit, "Update" %>
   </div>

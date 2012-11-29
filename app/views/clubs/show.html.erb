@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+<h1>Turniere des <%= @club.name %></h1>
+
+<% @users.each do |user| %>
+  <h3>Listing tournaments for user <%= user.id%></h3>
+  <br />
+  <h4>Statistiken:</h4>
+  <%= raw(print_stats user.tournaments) %>
+
+  <table class="tournament-list">
+    <tr>
+      <th>Turniernummer</th>
+      <th>Paar</th>
+      <th>Platz</th>
+      <th>Adresse</th>
+      <th>Datum</th>
+      <th>Zeit</th>
+      <th>Art</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  <% user.tournaments.each do |tournament| %>
+    <tr>
+      <td><%= tournament.number %></td>
+      <td><%= tournament.user_id %></td>
+      <td><%= tournament.place %> von <%= tournament.participants %></td>
+      <td><%= raw tournament.address.split(", ").join("<br />") %></td>
+      <td><%= DateTime.parse(tournament.date).strftime("%d.%m.%Y") %></td>
+      <td><%= DateTime.parse(tournament.date).strftime("%H:%M") %></td>
+      <td><%= tournament.kind %></td>
+      <% if current_user == @user %>
+        <td><%= link_to 'Show', tournament %></td>
+        <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
+        <td><%= link_to 'Destroy', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
+
+  <% end %>
+  </table>
+  <br />
+  <hr />
+  <br />
+  <br />
+<% end %>
+
+
+<%= link_to 'Verein umbenennen', edit_club_path(@club) %> |
+<%= link_to 'Zurück', clubs_path %>

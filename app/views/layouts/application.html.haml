@@ -14,6 +14,7 @@
           .nav-collapse.collapse.navbar-responsive-collapse
             %ul.nav
               %li
+              %li= link_to 'Vereine ansehen', clubs_path
               - if user_signed_in?
                 %li= link_to 'Turnier hinzufügen', new_tournament_path
                 %li= link_to 'Alle Turniere', tournaments_path
