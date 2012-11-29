@@ -6,6 +6,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments.json
   def index
     @tournaments = Tournament.all
+    @users = User.all
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,7 +1,0 @@
-<h2>Tänzer</h2>
-<br />
-<ul>
-<% @users.each do |user| %>
-  <li><%= link_to(user.email, user_tournaments_path(user)) %></li>
-<% end %>
-</ul>
