@@ -1,4 +1,7 @@
+require 'memoize'
+include Memoize
 class TournamentsController < ApplicationController
+
   before_filter :authenticate_user!
   before_filter :enhance_informations, only: [:create]
 
@@ -122,3 +125,4 @@ class TournamentsController < ApplicationController
     return out
   end
 end
+memoize :find_by_number
