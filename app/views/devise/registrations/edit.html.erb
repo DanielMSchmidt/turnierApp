@@ -6,9 +6,9 @@
   <div class="form-inputs">
     <%= f.input :name, :required => true, :autofocus => true %>
     <%= f.input :email, :required => true %>
-    <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
+    <%= f.input :password, :autocomplete => "off", :hint => "frei lassen falls du es nicht ändern möchtest", :required => false %>
     <%= f.input :password_confirmation, :required => false %>
-    <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
+    <%= f.input :current_password, :hint => "bitte gib dein aktuelles Passwort an", :required => true %>
   </div>
 
   <div class="form-inputs">
@@ -22,6 +22,9 @@
         <%= link_to "#{club.name} aus deinen Vereinen entfernen ", delete_club_path(:club_id => club.id, :user_id => current_user.id) %>
       <% end %>
     <% end %>
+    <br />
+    <br />
+    <%= link_to 'Neuen Verein hinzufügen', new_club_path %>
   </div>
 
   <div class="form-actions">
