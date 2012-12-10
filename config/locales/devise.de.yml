@@ -1,4 +1,11 @@
 de:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "Diese E-Mailadresse wurde bereits verwendet-"
   errors:
     messages:
       expired: "ist abgelaufen, bitte neu anfordern"
