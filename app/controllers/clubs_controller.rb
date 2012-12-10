@@ -1,9 +1,9 @@
 class ClubsController < ApplicationController
   # GET /clubs
   # GET /clubs.json
+  before_filter :setClubsAsActive
   def index
     @clubs = Club.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clubs }
@@ -79,5 +79,9 @@ class ClubsController < ApplicationController
       format.html { redirect_to clubs_url }
       format.json { head :no_content }
     end
+  end
+
+  def setClubsAsActive
+    @active_page = 'clubs'
   end
 end

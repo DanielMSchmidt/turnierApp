@@ -14,18 +14,16 @@
           .nav-collapse.collapse.navbar-responsive-collapse
             %ul.nav
               %li
-              %li= link_to 'Vereine ansehen', clubs_path
+              %li.clubs= link_to 'Vereine', clubs_path
+              %li.results= link_to 'Alle Turnierergebnisse', tournaments_path
               - if user_signed_in?
-                %li= link_to 'Turnier hinzufügen', new_tournament_path
-                %li= link_to 'Alle Turniere', tournaments_path
-                %li= link_to "Logged in as #{current_user.email}", edit_user_registration_path
-                %li= link_to "Abmelden", destroy_user_session_path, method: :delete
+                %li.add_result= link_to 'Turnier hinzufügen', new_tournament_path
+                %li.profil= link_to "Profil bearbeiten", edit_user_registration_path
+                %li.signout= link_to "Abmelden", destroy_user_session_path, method: :delete
               - else
-                %li= link_to "Registrieren", new_user_registration_path
-                %li= link_to "Anmelden", new_user_session_path
-              %li
-                = link_to 'Kontakt', contact_path
-              %li
-                = link_to 'Impressum', impressum_path
+                %li.signup= link_to "Registrieren", new_user_registration_path
+                %li.signin= link_to "Anmelden", new_user_session_path
+              %li.impressum= link_to 'Impressum', impressum_path
+
     .container
       = yield

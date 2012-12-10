@@ -1,4 +1,4 @@
-<h1>Listing tournaments for user <%= @user.id%></h1>
+<h1>Alle Turniere von <%= @user.name %> anzeigen</h1>
 
 <h4>Statistiken:</h4>
 <%= raw(print_stats @tournaments) %>
@@ -20,5 +20,6 @@
 </table>
 
 <br />
-
-<%= link_to 'New Tournament', new_tournament_path %>
+<% if current_user == @user %>
+  <%= link_to 'Neues Turnier hinzufügen', new_tournament_path %>
+<% end %>

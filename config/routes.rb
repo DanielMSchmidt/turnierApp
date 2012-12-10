@@ -9,8 +9,7 @@ TurnierList::Application.routes.draw do
   resources :tournaments
   match "/user/:id/tournaments" => "tournaments#of_user", as: :user_tournaments
   match "/membership/new/:user_id/:club_id" => "membership#create", as: :add_club
-    match "/membership/delete/:user_id/:club_id" => "membership#destroy", as: :delete_club
-  match "/contact" => "home#contact"
+  match "/membership/delete/:user_id/:club_id" => "membership#destroy", as: :delete_club
   match "/impressum" => "home#impressum"
 
   devise_for :users

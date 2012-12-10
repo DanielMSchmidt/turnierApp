@@ -1,9 +1,8 @@
-require 'memoize'
-include Memoize
 class TournamentsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :enhance_informations, only: [:create]
+  before_filter :setActivePage
 
   # GET /tournaments
   # GET /tournaments.json
@@ -31,6 +30,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/new
   # GET /tournaments/new.json
   def new
+    @active_page = 'add_result'
     @tournament = Tournament.new
 
     respond_to do |format|
@@ -124,5 +124,8 @@ class TournamentsController < ApplicationController
 
     return out
   end
+
+  def setActivePage
+    @active_page = 'results'
+  end
 end
-memoize :find_by_number

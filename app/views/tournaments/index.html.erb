@@ -1,4 +1,4 @@
-<h1>Show tournaments by users: </h1>
+<h1>Links zu den Turnieren aller Tänzer:</h1>
 <h2>Tänzer</h2>
 <br />
 <ul>
@@ -7,7 +7,7 @@
 <% end %>
 </ul>
 
-<h2>Listing all tournaments</h2>
+<h2>Auflistung aller Turniere</h2>
 
 <table class="tournament-list">
   <tr>
@@ -27,5 +27,6 @@
 </table>
 
 <br />
-
-<%= link_to 'New Tournament', new_tournament_path %>
+<% if current_user == @user %>
+  <%= link_to 'Neues Turnier hinzufügen', new_tournament_path %>
+<% end %>

@@ -6,10 +6,10 @@ This app is build for Dancesport Couples to manage their results at competitions
 v0.1-beta
   Only shows last competitions with results
   Differs between different clubs
+v0.2
+  Translations
 
 Todo
-  v0.1
-    Bugfixes, Frontend
-
-  v0.2
+  v2
     Ability to plan competitions for the future
+

@@ -4,5 +4,6 @@ class HomeController < ApplicationController
   end
 
   def impressum
+    @active_page = 'impressum'
   end
 end
