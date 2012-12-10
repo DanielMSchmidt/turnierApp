@@ -30,9 +30,9 @@
       <td><%= tournament_time(tournament) %></td>
       <td><%= tournament.kind %></td>
       <% if current_user == @user %>
-        <td><%= link_to 'Show', tournament %></td>
-        <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
-        <td><%= link_to 'Destroy', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'anzeigen', tournament %></td>
+        <td><%= link_to 'bearbeiten', edit_tournament_path(tournament) %></td>
+        <td><%= link_to 'löschen', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tr>
 
