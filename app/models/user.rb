@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
+  default_scope :order => 'name ASC'
 
   has_many :tournaments
   has_many :memberships
