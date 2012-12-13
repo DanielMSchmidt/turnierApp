@@ -3,7 +3,7 @@ class ClubsController < ApplicationController
   # GET /clubs.json
   before_filter :setClubsAsActive
   def index
-    @clubs = Club.all
+    @clubs = Club.find(:all, :order => 'name')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clubs }

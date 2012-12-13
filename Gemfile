@@ -10,7 +10,6 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'mechanize'
 gem 'nokogiri'
-gem 'memoize'
 
 group :production do
 	gem 'pg'

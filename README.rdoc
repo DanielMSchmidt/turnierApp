@@ -8,6 +8,7 @@ v0.1-beta
   Differs between different clubs
 v0.2
   Translations
+  Added GA
 
 Todo
   v2
