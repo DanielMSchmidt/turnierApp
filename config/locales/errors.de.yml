@@ -1,0 +1,20 @@
+de:
+  activerecord:
+    errors:
+      models:
+        club:
+          attributes:
+            name:
+              blank: "für den Verein bitte eingeben"
+              taken: "ist schon von einem Verein belegt. Wenn du ihn zu deinen Vereinen hinzufügen willst geht das auf deiner Profilseite"
+        tournament:
+          attributes:
+            number:
+              blank:
+              not_a_number:
+            participants:
+              blank:
+              not_a_number:
+            place:
+              blank:
+              not_a_number:

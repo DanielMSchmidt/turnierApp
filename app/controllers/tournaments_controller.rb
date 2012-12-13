@@ -94,10 +94,12 @@ class TournamentsController < ApplicationController
   end
 
   def enhance_informations
-    @all_params = params[:tournament].merge!(find_by_number(params[:tournament][:number]))
+    new_informations = find_by_number(params[:tournament][:number])
+    @all_params = params[:tournament].merge!(new_informations) if new_informations
   end
 
   def find_by_number(number)
+    return nil if number
     agent = Mechanize.new
     agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
     form = agent.page.forms.last
