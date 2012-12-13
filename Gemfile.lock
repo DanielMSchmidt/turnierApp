@@ -92,7 +92,6 @@ GEM
       nokogiri (~> 1.4)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (~> 0.0, >= 0.0.9)
-    memoize (1.3.1)
     mime-types (1.19)
     multi_json (1.3.7)
     net-http-digest_auth (1.2.1)
@@ -192,7 +191,6 @@ DEPENDENCIES
   haml
   jquery-rails
   mechanize
-  memoize
   nokogiri
   pg
   rails (= 3.2.8)
