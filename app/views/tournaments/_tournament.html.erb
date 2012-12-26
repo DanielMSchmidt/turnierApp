@@ -1,11 +1,13 @@
 <tr>
-  <td><%= tournament.number %></td>
-  <td><%= tournament.user_id %></td>
+
+  <td><%= tournament.user.name%></td>
+  <td><%= tournament_date(tournament) %></td>
+  <td><%= tournament_time(tournament) %></td>
+  <td><%= tournament.kind %></td>
   <td><%= tournament.place %> von <%= tournament.participants %></td>
   <td><%= tournament_adress(tournament) %></td>
-  <td><%= tournament_time(tournament) %></td>
-  <td><%= tournament_date(tournament) %></td>
-  <td><%= tournament.kind %></td>
+  <td><%= tournament.number %></td>
+
   <% if current_user == @user %>
     <td><%= link_to 'Anzeigen', tournament %></td>
     <td><%= link_to 'Bearbeiten', edit_tournament_path(tournament) %></td>
