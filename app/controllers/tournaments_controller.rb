@@ -47,7 +47,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new(@all_params)
+    @tournament = Tournament.new(@all_params).fillup_missing_data
 
     respond_to do |format|
       if @tournament.save

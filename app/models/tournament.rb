@@ -3,7 +3,7 @@ class Tournament < ActiveRecord::Base
   attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes
   belongs_to :user
 
-  validates :number, :participants, :place, presence: true, numericality: true
+  validates :number, presence: true, numericality: true
   validate :no_double_tournaments_are_allowed
 
    def no_double_tournaments_are_allowed
@@ -15,5 +15,18 @@ class Tournament < ActiveRecord::Base
     tournaments = []
     User.tagged_with(tagname).each{ |user| tournaments += user.tournaments}
     tournaments.sort_by {|a| a[:created_at]} #later should be a thing like :date (after grabbing)
+  end
+
+  def upcoming?
+    return self.participants.nil? && self.place.nil?
+  end
+
+  def fillup_missing_data
+    #if particiants or place is given and it's not upcoming, set place or particiants to default value
+    unless (self.upcoming?)
+      self.participants ||= self.place
+      self.place ||= self.participants
+    end
+    self #for chaining
   end
 end
