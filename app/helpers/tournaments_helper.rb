@@ -1,5 +1,7 @@
 module TournamentsHelper
   def print_stats(tournaments = [])
+    tournaments.select!{|tournament| !tournament.upcoming?}
+
     return "Ohne Turniere gibt es keine Statistik" if tournaments.empty?
     str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th>"
 

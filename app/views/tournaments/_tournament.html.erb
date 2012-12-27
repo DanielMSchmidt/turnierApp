@@ -1,9 +1,9 @@
-<tr>
+<tr <%= "class=mark" if tournament.behind_time? %>>
   <td><%= tournament.user.name%></td>
   <td><%= tournament_date(tournament) %></td>
   <td><%= tournament_time(tournament) %></td>
   <td><%= tournament.kind %></td>
-  <td><%= tournament.place %> von <%= tournament.participants %></td>
+  <td><%= tournament.place || '?' %> von <%= tournament.participants || '??' %></td>
   <td><%= tournament_adress(tournament) %></td>
   <td><%= tournament.number %></td>
 

@@ -29,4 +29,9 @@ class Tournament < ActiveRecord::Base
     end
     self #for chaining
   end
+
+  def behind_time?
+    #true if its upcoming and it has been danced jet
+    self.upcoming? && (self.date.to_datetime < Time.now)
+  end
 end

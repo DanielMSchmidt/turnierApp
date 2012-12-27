@@ -15,6 +15,7 @@ class ClubsController < ApplicationController
   def show
     @club = Club.find(params[:id])
     @users = @club.users.includes(:tournaments)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @club }
