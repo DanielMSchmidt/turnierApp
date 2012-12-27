@@ -2,9 +2,12 @@
 %html
   %head
     %title TurnierApp - Organisiert deine Turniere
+    = content_for :meta_description, "Turnier App hilft Turniertänzern und Vereinen dabei, den Überblick über bereits getanzte Turniere und die Erfolge über das Jahr hinweg zu behalten"
+    = content_for :meta_keywords, "Tanzen, Turniertanzen, Sport, Turniersport, Latein, Standard, Turniere, organisieren"
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
+
   %body
     = hidden_field('Navigation', 'active', value: @active_page || 'Start')
     .navbar
