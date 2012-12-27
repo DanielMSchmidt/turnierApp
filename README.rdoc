@@ -9,6 +9,8 @@ v0.1-beta
 v0.2
   Translations
   Added GA
+v0.3
+  Changed UI completely to improve usability
 
 Todo
   v1
