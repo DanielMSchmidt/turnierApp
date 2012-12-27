@@ -13,9 +13,6 @@ TurnierList::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
-
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
@@ -35,6 +32,19 @@ TurnierList::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  # Host_url set
+  # Mailer
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "127.0.0.1", :port => 25, :user_name => ENV['PWD_MAILER_NAME'], :password => ENV['PWD_MAILER_PWD'] }
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.raise_delivery_errors = true
+
+  #Bullet gem configurations
+    config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.disable_browser_cache = true
+  end
 end
