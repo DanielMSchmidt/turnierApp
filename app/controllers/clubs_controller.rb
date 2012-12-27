@@ -2,8 +2,9 @@ class ClubsController < ApplicationController
   # GET /clubs
   # GET /clubs.json
   before_filter :setClubsAsActive
+
   def index
-    @clubs = Club.find(:all)
+    @clubs = Club.includes(:user).all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clubs }
@@ -42,7 +43,7 @@ class ClubsController < ApplicationController
   # POST /clubs.json
   def create
     @club = Club.new(params[:club])
-
+    @club.user_id = current_user.id
     respond_to do |format|
       if @club.save
         format.html { redirect_to @club, notice: 'Club was successfully created.' }

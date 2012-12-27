@@ -3,7 +3,13 @@
 <table class="table table-striped">
 <% @clubs.each do |club| %>
   <tr>
-    <td><%= link_to club.name, club %></td>
+    <td>
+      <%= link_to club.name, club %>
+      <% if current_user == club.owner %>
+        <%= link_to 'umbenennen', edit_club_path(club) %> |
+        <%= link_to 'löschen', club, :method => :delete, :confirm => "Bist du dir sicher?" %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
