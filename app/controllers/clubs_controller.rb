@@ -4,7 +4,7 @@ class ClubsController < ApplicationController
   before_filter :setClubsAsActive
 
   def index
-    @clubs = Club.find(:all)
+    @clubs = Club.includes(:user).all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clubs }

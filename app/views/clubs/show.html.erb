@@ -13,5 +13,8 @@
 </ul>
 
 <br>
-<%= link_to 'Verein umbenennen', edit_club_path(@club) %> |
+<% if current_user == @club.owner %>
+  <%= link_to 'Verein umbenennen', edit_club_path(@club) %> |
+  <%= link_to 'Verein löschen', @club, :method => :delete, :confirm => "Bist du dir sicher?" %>
+<% end %>
 <%= link_to 'Zurück', clubs_path %>
