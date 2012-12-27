@@ -11,6 +11,6 @@ v0.2
   Added GA
 
 Todo
-  v2
+  v1
     Ability to plan competitions for the future
 
