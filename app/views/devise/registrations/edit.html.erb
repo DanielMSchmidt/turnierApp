@@ -1,43 +1,61 @@
-<h2>Bearbeiten von <%= resource_name.to_s.humanize %></h2>
+<div class="row-fluid">
+  <div class="span5">
+    <h2>Benutzer bearbeiten</h2>
 
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= f.error_notification %>
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+      <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name, :required => true, :autofocus => true %>
-    <%= f.input :email, :required => true %>
-    <%= f.input :password, :autocomplete => "off", :hint => "frei lassen falls du es nicht ändern möchtest", :required => false %>
-    <%= f.input :password_confirmation, :required => false %>
-    <%= f.input :current_password, :hint => "bitte gib dein aktuelles Passwort an", :required => true %>
-  </div>
+      <div class="form-inputs">
+        <%= f.input :name, :required => true, :autofocus => true %>
+        <%= f.input :email, :required => true %>
 
-  <div class="form-inputs">
-    <% if @clubs.nil?%>
-      <p><strong>Es gibt leider noch keine Vereine, bitte trage einen ein.</strong></p>
-    <% else %>
-      <% @clubs.each do |club|  %>
-        <%= link_to "#{club.name} zu deinen Vereinen hinzufügen", add_club_path(:club_id => club.id, :user_id => current_user.id) %>
-      <% end %>
-      <% @own_clubs.each do |club|  %>
-        <%= link_to "#{club.name} aus deinen Vereinen entfernen ", delete_club_path(:club_id => club.id, :user_id => current_user.id) %>
-      <% end %>
+        <br>
+        <span class="help-block">Bitte frei lassen, falls du es nicht ändern möchtest.</span>
+        <%= f.input :password, :autocomplete => "off", :required => false %>
+        <%= f.input :password_confirmation, :required => false %>
+        <br>
+        <span class="help-block">Bitte gib dein aktuelles Passwort an.</span>
+        <%= f.input :current_password, :required => true %>
+
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Update" %>
+      </div>
     <% end %>
-    <br />
-    <br />
-    <%= link_to 'Neuen Verein hinzufügen', new_club_path %>
+
+    <h3>Account löschen</h3>
+
+    <p><%= link_to "Jetzt löschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete %>.</p>
+
+    <%= link_to "zurück", :back %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
+  <div class="span4 offset1">
+    <h2>Vereine ändern</h2>
+    <div class="form-inputs">
+      <% if @clubs.nil?%>
+        <p><strong>Es gibt leider noch keine Vereine, bitte trage einen ein.</strong></p>
+      <% else %>
+        <br>
+        <h4>Entfernen</h4>
+        <ul>
+        <% @own_clubs.each do |club|  %>
+          <li><%= link_to club.name, delete_club_path(:club_id => club.id, :user_id => current_user.id) %></li>
+        <% end %>
+        </ul>
+        <hr />
+        <h4>Hinzufügen</h4>
+        <ul>
+        <% @clubs.each do |club|  %>
+          <li><%= link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id) %></li>
+        <% end %>
+      <% end %>
+      <br />
+      <br />
+      <%= link_to 'Neuen Verein hinzufügen', new_club_path %>
+    </div>
   </div>
-<% end %>
-
-<h3>Account löschen</h3>
-
-<p><%= link_to "Jetzt löschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete %>.</p>
-
-<%= link_to "zurück", :back %>
-
+</div>
 <script>
   $("li").removeClass("active");
   $(".profil").addClass("active");
