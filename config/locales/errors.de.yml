@@ -18,3 +18,10 @@ de:
             place:
               blank: "(Platz) bitte eingeben"
               not_a_number: "(Platz) bitte als Zahl angeben"
+        user:
+          attributes:
+            email:
+              blank: "bitte eingeben"
+              taken: "wurde bereits verwendet, wähle bitte ein anderes"
+            password:
+              too_short: "ist zu kurz, bitte gib ein längeres ein"
