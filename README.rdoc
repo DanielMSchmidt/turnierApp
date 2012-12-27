@@ -13,6 +13,10 @@ v0.3
   Changed UI completely to improve usability
 v0.3.1
   mailer fixes
+v0.3.2
+  frontend and fixed typos
+v0.3.3
+  clubs now have owners, who manage them (Person who builds it)
 
 Todo
   v1
