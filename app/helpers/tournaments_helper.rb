@@ -1,11 +1,11 @@
 module TournamentsHelper
   def print_stats(tournaments = [])
-    tournaments.select!{|tournament| !tournament.upcoming?}
+    finished_tournaments = tournaments.select{|tournament| !tournament.upcoming?}
 
-    return "Ohne Turniere gibt es keine Statistik" if tournaments.empty?
+    return "Ohne getanzte Turniere gibt es keine Statistik" if finished_tournaments.empty?
     str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th>"
 
-    tournaments_by_year(tournaments).each do |year|
+    tournaments_by_year(finished_tournaments).each do |year|
       str += print_year(year)
     end
 
