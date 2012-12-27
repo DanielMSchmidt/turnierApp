@@ -1,14 +1,14 @@
-<tr>
-  <td><%= tournament.number %></td>
-  <td><%= tournament.user_id %></td>
-  <td><%= tournament.place %> von <%= tournament.participants %></td>
-  <td><%= tournament_adress(tournament) %></td>
-  <td><%= tournament_time(tournament) %></td>
+<tr <%= "class=mark" if tournament.behind_time? %>>
+  <td><%= tournament.user.name%></td>
   <td><%= tournament_date(tournament) %></td>
+  <td><%= tournament_time(tournament) %></td>
   <td><%= tournament.kind %></td>
-  <% if current_user == @user %>
-    <td><%= link_to 'Anzeigen', tournament %></td>
+  <td><%= tournament.place || '?' %> von <%= tournament.participants || '??' %></td>
+  <td><%= tournament_adress(tournament) %></td>
+  <td><%= tournament.number %></td>
+
+  <% if current_user == tournament.user %>
     <td><%= link_to 'Bearbeiten', edit_tournament_path(tournament) %></td>
-    <td><%= link_to 'Löschen', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Löschen', tournament, method: :delete, data: { confirm: 'Bist du dir sicher?' } %></td>
   <% end %>
 </tr>
