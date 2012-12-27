@@ -10,6 +10,7 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'mechanize'
 gem 'nokogiri'
+gem 'libv8', '~> 3.11.8'
 
 group :production do
 	gem 'pg'
