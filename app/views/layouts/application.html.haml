@@ -10,7 +10,7 @@
 
   %body
     = hidden_field('Navigation', 'active', value: @active_page || 'Start')
-    .navbar
+    .navbar.navbar-fixed-top
       .navbar-inner
         .container
           = link_to 'TurnierApp', root_path, class: 'brand'
