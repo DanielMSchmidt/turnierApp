@@ -7,7 +7,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @tournaments = Tournament.all
+    @tournaments = Tournament.includes(:user).all
     @users = User.all
 
     respond_to do |format|
