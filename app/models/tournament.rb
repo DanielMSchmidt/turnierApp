@@ -23,7 +23,10 @@ class Tournament < ActiveRecord::Base
 
   def fillup_missing_data
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
-    unless (self.upcoming?)
+    #set enrolled to false if it is upcoming
+    if (self.upcoming?)
+      self.enrolled = false
+    else
       self.participants ||= self.place
       self.place ||= self.participants
     end
