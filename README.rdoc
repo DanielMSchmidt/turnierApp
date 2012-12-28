@@ -17,6 +17,8 @@ v0.3.2
   frontend and fixed typos
 v0.3.3
   clubs now have owners, who manage them (Person who builds it)
+v0.3.4
+  styling changes
 
 Todo
   v1
