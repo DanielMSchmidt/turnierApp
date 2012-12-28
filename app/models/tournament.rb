@@ -6,6 +6,10 @@ class Tournament < ActiveRecord::Base
   validates :number, presence: true, numericality: true
   validate :no_double_tournaments_are_allowed
 
+  before_save do
+    self.fillup_missing_data
+  end
+
    def no_double_tournaments_are_allowed
      puts Tournament.where(:number => number, :user_id => user_id).size == 0
      errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
@@ -27,6 +31,7 @@ class Tournament < ActiveRecord::Base
     if (self.upcoming?)
       self.enrolled = false
     else
+      self.enrolled = true
       self.participants ||= self.place
       self.place ||= self.participants
     end
