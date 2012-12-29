@@ -36,6 +36,11 @@ body
 			float: left
 
 table
-	tr
-		&.mark
-			background-color: #ff6600
+	td#status
+		background-image: image-url("ok.png")
+		background-repeat: no-repeat
+		background-position: 0px 11px
+		&.missing_information
+			background-image: image-url("missing_information.png")
+		&.not_enrolled
+			background-image: image-url("not_enrolled.png")
