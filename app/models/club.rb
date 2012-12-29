@@ -22,7 +22,7 @@ class Club < ActiveRecord::Base
   def mail_owner_unenrolled_tournaments
     if (self.unenrolled_tournaments_left)
       NotificationMailer.enrollCouples(self.owner, self).deliver
-      puts "send weekly mail to #{club.name}"
+      puts "send weekly mail to #{self.name}"
     end
   end
 
