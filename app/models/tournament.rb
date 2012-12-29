@@ -16,12 +16,6 @@ class Tournament < ActiveRecord::Base
      errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
    end
 
-  def with_tag(tagname)
-    tournaments = []
-    User.tagged_with(tagname).each{ |user| tournaments += user.tournaments}
-    tournaments.sort_by {|a| a[:created_at]} #later should be a thing like :date (after grabbing)
-  end
-
   def upcoming?
     return self.participants.nil? && self.place.nil?
   end
