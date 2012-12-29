@@ -77,7 +77,8 @@ class TournamentsController < ApplicationController
   end
 
   def set_as_enrolled
-    Tournament.find(params[:id]).update_attributes({enrolled: true})
+    Tournament.find(params[:id]).update_column(:enrolled, true)
+    redirect_to :back
   end
 
   # DELETE /tournaments/1
