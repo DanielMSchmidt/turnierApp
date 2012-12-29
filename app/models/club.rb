@@ -20,14 +20,14 @@ class Club < ActiveRecord::Base
   end
 
   def mail_owner_unenrolled_tournaments
-    if (self.unenrolled_tournaments_left)
+    if (self.unenrolled_and_enrollable_tournaments_left)
       NotificationMailer.enrollCouples(self.owner, self).deliver
       puts "send weekly mail to #{self.name}"
     end
   end
 
-  def unenrolled_tournaments_left
+  def unenrolled_and_enrollable_tournaments_left
     return false if self.tournaments.nil?
-    self.tournaments.collect{|x| !x.enrolled?}.include?(true)
+    self.tournaments.collect{|x| !x.enrolled? && x.date.to_date < Date.today + 5.weeks}.include?(true)
   end
 end
