@@ -76,6 +76,10 @@ class TournamentsController < ApplicationController
     end
   end
 
+  def set_as_enrolled
+    Tournament.find(params[:id]).update_attributes({enrolled: true})
+  end
+
   # DELETE /tournaments/1
   # DELETE /tournaments/1.json
   def destroy
