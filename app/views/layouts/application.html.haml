@@ -28,8 +28,10 @@
                 %li.signin= link_to "Anmelden", new_user_session_path
               %li.impressum= link_to 'Impressum', impressum_path
 
-    .container
-      = yield
+    .content
+      .row-fluid
+        .offset1.span10
+          = yield
     %footer.navbar.navbar-fixed-bottom
       =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp"
       %form{:action => "https://www.paypal.com/cgi-bin/webscr", :method => "post"}
