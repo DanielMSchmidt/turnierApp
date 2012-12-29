@@ -32,11 +32,15 @@ TurnierList::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  # Mailer
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { :address => "smtp.1und1.de", :port => 25, :user_name => ENV['PWD_MAILER_NAME'], :password => ENV['PWD_MAILER_PWD'] }
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  # Care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
+
+  # Change mail delvery to either :smtp, :sendmail, :file, :test
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "127.0.0.1", :port => 1025 }
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
 
   #Bullet gem configurations
     config.after_initialize do
