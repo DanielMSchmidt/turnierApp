@@ -1,14 +1,9 @@
 class NotificationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "turnierlist@psv-kiel.de"
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notification_mailer.enrollCouples.subject
-  #
-  def enrollCouples
-    @greeting = "Hi"
+  def enrollCouples(user, club)
+    @club = club
 
-    mail to: "to@example.org"
+    mail to: user.email, subject: "Es gibt Paare für den #{club.name} zu melden"
   end
 end
