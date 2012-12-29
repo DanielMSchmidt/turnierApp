@@ -9,4 +9,10 @@ class User < ActiveRecord::Base
   has_many :memberships
   has_many :clubs, :through => :memberships
 
+  def organises(tournament)
+    tournament.user.clubs.each do |club|
+      return true if club.owner == self
+    end
+    false
+  end
 end
