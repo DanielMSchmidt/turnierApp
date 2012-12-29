@@ -11,6 +11,7 @@ gem 'bootstrap-sass'
 gem 'mechanize'
 gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
+gem 'whenever', :require => false #for cronjobs
 
 group :production do
 	gem 'pg'

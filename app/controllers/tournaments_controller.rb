@@ -47,7 +47,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new(@all_params).fillup_missing_data
+    @tournament = Tournament.new(@all_params)
 
     respond_to do |format|
       if @tournament.save
@@ -74,6 +74,11 @@ class TournamentsController < ApplicationController
         format.json { render json: @tournament.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def set_as_enrolled
+    Tournament.find(params[:id]).update_column(:enrolled, true)
+    redirect_to :back
   end
 
   # DELETE /tournaments/1
