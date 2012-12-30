@@ -16,7 +16,7 @@ class ClubsController < ApplicationController
   def show
     @club = Club.find(params[:id])
     @users = @club.users.includes(:tournaments)
-    @unenrolled_tournaments = Tournament.where(enrolled: false)
+    @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten
 
     respond_to do |format|
       format.html # show.html.erb
