@@ -23,6 +23,7 @@ group :development, :test do
   gem 'brakeman'
   gem "rails_best_practices"
   gem "rspec-rails", "~> 2.0"
+  gem "factory_girl_rails"
 end
 
 # Gems used only for assets and not required
