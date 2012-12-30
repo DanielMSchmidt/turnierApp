@@ -12,6 +12,7 @@ TurnierList::Application.routes.draw do
   match "/membership/new/:user_id/:club_id" => "membership#create", as: :add_club
   match "/membership/delete/:user_id/:club_id" => "membership#destroy", as: :delete_club
   match "/impressum" => "home#impressum"
+  match "/club/:club_id/transfer/:user_id" => "club#transfer_ownership", as: :transfer_ownership_to
 
   devise_for :users
 

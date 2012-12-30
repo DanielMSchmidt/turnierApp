@@ -84,6 +84,14 @@ class ClubsController < ApplicationController
     end
   end
 
+  def transfer_ownership
+    @club = Club.find(params[:club_id])
+    new_user = User.find(params[:user_id])
+    @club.user_id = new_user.id
+    @club.save
+    redirect_to :back
+  end
+
   def setClubsAsActive
     @active_page = 'clubs'
   end

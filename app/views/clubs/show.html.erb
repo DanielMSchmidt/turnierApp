@@ -28,7 +28,13 @@
 
       <%= render @unenrolled_tournaments, enrollable: true %>
   </table>
-
+  <h3>Jemand anders meldet die Paare</h3>
+  <ul>
+  <% @users.each do |user| %>
+    <li><%= link_to "zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id)%></li>
+  <% end %>
+  </ul>
+  <br />
   <%= link_to 'Verein umbenennen', edit_club_path(@club) %> |
   <%= link_to 'Verein löschen', @club, :method => :delete, :confirm => "Bist du dir sicher?" %>
 <% end %>
