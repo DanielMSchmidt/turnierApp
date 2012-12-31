@@ -2,7 +2,7 @@
 
 <h4>Statistiken:</h4>
 <%= raw(print_stats @tournaments) %>
-
+<br />
 <table class="tournament-list table table-striped">
   <tr>
     <th>Paar</th>
@@ -12,9 +12,12 @@
     <th>Platz</th>
     <th>Adresse</th>
     <th>Turniernr.</th>
+    <th>Status</th>
+    <th></th>
     <th></th>
     <th></th>
   </tr>
+
   <%= render @tournaments %>
 </table>
 

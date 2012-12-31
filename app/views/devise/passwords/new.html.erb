@@ -1,5 +1,4 @@
 <h2>Passwort vergessen?</h2>
-<h3 style="color: red;"><strong><u>Dieses Feature steht zur Zeit noch nicht zur Verfügung, bitte melde dich bei mir unter daniel.maximilian@gmx.net und ich versuche zu helfen.</u></strong></h3>
 <%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= f.error_notification %>
 
@@ -8,7 +7,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions", class: "btn btn-primary" %>
+    <%= f.button :submit, "Schick mir ein neues Passwort", class: "btn btn-primary" %>
   </div>
 <% end %>
 
