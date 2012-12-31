@@ -25,3 +25,6 @@ de:
               taken: "wurde bereits verwendet, wähle bitte ein anderes"
             password:
               too_short: "ist zu kurz, bitte gib ein längeres ein"
+              confirmation: "bitte erneut eingeben"
+            current_password:
+              invalid: "ist leider falsch."
