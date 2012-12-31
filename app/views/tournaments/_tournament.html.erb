@@ -1,5 +1,9 @@
 <tr>
-  <td><%= tournament.user.name%></td>
+  <td>
+    <% tournament.user.name.split(" / ").each do |x| %>
+      <%= x %> <br />
+    <% end %>
+  </td>
   <td><%= tournament_date(tournament) %></td>
   <td><%= tournament_time(tournament) %></td>
   <td><%= tournament.kind %></td>
