@@ -43,8 +43,8 @@ class ClubsController < ApplicationController
   # POST /clubs
   # POST /clubs.json
   def create
-    @club = Club.new(params[:club])
-    @club.user_id = current_user.id
+    @club = current_user.clubs.build params[:club]
+
     respond_to do |format|
       if @club.save
         format.html { redirect_to @club, notice: 'Club was successfully created.' }
