@@ -16,9 +16,11 @@ v0.3.1
 v0.3.2
   frontend and fixed typos
 v0.3.3
-  clubs now have owners, who manage them (Person who builds it)
+  clubs now have owners, who manage them (Person who creates it)
 v0.3.4
   styling changes
+v0.4
+  club can shift owners, tournaments can be marked as enrolled, design makeover
 
 Todo
   v1

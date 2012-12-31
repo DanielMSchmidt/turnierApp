@@ -1,6 +1,6 @@
 class MembershipController < ApplicationController
   def create
-    puts Membership.create!(user_id: params[:user_id], club_id: params[:club_id])
+    Membership.create!(user_id: params[:user_id], club_id: params[:club_id])
     redirect_to edit_user_registration_path(current_user), notice: 'Club was successfully added.'
   end
 

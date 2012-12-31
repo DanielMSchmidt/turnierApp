@@ -13,28 +13,37 @@
  */
 
 body
-	padding-top: 50px
 	p
 		margin-top: 20px
 		font-size:  125%
 		line-height: 30px
+	.content
+		margin-top: 80px
+		margin-bottom: 80px
 
 	footer
 		background-color: white
 		border-top: solid 1px black
-		margin-right: 30px
+		padding-right: 30px
 		overflow:hidden
-		padding-top: 15px
+		padding-top: 20px
 		text-decoration: none
 		a
 			float: right
 			&:hover
 				text-decoration: none
 				background-color: transparent
+			&:visited
+				color: white
 		form
 			float: left
 
 table
-	tr
-		&.mark
-			background-color: #ff6600
+	td#status
+		background-image: image-url("ok.png")
+		background-repeat: no-repeat
+		background-position: 0px 11px
+		&.missing_information
+			background-image: image-url("missing_information.png")
+		&.not_enrolled
+			background-image: image-url("not_enrolled.png")

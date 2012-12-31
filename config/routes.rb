@@ -7,10 +7,12 @@ TurnierList::Application.routes.draw do
   resources :clubs
 
   resources :tournaments
+  match "/tournament/:id/enroll" => "tournaments#set_as_enrolled", as: :just_enrolled
   match "/user/:id/tournaments" => "tournaments#of_user", as: :user_tournaments
   match "/membership/new/:user_id/:club_id" => "membership#create", as: :add_club
   match "/membership/delete/:user_id/:club_id" => "membership#destroy", as: :delete_club
   match "/impressum" => "home#impressum"
+  match "/club/:club_id/transfer/:user_id" => "clubs#transfer_ownership", as: :transfer_ownership_to
 
   devise_for :users
 

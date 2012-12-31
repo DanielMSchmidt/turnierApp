@@ -11,6 +11,7 @@ gem 'bootstrap-sass'
 gem 'mechanize'
 gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
+gem 'whenever', :require => false #for cronjobs
 
 group :production do
 	gem 'pg'
@@ -21,6 +22,8 @@ group :development, :test do
   gem 'bullet'
   gem 'brakeman'
   gem "rails_best_practices"
+  gem "rspec-rails", "~> 2.0"
+  gem "factory_girl_rails"
 end
 
 # Gems used only for assets and not required

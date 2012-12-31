@@ -4,7 +4,7 @@ class ClubsController < ApplicationController
   before_filter :setClubsAsActive
 
   def index
-    @clubs = Club.includes(:user).all
+    @clubs = Club.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clubs }
@@ -16,6 +16,7 @@ class ClubsController < ApplicationController
   def show
     @club = Club.find(params[:id])
     @users = @club.users.includes(:tournaments)
+    @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten
 
     respond_to do |format|
       format.html # show.html.erb
@@ -81,6 +82,14 @@ class ClubsController < ApplicationController
       format.html { redirect_to clubs_url }
       format.json { head :no_content }
     end
+  end
+
+  def transfer_ownership
+    @club = Club.find(params[:club_id])
+    new_user = User.find(params[:user_id])
+    @club.user_id = new_user.id
+    @club.save
+    redirect_to root_path
   end
 
   def setClubsAsActive

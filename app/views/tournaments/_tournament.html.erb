@@ -1,4 +1,4 @@
-<tr <%= "class=mark" if tournament.behind_time? %>>
+<tr>
   <td><%= tournament.user.name%></td>
   <td><%= tournament_date(tournament) %></td>
   <td><%= tournament_time(tournament) %></td>
@@ -7,8 +7,23 @@
   <td><%= tournament_adress(tournament) %></td>
   <td><%= tournament.number %></td>
 
+
+
+  <% if current_user.organises(tournament) %>
+    <% enrollable ||= 'false' %>
+
+    <td id="status" class="
+    <%= 'missing_information ' if tournament.behind_time? %>
+    <%= 'not_enrolled ' unless tournament.enrolled? %>"></td>
+    <% if enrollable && !tournament.enrolled? %>
+      <td><%= link_to 'Als gemeldet markieren', just_enrolled_path(tournament.id), class: "btn" %></td>
+    <% else %>
+      <td></td>
+    <% end %>
+  <% end %>
+
   <% if current_user == tournament.user %>
-    <td><%= link_to 'Bearbeiten', edit_tournament_path(tournament) %></td>
-    <td><%= link_to 'Löschen', tournament, method: :delete, data: { confirm: 'Bist du dir sicher?' } %></td>
+    <td><%= link_to 'Bearbeiten', edit_tournament_path(tournament), class: "btn" %></td>
+    <td><%= link_to 'Löschen', tournament, method: :delete, data: { confirm: 'Bist du dir sicher?' }, class: "btn btn-danger" %></td>
   <% end %>
 </tr>

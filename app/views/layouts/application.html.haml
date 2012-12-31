@@ -4,6 +4,7 @@
     %title TurnierApp | Organisiere deine Turniere
     %meta{:content => "Turnier App hilft Turniertänzern und Vereinen dabei, den Überblick über bereits getanzte Turniere und die Erfolge über das Jahr hinweg zu behalten", :name => "description"}
     %meta{:content => "Tanzen, Turniertanzen, Sport, Turniersport, Latein, Standard, Turniere, organisieren", :name => "keywords"}
+    %link{:href => "/favicon.ico", :rel => "shortcut icon"}
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -28,10 +29,12 @@
                 %li.signin= link_to "Anmelden", new_user_session_path
               %li.impressum= link_to 'Impressum', impressum_path
 
-    .container
-      = yield
+    .content
+      .row-fluid
+        .offset1.span10
+          = yield
     %footer.navbar.navbar-fixed-bottom
-      =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp"
+      =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp", class: "btn btn-info"
       %form{:action => "https://www.paypal.com/cgi-bin/webscr", :method => "post"}
         %input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
           %input{:name => "hosted_button_id", :type => "hidden", :value => "4XFV2JU839HXL"}

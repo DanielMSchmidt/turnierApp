@@ -20,6 +20,8 @@
     <th>Turniernr.</th>
     <th></th>
     <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
   <%= render @tournaments %>
@@ -27,5 +29,5 @@
 
 <br />
 <% if current_user == @user %>
-  <%= link_to 'Neues Turnier hinzufügen', new_tournament_path %>
+  <%= link_to 'Neues Turnier hinzufügen', new_tournament_path, class: "btn btn-primary" %>
 <% end %>
