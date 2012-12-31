@@ -34,7 +34,7 @@
         .offset1.span10
           = yield
     %footer.navbar.navbar-fixed-bottom
-      =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp", class: "btn btn-info"
+      =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp", class: "btn btn-info high"
       %form{:action => "https://www.paypal.com/cgi-bin/webscr", :method => "post"}
         %input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
           %input{:name => "hosted_button_id", :type => "hidden", :value => "4XFV2JU839HXL"}
