@@ -43,7 +43,8 @@ class ClubsController < ApplicationController
   # POST /clubs
   # POST /clubs.json
   def create
-    @club = current_user.clubs.build params[:club]
+    @club = Club.new(params[:club])
+    @club.user = current_user
 
     respond_to do |format|
       if @club.save

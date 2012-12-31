@@ -1,5 +1,22 @@
 require 'spec_helper'
+require 'capybara/rails'
+
 describe "Club" do
+  describe "creating a club" do
+
+    it "should be a user assigned to the created club" do
+      User.all.each{|x| x.delete}
+      user = FactoryGirl.create(:user)
+
+      visit "/users/sign_in"
+      fill_in("user[email]", :with => user.email)
+      fill_in("user[password]", :with => user.password)
+      click_on("Anmelden")
+
+      assert_equal(user, current_user, "user should be logged in")
+    end
+    it "should be a club created"
+  end
   describe "sending of unenrollment mails" do
     describe "method unenrolled_and_enrollable_tournaments_left" do
       before(:each) do
