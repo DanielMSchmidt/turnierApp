@@ -24,6 +24,7 @@ group :development, :test do
   gem "rails_best_practices"
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
+  gem "capybara"
 end
 
 # Gems used only for assets and not required
