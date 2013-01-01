@@ -11,6 +11,9 @@
 
   %body
     = hidden_field('Navigation', 'active', value: @active_page || 'Start')
+    :javascript
+      $("li").removeClass("active");
+      $('.#{@active_page || 'Start'}').addClass('active');
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
