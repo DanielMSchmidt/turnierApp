@@ -35,27 +35,14 @@ module TournamentsHelper
   def placings(tournaments)
     count = 0
     tournaments.each do |tournament|
-      place_for_placing = 3
-      place_for_placing = 5 if start_class(tournament) == 'C'
-      place_for_placing = 6 if start_class(tournament) == 'D'
-      count += 1 if (tournament.place <= place_for_placing)
+      count += 1 if tournament.got_placing?
     end
 
     return count
   end
 
-  def start_class(tournament)
-    return tournament.kind.split(" ")[1]
-  end
-
   def points(tournaments)
-    sum = 0
-    tournaments.each do |t|
-      sum += [(t.participants - t.place), 20].min
-      puts [(t.participants - t.place), 20].min
-    end
-
-    return sum
+    tournaments.collect{|x| x.points}.inject(:+)
   end
 
   def tournament_date(tournament)
