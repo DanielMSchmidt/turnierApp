@@ -22,6 +22,38 @@ FactoryGirl.define do
     enrolled false
   end
 
+  factory :d_class_tournament do
+    number 27114
+    user_id 1
+    address 'testaddress'
+    date (DateTime.now + 2.weeks).to_date
+    enrolled false
+  end
+
+  factory :c_class_tournament do
+    number 27115
+    user_id 1
+    address 'testaddress'
+    date (DateTime.now + 2.weeks).to_date
+    enrolled false
+  end
+
+  factory :b_class_tournament do
+    number 28044
+    user_id 1
+    address 'testaddress'
+    date (DateTime.now + 2.weeks).to_date
+    enrolled false
+  end
+
+  factory :future_tournament do
+    number 29239
+    user_id 1
+    address 'testaddress'
+    date (DateTime.now + 2.weeks).to_date
+    enrolled false
+  end
+
   factory :enrolled_tournament, class: Tournament do
     number 28289
     user_id 1
