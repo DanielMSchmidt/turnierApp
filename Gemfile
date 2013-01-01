@@ -13,6 +13,7 @@ gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
 gem 'whenever', :require => false #for cronjobs
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 
 group :production do
 	gem 'pg'
