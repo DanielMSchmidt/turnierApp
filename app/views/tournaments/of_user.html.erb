@@ -1,4 +1,4 @@
-<h1>Alle Turniere von <%= @user.name %> anzeigen</h1>
+<h1>Alle Turniere von <br /> <%= @user.name.gsub(/[\/]/, "und")  %></h1>
 
 <h4>Statistiken:</h4>
 <%= raw(print_stats @tournaments) %>
