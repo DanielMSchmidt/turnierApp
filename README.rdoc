@@ -27,6 +27,8 @@ v0.4.2
   fixed typos and styling bugs
 v0.5
   fixed bug with Notification Mails and increased performance
+v0.5.1
+  fixed bug caused by turbolinks
 
 Todo
   v1
