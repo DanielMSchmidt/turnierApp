@@ -1,7 +1,7 @@
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
   default_scope includes(:user)
-  attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled
+  attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
   belongs_to :user
 
   validates :number, presence: true, numericality: true
@@ -37,4 +37,35 @@ class Tournament < ActiveRecord::Base
     #true if its upcoming and it has been danced jet
     self.upcoming? && (self.date.to_datetime < Time.now)
   end
+
+  def got_placing?
+    return false if self.upcoming?
+
+    place_for_placing = 3
+    place_for_placing = 5 if self.start_class == 'C'
+    place_for_placing = 6 if self.start_class == 'D'
+
+    return (self.place <= place_for_placing) && (self.points >= 2)
+  end
+
+  def points
+    participants = self.participants ||= 0
+    place = self.place ||= 0
+    [(participants - place), 20].min
+  end
+
+  def start_class
+    return self.kind.split(" ")[1]
+  end
+
+  def should_send_a_notification_mail?
+    return false if self.enrolled? || !(Date.today..(Date.today + 5.weeks)).include?(self.date.to_date)
+    return !(((Date.today - 2.weeks)..Date.today).include?(self.notificated_about.to_date) unless self.notificated_about.nil?)
+  end
+
+  def notification_send
+    self.notificated_about = Date.today
+    self.save
+  end
+
 end

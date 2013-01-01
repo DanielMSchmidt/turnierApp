@@ -2,21 +2,6 @@ require 'spec_helper'
 require 'capybara/rails'
 
 describe "Club" do
-  describe "creating a club" do
-
-    it "should be a user assigned to the created club" do
-      User.all.each{|x| x.delete}
-      user = FactoryGirl.create(:user)
-
-      visit "/users/sign_in"
-      fill_in("user[email]", :with => user.email)
-      fill_in("user[password]", :with => user.password)
-      click_on("Anmelden")
-
-      assert_equal(user, current_user, "user should be logged in")
-    end
-    it "should be a club created"
-  end
   describe "sending of unenrollment mails" do
     describe "method unenrolled_and_enrollable_tournaments_left" do
       before(:each) do
@@ -28,13 +13,13 @@ describe "Club" do
       it "should be true if the tournament is in the near future and unenrolled" do
         FactoryGirl.create(:tournament)
 
-        assert(@club.unenrolled_and_enrollable_tournaments_left)
+        assert(@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       end
 
       it "should be false if the tournament is in the wide future and unenrolled" do
         FactoryGirl.create(:tournament, date: (DateTime.now + 2.months).to_date)
 
-        assert(!@club.unenrolled_and_enrollable_tournaments_left)
+        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       end
 
       it "should be false if the tournament is in the near future and enrolled" do
@@ -42,7 +27,18 @@ describe "Club" do
         FactoryGirl.create(:enrolled_tournament)
 
         assert_equal(Tournament.count, 1, 'there should only be one tournament')
-        assert(!@club.unenrolled_and_enrollable_tournaments_left, 'got unenrolled and enrollable tournaments, where there should be none')
+        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, 'got unenrolled and enrollable tournaments, where there should be none')
+      end
+
+      it "should be false if a mail was allready send" do
+        mail = Mail.new(:from => 'from@person.de', :to => 'to@person.de', :subject => 'a Subject')
+        FactoryGirl.create(:tournament)
+
+        assert(@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, "mail wasnt send")
+
+        @club.mail_owner_unenrolled_tournaments
+
+        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, "mail was send")
       end
 
     end
