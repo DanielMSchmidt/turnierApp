@@ -13,13 +13,13 @@ describe "Club" do
       it "should be true if the tournament is in the near future and unenrolled" do
         FactoryGirl.create(:tournament)
 
-        assert(@club.unenrolled_and_enrollable_tournaments_left)
+        assert(@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       end
 
       it "should be false if the tournament is in the wide future and unenrolled" do
         FactoryGirl.create(:tournament, date: (DateTime.now + 2.months).to_date)
 
-        assert(!@club.unenrolled_and_enrollable_tournaments_left)
+        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       end
 
       it "should be false if the tournament is in the near future and enrolled" do
@@ -27,7 +27,18 @@ describe "Club" do
         FactoryGirl.create(:enrolled_tournament)
 
         assert_equal(Tournament.count, 1, 'there should only be one tournament')
-        assert(!@club.unenrolled_and_enrollable_tournaments_left, 'got unenrolled and enrollable tournaments, where there should be none')
+        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, 'got unenrolled and enrollable tournaments, where there should be none')
+      end
+
+      it "should be false if a mail was allready send" do
+        mail = Mail.new(:from => 'from@person.de', :to => 'to@person.de', :subject => 'a Subject')
+        FactoryGirl.create(:tournament)
+
+        assert(@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, "mail wasnt send")
+
+        @club.mail_owner_unenrolled_tournaments
+
+        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, "mail was send")
       end
 
     end

@@ -1,7 +1,7 @@
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
   default_scope includes(:user)
-  attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled
+  attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
   belongs_to :user
 
   validates :number, presence: true, numericality: true
@@ -57,4 +57,15 @@ class Tournament < ActiveRecord::Base
   def start_class
     return self.kind.split(" ")[1]
   end
+
+  def should_send_a_notification_mail?
+    return false if self.enrolled? || !(Date.today..(Date.today + 5.weeks)).include?(self.date.to_date)
+    return !(((Date.today - 2.weeks)..Date.today).include?(self.notificated_about.to_date) unless self.notificated_about.nil?)
+  end
+
+  def notification_send
+    self.notificated_about = Date.today
+    self.save
+  end
+
 end
