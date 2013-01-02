@@ -1,4 +1,6 @@
 class Club < ActiveRecord::Base
+  require 'celluloid'
+
   default_scope :order => 'name ASC'
   attr_accessible :name
   belongs_to :user
