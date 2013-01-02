@@ -11,6 +11,10 @@ class Tournament < ActiveRecord::Base
     self.fillup_missing_data
   end
 
+  def to_s
+    "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
+  end
+
    def no_double_tournaments_are_allowed
      Tournament.where(:number => number, :user_id => user_id).size == 0
      errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
@@ -24,11 +28,14 @@ class Tournament < ActiveRecord::Base
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
     #set enrolled to false if it is upcoming
     if (self.upcoming?)
+      logger.debug "detected an upcoming tournament - #{self.to_s}"
       self.enrolled = false
     else
+      logger.debug "filling up missing data for #{self.to_s}"
       self.enrolled = true
       self.participants ||= self.place
       self.place ||= self.participants
+      logger.debug "filled up as #{self.to_s}"
     end
     self #for chaining
   end
@@ -59,13 +66,17 @@ class Tournament < ActiveRecord::Base
   end
 
   def should_send_a_notification_mail?
+    logger.debug "test if a notification mail should be sended about #{self.to_s}"
     return false if self.enrolled? || !(Date.today..(Date.today + 5.weeks)).include?(self.date.to_date)
-    return !(((Date.today - 2.weeks)..Date.today).include?(self.notificated_about.to_date) unless self.notificated_about.nil?)
+    if !(((Date.today - 2.weeks)..Date.today).include?(self.notificated_about.to_date) unless self.notificated_about.nil?)
+      logger.debug "a notification mail should be send about #{self.to_s}"
+      return true
+    end
   end
 
   def notification_send
     self.notificated_about = Date.today
     self.save
+    logger.debug "the notification was send for #{self.to_s} and the time was updated"
   end
-
 end
