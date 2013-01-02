@@ -68,7 +68,7 @@ class Tournament < ActiveRecord::Base
   def should_send_a_notification_mail?
     logger.debug "test if a notification mail should be sended about #{self.to_s}"
     return false if self.enrolled? || !(Date.today..(Date.today + 5.weeks)).include?(self.date.to_date)
-    if !(((Date.today - 2.weeks)..Date.today).include?(self.notificated_about.to_date) unless self.notificated_about.nil?)
+    if !(((Date.today - 6.days)..Date.today).include?(self.notificated_about.to_date) unless self.notificated_about.nil?)
       logger.debug "a notification mail should be send about #{self.to_s}"
       return true
     end
