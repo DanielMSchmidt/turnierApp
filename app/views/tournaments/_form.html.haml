@@ -11,10 +11,10 @@
     = f.label :number, "Turniernummer"
     = f.number_field :number
   .field
-    = f.label :place, "Platz"
+    = f.label :place, "Platz (leer lassen, falls noch nicht getanzt)"
     = f.number_field :place
   .field
-    = f.label :participants, "Teilnehmeranzahl"
+    = f.label :participants, "Teilnehmeranzahl (leer lassen, falls noch nicht getanzt)"
     = f.number_field :participants
   = f.hidden_field :user_id, :value => current_user.id
   .actions
