@@ -34,8 +34,8 @@ task :send_friday_notifications => :environment do
 end
 
 task :send_user_notification => :environment do
-  count = User.count
+  user = User.all
   puts "start sending usercount notification about #{count} couples"
-  NotificationMailer.userCount(count).deliver
+  NotificationMailer.userCount(user).deliver
   puts "ended sending usercount notification"
 end
