@@ -1,1 +1,6 @@
-<h3>Es gibt zur Zeit <%= @count %> Paare in der Turnierapp</h3>
+<h3>Es gibt zur Zeit <%= @count %> Paare in der Turnierapp:</h3>
+<ul>
+  <% @user.each do |u| %>
+    <li><%= u.name %></li>
+  <% end %>
+</ul>
