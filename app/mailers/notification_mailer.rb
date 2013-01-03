@@ -6,9 +6,10 @@ class NotificationMailer < ActionMailer::Base
     mail to: user.email, subject: "Im #{@club.name} gibt es Paare zu melden"
   end
 
-  def userCount(user)
+  def userCount(user, newUser)
     @count = user.count
     @user = user
-    mail to: "daniel.maximilian@gmx.net", subject: "Die Anzahl der Paare in der Turnierapp liegt bei #{@count}"
+    @newUser = newUser
+    mail to: "daniel.maximilian@gmx.net", subject: "Neuer Nutzer mit Namen #{newUser} | Total: #{@count}"
   end
 end

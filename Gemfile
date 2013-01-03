@@ -15,7 +15,9 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'celluloid'
 
+
 group :production do
+  gem 'newrelic_rpm'
 	gem 'pg'
 end
 
