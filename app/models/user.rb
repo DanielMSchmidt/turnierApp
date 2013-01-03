@@ -19,7 +19,14 @@ class User < ActiveRecord::Base
   end
 
   def notify_about_new_user
-    logger.debug "notifying about new user"
-    Rake::Task["send_user_notification"].execute
+    logger.debug "notifying about new user #{self.name}"
+    User.send_user_notification(self.name)
+  end
+
+  def self.send_user_notification(newUser)
+    user = User.all
+    puts "start sending usercount notification about #{user.count} couples"
+    NotificationMailer.userCount(user, newUser).deliver
+    puts "ended sending usercount notification"
   end
 end
