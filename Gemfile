@@ -14,6 +14,7 @@ gem 'libv8', '~> 3.11.8'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'celluloid'
+gem 'newrelic_rpm'
 
 group :production do
 	gem 'pg'
