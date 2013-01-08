@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   def organises(tournament)
     tournament.user.clubs.each do |club|
-      return true if club.owner == self
+      return true if club.is_owner?(self)
     end
     false
   end
@@ -35,11 +35,15 @@ class User < ActiveRecord::Base
   end
 
   def getOrganisedTournaments
+    logger.debug "setting organised tournaments for user #{self.id}"
     clubs = Club.where(user_id: self.id)
-    unless clubs.count == 0
-      clubs.tournaments
+
+    unless clubs.empty?
+      logger.debug "found clubs: #{clubs.collect{|x| x.name}.join(", ")}"
+      return clubs.collect{|x| x.tournaments}.flatten
     else
-      []
+      logger.debug "no club found"
+      return []
     end
   end
 
