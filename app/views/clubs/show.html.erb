@@ -31,7 +31,6 @@
   </table>
   <br />
   <h3>Jemand anders meldet die Paare</h3>
-  <%= "Verein: #{@club.id}, Current_user: #{current_user.id}, clubowner: #{@club.user_id}"%>
   <ul>
   <% @users.each do |user| %>
     <li><%= link_to "zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn" %></li>
