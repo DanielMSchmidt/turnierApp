@@ -5,18 +5,17 @@ class Tournament < ActiveRecord::Base
   belongs_to :user
 
   validates :number, presence: true, numericality: true
-  validate :no_double_tournaments_are_allowed
+  validate :no_double_tournaments_are_allowed, on: :create
 
-  before_save do
-    self.fillup_missing_data
-  end
+  before_save :fillup_missing_data
+  before_destroy :send_mail_if_enrolled_tournament_is_deleted
 
   def to_s
     "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
   end
 
    def no_double_tournaments_are_allowed
-     Tournament.where(:number => number, :user_id => user_id).size == 0
+     Tournament.where(number: number, user_id: user_id).size == 0
      errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
    end
 
@@ -78,5 +77,21 @@ class Tournament < ActiveRecord::Base
     self.notificated_about = Date.today
     self.save
     logger.debug "the notification was send for #{self.to_s} and the time was updated"
+  end
+
+  def is_enrolled_and_not_danced?
+    self.enrolled? && self.upcoming?
+  end
+
+  def send_mail_if_enrolled_tournament_is_deleted
+    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted started"
+
+    if self.is_enrolled_and_not_danced?
+      club_owners_mailaddresses = self.user.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
+      logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
+      NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, self).deliver
+    end
+    logger.debug "deleted tournament #{self.to_s}"
+    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted ended"
   end
 end

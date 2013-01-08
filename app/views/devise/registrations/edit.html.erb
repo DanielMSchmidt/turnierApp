@@ -1,3 +1,12 @@
+<%
+if user_signed_in?
+  @own_clubs = current_user.clubs
+  @clubs = Club.all.delete_if {|club| @own_clubs.include?(club) }
+else
+  @own_clubs = nil
+  @clubs = Club.all
+end
+%>
 <div class="row-fluid">
   <div class="span5">
     <h2>Benutzer bearbeiten</h2>

@@ -29,4 +29,18 @@ class User < ActiveRecord::Base
     NotificationMailer.userCount(user, newUser).deliver
     puts "ended sending usercount notification"
   end
+
+  def to_s
+    "User: #{self.id} - #{self.email}"
+  end
+
+  def getOrganisedTournaments
+    clubs = Club.where(user_id: self.id)
+    unless clubs.count == 0
+      clubs.tournaments
+    else
+      []
+    end
+  end
+
 end

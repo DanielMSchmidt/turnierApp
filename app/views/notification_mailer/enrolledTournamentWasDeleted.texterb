@@ -1,0 +1,4 @@
+Ein Paar hat ein Turnier gelöscht für das es schon gemeldet war:
+
+  Paar: <%= @user.name %>
+  Turniernummer: <%= @tournament.number %>
