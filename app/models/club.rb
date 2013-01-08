@@ -16,6 +16,10 @@ class Club < ActiveRecord::Base
     end
   end
 
+  def is_owner?(user)
+    self.user_id == user.id
+  end
+
   def tournaments
     return nil if self.user.nil? || self.user.tournaments.nil?
     self.user.tournaments
