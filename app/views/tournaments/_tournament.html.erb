@@ -16,7 +16,7 @@
   <%= 'not_enrolled ' unless tournament.enrolled? %>"></td>
 
   <% enrollable ||= 'false' %>
-  <% if current_user.organises(tournament) %>
+  <% if @organisingTournaments.include?(tournament) %>
     <% if enrollable && !tournament.enrolled? %>
       <td><%= link_to 'Als gemeldet markieren', just_enrolled_path(tournament.id), class: "btn" %></td>
     <% else %>

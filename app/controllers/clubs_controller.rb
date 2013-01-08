@@ -17,6 +17,11 @@ class ClubsController < ApplicationController
     @club = Club.find(params[:id])
     @users = @club.users.includes(:tournaments)
     @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten
+    if @club.user_id == current_user.id
+      @organisingTournaments = @unenrolled_tournaments
+    else
+      @organisingTournaments = []
+    end
 
     respond_to do |format|
       format.html # show.html.erb

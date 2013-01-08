@@ -25,8 +25,9 @@ class Club < ActiveRecord::Base
     if (self.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       NotificationMailer.enrollCouples(self.owner, self).deliver
       self.tournaments.each{|x| x.notification_send}
-      logger.debug "send weekly mail to #{self.name}"
+      logger.debug "send weekly mail to #{self.name} at mail #{self.owner.email}"
     end
+    logger.debug "did not send weekly mail to #{self.name}"
   end
 
   def unenrolled_and_enrollable_tournaments_left_which_should_be_notified

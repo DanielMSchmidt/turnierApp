@@ -3,11 +3,14 @@ class TournamentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :enhance_informations, only: [:create]
   before_filter :setActivePage
+  before_filter :setOrganisingTournaments, only: [:show, :index, :of_user]
 
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @tournaments = Tournament.includes(:user).all
+    @tournaments = Tournament.includes(:user).all if current_user.email == "daniel.maximilian@gmx.net" #todo: irgendwann durch admin ersetzen
+    @tournaments ||= []
+
     @users = User.all
 
     respond_to do |format|
@@ -140,5 +143,9 @@ class TournamentsController < ApplicationController
 
   def setActivePage
     @active_page = 'results'
+  end
+
+  def setOrganisingTournaments
+    @organisingTournaments = current_user.getOrganisedTournaments unless current_user.nil?
   end
 end
