@@ -51,14 +51,10 @@ class TournamentsController < ApplicationController
   def create
     @tournament = Tournament.new(enhanced_informations)
 
-    respond_to do |format|
-      if @tournament.save
-        format.html { redirect_to @tournament, notice: 'Tournament was successfully created.' }
-        format.json { render json: @tournament, status: :created, location: @tournament }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @tournament.errors, status: :unprocessable_entity }
-      end
+    if @tournament.save
+      redirect_to @tournament, notice: 'Tournament was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -67,19 +63,20 @@ class TournamentsController < ApplicationController
   def update
     @tournament = Tournament.find(params[:id])
 
-    respond_to do |format|
-      if @tournament.update_attributes(params[:tournament])
-        format.html { redirect_to @tournament, notice: 'Tournament was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @tournament.errors, status: :unprocessable_entity }
-      end
+    if @tournament.update_attributes(params[:tournament])
+      redirect_to @tournament, notice: 'Tournament was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def set_as_enrolled
-    Tournament.find(params[:id]).update_column(:enrolled, true)
+    tournament = Tournament.find(params[:id])
+    if tournament.update_column(:enrolled, true)
+      logger.debug "Tournament Number #{params[:id]} was set as enrolled."
+    else
+      logger.debug "Tournament Number #{params[:id]} couldn't be set as enrolled."
+    end
     redirect_to :back
   end
 
@@ -103,7 +100,7 @@ class TournamentsController < ApplicationController
   def enhanced_informations
     logger.debug "enhance information for tournament number #{params[:tournament][:number]}"
 
-    new_informations = find_by_number(params[:tournament][:number])
+    new_informations = Tournament.find_by_number(params[:tournament][:number])
     unless new_informations.nil?
       logger.debug "Enhanced informations"
       return params[:tournament].merge!(new_informations)
@@ -111,36 +108,6 @@ class TournamentsController < ApplicationController
       logger.debug "Didn't enhanced informations"
       return params[:tournament]
     end
-  end
-
-  def find_by_number(number)
-    return nil if number.nil? || number == ""
-
-    agent = Mechanize.new
-    agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
-    form = agent.page.forms.last
-    form.nr = number
-    form.submit
-
-    out = {}
-
-    agent.page.search(".veranstaltung").each do |event|
-      event.search(".ort a").each do |link|
-        url = link.attributes["href"].value
-        out[:address] = url.slice(30..url.length)
-      end
-      @date = event.search(".kategorie").first.text.slice(0..9)
-
-    end
-    agent.page.search(".markierung").each do |item|
-      out[:kind] = item.search(".turnier").first.text
-      @time = item.search(".uhrzeit").first.text
-      out[:notes] = item.search(".bemerkung").first.text
-    end
-
-    out[:date] = DateTime.parse "#{@time} #{@date}"
-
-    return out
   end
 
   def setActivePage
