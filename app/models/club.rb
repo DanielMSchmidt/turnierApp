@@ -20,6 +20,11 @@ class Club < ActiveRecord::Base
     self.user_id == user.id
   end
 
+  def transfer_to(new_user)
+    self.user_id = new_user.id
+    self.save!
+  end
+
   def tournaments
     return nil if self.user.nil? || self.user.tournaments.nil?
     self.user.tournaments
