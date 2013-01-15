@@ -14,7 +14,7 @@ class NotificationMailer < ActionMailer::Base
   end
 
   def enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament)
-    @username = tournament.user.name
+    @username = tournament.user_name
     @tournamentnumber = tournament.number
 
     mail to: club_owners_mailaddresses, subject: "#{@username} hat ein Turnier geloescht fuer das es schon gemeldet war"
