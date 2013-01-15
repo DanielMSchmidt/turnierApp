@@ -1,7 +1,6 @@
 class TournamentsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :enhance_informations, only: [:create]
   before_filter :setActivePage
   before_filter :setOrganisingTournaments, only: [:show, :index, :of_user]
 
@@ -50,7 +49,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new(@all_params)
+    @tournament = Tournament.new(enhanced_informations)
 
     respond_to do |format|
       if @tournament.save
@@ -101,19 +100,22 @@ class TournamentsController < ApplicationController
     @tournaments = @user.tournaments
   end
 
-  def enhance_informations
+  def enhanced_informations
+    logger.debug "enhance information for tournament number #{params[:tournament][:number]}"
+
     new_informations = find_by_number(params[:tournament][:number])
     unless new_informations.nil?
       logger.debug "Enhanced informations"
-      @all_params = params[:tournament].merge!(new_informations)
+      return params[:tournament].merge!(new_informations)
     else
       logger.debug "Didn't enhanced informations"
-      @all_params = params[:tournament]
+      return params[:tournament]
     end
   end
 
   def find_by_number(number)
-    return nil unless number
+    return nil if number.nil? || number == ""
+
     agent = Mechanize.new
     agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
     form = agent.page.forms.last
