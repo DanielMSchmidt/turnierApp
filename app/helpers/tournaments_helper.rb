@@ -46,14 +46,14 @@ module TournamentsHelper
   end
 
   def tournament_date(tournament)
-    tournament.get_date.strftime("%d.%m.%Y") unless tournament.date.nil?
+    tournament.get_date.strftime("%d.%m.%Y") if tournament.date?
   end
 
   def tournament_time(tournament)
-    tournament.get_date.strftime("%H:%M") unless tournament.date.nil?
+    tournament.get_date.strftime("%H:%M") if tournament.date?
   end
 
   def tournament_adress(tournament)
-    raw tournament.address.split(", ").join("<br />") unless tournament.address.nil?
+    raw tournament.address.split(", ").join("<br />") if tournament.address?
   end
 end
