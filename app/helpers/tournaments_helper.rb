@@ -16,7 +16,7 @@ module TournamentsHelper
   def tournaments_by_year(tournaments)
     out = []
     tournaments.each do |tournament|
-      thisYear = tournament.date.to_datetime.year
+      thisYear = tournament.get_date.year
       out[thisYear] ||= []
       out[thisYear].push(tournament)
     end
@@ -25,7 +25,7 @@ module TournamentsHelper
 
   def print_year(tournaments_of_year)
     return "<tr>
-    <th>#{tournaments_of_year.first.date.to_datetime.year}</th>
+    <th>#{tournaments_of_year.first.get_date.year}</th>
     <td>#{tournaments_of_year.count}</td>
     <td>#{placings(tournaments_of_year)}</td>
     <td>#{points(tournaments_of_year)}</td>
@@ -46,11 +46,11 @@ module TournamentsHelper
   end
 
   def tournament_date(tournament)
-    tournament.date.to_datetime.strftime("%d.%m.%Y") unless tournament.date.nil?
+    tournament.get_date.strftime("%d.%m.%Y") unless tournament.date.nil?
   end
 
   def tournament_time(tournament)
-    tournament.date.to_datetime.strftime("%H:%M") unless tournament.date.nil?
+    tournament.get_date.strftime("%H:%M") unless tournament.date.nil?
   end
 
   def tournament_adress(tournament)

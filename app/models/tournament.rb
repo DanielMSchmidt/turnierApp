@@ -23,6 +23,10 @@ class Tournament < ActiveRecord::Base
     return self.participants.nil? && self.place.nil?
   end
 
+  def get_date
+    self.date.to_datetime
+  end
+
   def fillup_missing_data
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
     #set enrolled to false if it is upcoming
@@ -41,7 +45,7 @@ class Tournament < ActiveRecord::Base
 
   def behind_time?
     #true if its upcoming and it has been danced jet
-    self.upcoming? && (self.date.to_datetime < Time.now)
+    self.upcoming? && (self.get_date < Time.now)
   end
 
   def got_placing?
