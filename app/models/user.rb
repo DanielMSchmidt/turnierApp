@@ -11,13 +11,6 @@ class User < ActiveRecord::Base
   has_many :memberships, :dependent => :destroy
   has_many :clubs, :through => :memberships
 
-  def organises(tournament)
-    tournament.user.clubs.each do |club|
-      return true if club.is_owner?(self)
-    end
-    false
-  end
-
   def notify_about_new_user
     logger.debug "notifying about new user #{self.name}"
     User.send_user_notification(self.name)
