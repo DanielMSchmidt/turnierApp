@@ -52,14 +52,11 @@ class ClubsController < ApplicationController
     @club = Club.new(params[:club])
     @club.user = current_user
 
-    respond_to do |format|
-      if @club.save
-        format.html { redirect_to @club, notice: 'Club was successfully created.' }
-        format.json { render json: @club, status: :created, location: @club }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @club.errors, status: :unprocessable_entity }
-      end
+
+    if @club.save
+      redirect_to @club, notice: 'Club was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -68,14 +65,10 @@ class ClubsController < ApplicationController
   def update
     @club = Club.find(params[:id])
 
-    respond_to do |format|
-      if @club.update_attributes(params[:club])
-        format.html { redirect_to @club, notice: 'Club was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @club.errors, status: :unprocessable_entity }
-      end
+    if @club.update_attributes(params[:club])
+      redirect_to @club, notice: 'Club was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -94,8 +87,8 @@ class ClubsController < ApplicationController
   def transfer_ownership
     @club = Club.find(params[:club_id])
     new_user = User.find(params[:user_id])
-    @club.user_id = new_user.id
-    @club.save
+    @club.transfer_to(new_user)
+    logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
     redirect_to root_path
   end
 
