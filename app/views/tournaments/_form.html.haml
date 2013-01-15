@@ -2,8 +2,8 @@
   - if @tournament.errors.any?
     #error_explanation
       %h2
-        = pluralize(@tournament.errors.count, "error")
-        prohibited this tournament from being saved:
+        = pluralize(@tournament.errors.count, "Fehler")
+        verhindern, dass dieses Turnier gespeichert wird:
       %ul
         - @tournament.errors.full_messages.each do |msg|
           %li= msg
@@ -11,7 +11,7 @@
     = f.label :number, "Turniernummer"
     = f.number_field :number
   .field
-    = f.label :place, "Platz (bitte leer lassen, falls noch nicht getanzt)"
+    = f.label :place, "Platz (bitte leer lassen, falls noch nicht getanzt und niedrigsten Platz bei geteilten Plätzen nehmen)"
     = f.number_field :place
   .field
     = f.label :participants, "Teilnehmeranzahl (bitte leer lassen, falls noch nicht getanzt)"
