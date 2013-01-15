@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   after_create :notify_about_new_user
 
   has_many :tournaments
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
   has_many :clubs, :through => :memberships
 
   def organises(tournament)

@@ -4,7 +4,7 @@ class Club < ActiveRecord::Base
   default_scope :order => 'name ASC'
   attr_accessible :name
   belongs_to :user
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships, :order => 'name ASC'
   validates :name, presence: true, :uniqueness => true
 
