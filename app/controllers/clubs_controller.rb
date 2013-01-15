@@ -16,7 +16,8 @@ class ClubsController < ApplicationController
   def show
     @club = Club.find(params[:id])
     @users = @club.users.includes(:tournaments)
-    @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten
+    @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+
     if @club.user_id == current_user.id
       @organisingTournaments = @unenrolled_tournaments
     else
