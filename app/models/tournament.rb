@@ -7,8 +7,10 @@ class Tournament < ActiveRecord::Base
   validates :number, presence: true, numericality: true
   validate :no_double_tournaments_are_allowed, on: :create
 
-  before_save :fillup_missing_data
+  before_create :fillup_missing_data
   before_destroy :send_mail_if_enrolled_tournament_is_deleted
+
+  delegate :name, to: :user, prefix: true
 
   def to_s
     "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
@@ -19,33 +21,46 @@ class Tournament < ActiveRecord::Base
      errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
    end
 
-  def upcoming?
+  def incomplete?
     return self.participants.nil? && self.place.nil?
+  end
+
+  def get_date
+    self.date.to_datetime
   end
 
   def fillup_missing_data
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
     #set enrolled to false if it is upcoming
-    if (self.upcoming?)
+    logger.debug "test if I can fill up any data"
+    if (self.incomplete?)
       logger.debug "detected an upcoming tournament - #{self.to_s}"
-      self.enrolled = false
+      self.upcoming?
     else
       logger.debug "filling up missing data for #{self.to_s}"
-      self.enrolled = true
       self.participants ||= self.place
       self.place ||= self.participants
       logger.debug "filled up as #{self.to_s}"
     end
+    self.set_enrollement
     self #for chaining
+  end
+
+  def set_enrollement
+    self.enrolled = !self.upcoming?
+  end
+
+  def upcoming?
+    self.get_date.future?
   end
 
   def behind_time?
     #true if its upcoming and it has been danced jet
-    self.upcoming? && (self.date.to_datetime < Time.now)
+    self.incomplete? && !self.upcoming?
   end
 
   def got_placing?
-    return false if self.upcoming?
+    return false if self.incomplete?
 
     place_for_placing = 3
     place_for_placing = 5 if self.start_class == 'C'
@@ -94,4 +109,35 @@ class Tournament < ActiveRecord::Base
     logger.debug "deleted tournament #{self.to_s}"
     logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted ended"
   end
+
+  def self.find_by_number(number)
+    return nil if number.nil? || number == ""
+
+    agent = Mechanize.new
+    agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
+    form = agent.page.forms.last
+    form.nr = number
+    form.submit
+
+    out = {}
+
+    agent.page.search(".veranstaltung").each do |event|
+      event.search(".ort a").each do |link|
+        url = link.attributes["href"].value
+        out[:address] = url.slice(30..url.length)
+      end
+      @date = event.search(".kategorie").first.text.slice(0..9)
+
+    end
+    agent.page.search(".markierung").each do |item|
+      out[:kind] = item.search(".turnier").first.text
+      @time = item.search(".uhrzeit").first.text
+      out[:notes] = item.search(".bemerkung").first.text
+    end
+
+    out[:date] = DateTime.parse "#{@time} #{@date}"
+
+    return out
+  end
+
 end

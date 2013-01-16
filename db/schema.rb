@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130101212032) do
+ActiveRecord::Schema.define(:version => 20130115144805) do
 
   create_table "clubs", :force => true do |t|
     t.string   "name"
@@ -20,12 +20,17 @@ ActiveRecord::Schema.define(:version => 20130101212032) do
     t.integer  "user_id"
   end
 
+  add_index "clubs", ["user_id"], :name => "index_clubs_on_user_id"
+
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "club_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "memberships", ["club_id"], :name => "index_memberships_on_club_id"
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -39,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20130101212032) do
 
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+  add_index "taggings", ["tagger_id", "tagger_type"], :name => "index_taggings_on_tagger_id_and_tagger_type"
 
   create_table "tags", :force => true do |t|
     t.string "name"
@@ -59,6 +65,8 @@ ActiveRecord::Schema.define(:version => 20130101212032) do
     t.boolean  "enrolled",          :default => true
     t.date     "notificated_about"
   end
+
+  add_index "tournaments", ["user_id"], :name => "index_tournaments_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

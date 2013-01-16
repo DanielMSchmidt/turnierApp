@@ -12,6 +12,24 @@
  *= require_tree .
  */
 
+
+//include icons
+
+@import "icons/*.png"
+@include all-icons-sprites
+.icons-ok
+	background-repeat: no-repeat
+	height: 18px
+	width: 22px
+.icons-not_enrolled
+	background-repeat: no-repeat
+	height: 18px
+	width: 18px
+.icons-missing_information
+	background-repeat: no-repeat
+	height: 17px
+	width: 18px
+
 body
 	p
 		margin-top: 20px
@@ -40,13 +58,7 @@ body
 
 .high
 	margin-top: 0px !important
-
 table
-	td#status
-		background-image: image-url("ok.png")
-		background-repeat: no-repeat
-		background-position: 24px 11px
-		&.missing_information
-			background-image: image-url("missing_information.png")
-		&.not_enrolled
-			background-image: image-url("not_enrolled.png")
+	#status
+		div
+			margin: 10px 0 0 10px

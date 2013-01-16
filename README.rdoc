@@ -33,3 +33,5 @@ This app is build for Dancesport Couples to manage their results at competitions
     changed from conjobs to rake tasks and added concurrency to clubs
   v0.5.3
     added mail to me after user create and new relic
+  v0.5.4
+    improved speed and fixed some small bugs

@@ -1,12 +1,13 @@
 class Club < ActiveRecord::Base
   require 'celluloid'
 
-  default_scope :order => 'name ASC'
+
   attr_accessible :name
   belongs_to :user
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships, :order => 'name ASC'
   validates :name, presence: true, :uniqueness => true
+  default_scope :order => 'name ASC'
 
   def owner
     if self.user_id.nil?
@@ -18,6 +19,11 @@ class Club < ActiveRecord::Base
 
   def is_owner?(user)
     self.user_id == user.id
+  end
+
+  def transfer_to(new_user)
+    self.user_id = new_user.id
+    self.save!
   end
 
   def tournaments
