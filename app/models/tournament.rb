@@ -7,7 +7,7 @@ class Tournament < ActiveRecord::Base
   validates :number, presence: true, numericality: true
   validate :no_double_tournaments_are_allowed, on: :create
 
-  before_save :fillup_missing_data
+  before_create :fillup_missing_data
   before_destroy :send_mail_if_enrolled_tournament_is_deleted
 
   delegate :name, to: :user, prefix: true
@@ -21,7 +21,7 @@ class Tournament < ActiveRecord::Base
      errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
    end
 
-  def upcoming?
+  def incomplete?
     return self.participants.nil? && self.place.nil?
   end
 
@@ -32,26 +32,35 @@ class Tournament < ActiveRecord::Base
   def fillup_missing_data
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
     #set enrolled to false if it is upcoming
-    if (self.upcoming?)
+    logger.debug "test if I can fill up any data"
+    if (self.incomplete?)
       logger.debug "detected an upcoming tournament - #{self.to_s}"
-      self.enrolled = false
+      self.upcoming?
     else
       logger.debug "filling up missing data for #{self.to_s}"
-      self.enrolled = true
       self.participants ||= self.place
       self.place ||= self.participants
       logger.debug "filled up as #{self.to_s}"
     end
+    self.set_enrollement
     self #for chaining
+  end
+
+  def set_enrollement
+    self.enrolled = !self.upcoming?
+  end
+
+  def upcoming?
+    self.get_date.future?
   end
 
   def behind_time?
     #true if its upcoming and it has been danced jet
-    self.upcoming? && (self.get_date < Time.now)
+    self.incomplete? && !self.upcoming?
   end
 
   def got_placing?
-    return false if self.upcoming?
+    return false if self.incomplete?
 
     place_for_placing = 3
     place_for_placing = 5 if self.start_class == 'C'
