@@ -1,12 +1,13 @@
 class Club < ActiveRecord::Base
   require 'celluloid'
 
-  default_scope :order => 'name ASC'
+
   attr_accessible :name
   belongs_to :user
   has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships, :order => 'name ASC'
   validates :name, presence: true, :uniqueness => true
+  default_scope :order => 'name ASC'
 
   def owner
     if self.user_id.nil?
