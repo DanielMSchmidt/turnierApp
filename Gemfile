@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails'
 
 gem 'will_paginate', '~> 3.0'
-gem 'thin' #more solid webserver
+gem 'puma' #faster webserver
 gem 'haml'
 gem 'simple_form'
 gem 'devise'
