@@ -1,10 +1,17 @@
-%h1 Meine Vereine
-%table.table.table-striped
-  = render current_user.unverified_clubs
-%h2 unbestaetigte Anmeldungen
-%p= current_user.unverified_clubs.collect{|x| x.to_s }.join(", ")
-%h1 Alle Vereine
-%table.table.table-striped
-  = render @clubs.reject{|x| current_user.clubs.include?(x) if current_user.clubs}
-%br/
-= link_to 'Verein hinzufuegen', new_club_path, class: "btn btn-primary"
+- if current_user
+  %h1 Meine Vereine
+  %table.table.table-striped
+    = render current_user.unverified_clubs
+  %h2 unbestaetigte Anmeldungen
+  %p= current_user.unverified_clubs.collect{|x| x.to_s }.join(", ")
+  %h1 Alle Vereine
+  %table.table.table-striped
+    = render @clubs.reject{|x| current_user.clubs.include?(x) if current_user.clubs}
+  %br/
+  = link_to 'Verein hinzufuegen', new_club_path, class: "btn btn-primary"
+- else
+
+  %h1 Alle Vereine
+  %ul
+    -@clubs.map{|x| x.to_s}.each do |club|
+      %li=club
