@@ -48,4 +48,8 @@ class User < ActiveRecord::Base
     self.memberships.unverified.collect{|x| x.club}
   end
 
+  def to_i
+    self.id
+  end
+
 end
