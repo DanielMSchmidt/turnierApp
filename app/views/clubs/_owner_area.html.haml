@@ -1,4 +1,11 @@
 %br/
+- if @unverified_members.nil?
+  %h3 Folgende Paare wollen Mitglieder sein
+  %ul
+    - @unverified_members.each do |user|
+      %li= link_to "#{user.name} bestätigen", verify_user_path(user_id: user.id, club_id: @club.id), class: "btn"
+
+%br/
 %h3 Noch zu meldende Paare
 %table.tournament-list.table.table-striped
   %tr
@@ -15,12 +22,14 @@
       %th
       %th
   = render @unenrolled_tournaments, enrollable: true
+
 %br/
 %h3 Jemand anders meldet die Paare
 %ul
-  - @users.reject{|x| x == current_user}.each do |user|
+  - @verified_users.reject{|x| x == current_user}.each do |user|
     %li= link_to "Zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn"
+
 %br/
 = link_to 'Verein umbenennen', edit_club_path(@club)
 |
-\#{link_to 'Verein loeschen', @club, :method => :delete, :confirm => "Bist du dir sicher?"}
+=link_to 'Verein loeschen', @club, :method => :delete, :confirm => "Bist du dir sicher?"
