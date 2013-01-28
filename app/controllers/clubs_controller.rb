@@ -54,6 +54,7 @@ class ClubsController < ApplicationController
 
 
     if @club.save
+      @club.memberships.create!(user_id: current_user)
       redirect_to @club, notice: 'Club was successfully created.'
     else
       render :new
