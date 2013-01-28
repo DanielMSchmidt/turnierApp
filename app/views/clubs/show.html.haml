@@ -7,8 +7,10 @@
 %h3 Mitglieder
 %br/
 %ul
-  - @users.each do |user|
+  - @verified_users.each do |user|
     %li= link_to "#{user.name}", user_tournaments_path(user)
+
 - if current_user.id == @club.user_id
   = render 'owner_area'
+
 = link_to 'Zurueck', clubs_path
