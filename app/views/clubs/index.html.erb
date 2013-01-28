@@ -1,17 +1,11 @@
+<h1>Meine Vereine</h1>
+<table class="table table-striped">
+  <%= render @clubs.select{|x| current_user.clubs.include?(x) if current_user.clubs} %>
+</table>
 <h1>Alle Vereine</h1>
 
 <table class="table table-striped">
-<% @clubs.each do |club| %>
-  <tr>
-    <td>
-      <%= link_to club.name, club %>
-      <% if club.is_owner?(current_user) %>
-        <%= link_to 'umbenennen', edit_club_path(club) %> |
-        <%= link_to 'löschen', club, :method => :delete, :confirm => "Bist du dir sicher?" %>
-      <% end %>
-    </td>
-  </tr>
-<% end %>
+  <%= render @clubs.reject{|x| current_user.clubs.include?(x) if current_user.clubs} %>
 </table>
 
 <br />
