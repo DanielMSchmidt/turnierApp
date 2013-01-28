@@ -19,7 +19,7 @@ end
         <%= f.input :email, :required => true %>
 
         <br>
-        <span class="help-block">Bitte frei lassen, falls du es nicht ändern möchtest.</span>
+        <span class="help-block">Bitte frei lassen, falls du es nicht aendern moechtest.</span>
         <%= f.input :password, :autocomplete => "off", :required => false %>
         <%= f.input :password_confirmation, :required => false %>
         <br>
@@ -31,14 +31,14 @@ end
       <%= f.button :submit, "Aktualisieren", class: "btn btn-primary" %>
     <% end %>
 
-    <h3>Account löschen</h3>
+    <h3>Account loeschen</h3>
 
-    <%= link_to "Jetzt löschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete, class: "btn btn-danger" %>
+    <%= link_to "Jetzt loeschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete, class: "btn btn-danger" %>
     <br /><br />
-    <%= link_to "zurück", :back %>
+    <%= link_to "zurueck", :back %>
   </div>
   <div class="span4 offset1">
-    <h2>Vereine ändern</h2>
+    <h2>Vereine aendern</h2>
     <div class="form-inputs">
       <% if @clubs.nil?%>
         <p><strong>Es gibt leider noch keine Vereine, bitte trage einen ein.</strong></p>
@@ -51,7 +51,7 @@ end
         <% end %>
         </ul>
         <hr />
-        <h4>Hinzufügen</h4>
+        <h4>Hinzufuegen</h4>
         <ul>
         <% @clubs.each do |club|  %>
           <li><%= link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id) %></li>
@@ -59,7 +59,7 @@ end
       <% end %>
       <br />
       <br />
-      <%= link_to 'Neuen Verein hinzufügen', new_club_path, class: "btn btn-primary" %>
+      <%= link_to 'Neuen Verein hinzufuegen', new_club_path, class: "btn btn-primary" %>
     </div>
   </div>
 </div>

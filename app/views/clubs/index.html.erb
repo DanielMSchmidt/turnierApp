@@ -3,7 +3,7 @@
   <%= render current_user.unverified_clubs %>
 </table>
 
-<h2>unbestätigte Anmeldungen</h2>
+<h2>unbestaetigte Anmeldungen</h2>
 
 <p><%= current_user.unverified_clubs.collect{|x| x.to_s }.join(", ") %></p>
 
@@ -14,4 +14,4 @@
 
 <br />
 
-<%= link_to 'Verein hinzufügen', new_club_path, class: "btn btn-primary" %>
+<%= link_to 'Verein hinzufuegen', new_club_path, class: "btn btn-primary" %>
