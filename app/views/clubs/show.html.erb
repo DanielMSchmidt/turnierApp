@@ -32,8 +32,8 @@
   <br />
   <h3>Jemand anders meldet die Paare</h3>
   <ul>
-  <% @users.each do |user| %>
-    <li><%= link_to "zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn" %></li>
+  <% @users.reject{|x| x == current_user}.each do |user| %>
+    <li><%= link_to "Zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn" %></li>
   <% end %>
   </ul>
 
