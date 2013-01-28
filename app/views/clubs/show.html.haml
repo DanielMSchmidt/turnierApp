@@ -2,14 +2,17 @@
 %h1
   Turniere des #{@club.name}
 %br/
+
 %h3 Statistiken
-= raw(print_stats @users.collect{|x| x.tournaments}.flatten)
-%h3 Mitglieder
+= raw(print_stats @verified_users.collect{|x| x.tournaments}.flatten)
 %br/
+
+%h3 Mitglieder
 %ul
   - @verified_users.each do |user|
     %li= link_to "#{user.name}", user_tournaments_path(user)
 
+%br/
 - if current_user.id == @club.user_id
   = render 'owner_area'
 
