@@ -44,7 +44,7 @@ de:
       signed_up_but_inactive: 'Du hast dich erfolgreich registriert. Wir konnten Dich noch nicht anmelden, da Dein Account inaktiv ist.'
       signed_up_but_locked: 'Du hast dich erfolgreich registriert. Wir konnten Dich noch nicht anmelden, da Dein Account gesperrt ist.'
       updated: 'Deine Daten wurden aktualisiert.'
-      update_needs_confirmation: "Deine Daten wurden aktualisiert, aber Du musst Deine neue E-Mail-Adresse bestaetigen. Du erhaelsts in wenigen Minuten eine E-Mail, mit der Du die Aenderung Deiner E-Mail-Adresse abschließen kannst."
+      update_needs_confirmation: "Deine Daten wurden aktualisiert, aber Du musst Deine neue E-Mail-Adresse bestaetigen. Du erhaelsts in wenigen Minuten eine E-Mail, mit der Du die Aenderung Deiner E-Mail-Adresse abschliessen kannst."
       destroyed: 'Dein Account wurde geloescht.'
     unlocks:
       send_instructions: 'Du erhaeltst in wenigen Minuten eine E-Mail mit der Anleitung, wie Du Deinen Account entsperren koennen.'
