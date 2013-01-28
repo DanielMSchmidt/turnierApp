@@ -1,0 +1,51 @@
+- if user_signed_in?
+- @own_clubs = current_user.clubs
+- @clubs = Club.all.delete_if {|club| @own_clubs.include?(club) }
+- else
+- @own_clubs = nil
+- @clubs = Club.all
+- end
+.row-fluid
+  .span5
+    %h2 Benutzer bearbeiten
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :name, :required => true, :autofocus => true
+        = f.input :email, :required => true
+        %br/
+        %span.help-block Bitte frei lassen, falls du es nicht aendern moechtest.
+        = f.input :password, :autocomplete => "off", :required => false
+        = f.input :password_confirmation, :required => false
+        %br/
+        %span.help-block Bitte gib dein aktuelles Passwort an.
+        = f.input :current_password, :required => true
+      = f.button :submit, "Aktualisieren", class: "btn btn-primary"
+    %h3 Account loeschen
+    = link_to "Jetzt loeschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete, class: "btn btn-danger"
+    %br/
+    %br/
+    = link_to "zurueck", :back
+  .span4.offset1
+    %h2 Vereine aendern
+    .form-inputs
+      - if @clubs.nil?
+        %p
+          %strong Es gibt leider noch keine Vereine, bitte trage einen ein.
+      - else
+        %br/
+        %h4 Entfernen
+        %ul
+          - @own_clubs.each do |club|
+            %li= link_to club.name, delete_club_path(:club_id => club.id, :user_id => current_user.id)
+        %hr/
+        %h4 Hinzufuegen
+        %ul
+          - @clubs.each do |club|
+            %li= link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
+      %br/
+      %br/
+      = link_to 'Neuen Verein hinzufuegen', new_club_path, class: "btn btn-primary"
+:javascript
+  $("li").removeClass("active");
+  $(".profil").addClass("active");

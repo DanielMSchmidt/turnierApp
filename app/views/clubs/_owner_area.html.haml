@@ -1,0 +1,26 @@
+%br/
+%h3 Noch zu meldende Paare
+%table.tournament-list.table.table-striped
+  %tr
+    %th Paar
+    %th Datum
+    %th Zeit
+    %th Art
+    %th Platz
+    %th Adresse
+    %th Turniernr.
+    %th
+    %th
+    - if current_user.tournaments.collect{|x| @unenrolled_tournaments.include? x }.include? true
+      %th
+      %th
+  = render @unenrolled_tournaments, enrollable: true
+%br/
+%h3 Jemand anders meldet die Paare
+%ul
+  - @users.reject{|x| x == current_user}.each do |user|
+    %li= link_to "Zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn"
+%br/
+= link_to 'Verein umbenennen', edit_club_path(@club)
+|
+\#{link_to 'Verein loeschen', @club, :method => :delete, :confirm => "Bist du dir sicher?"}

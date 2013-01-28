@@ -1,0 +1,16 @@
+= form_for(@club) do |f|
+  - if @club.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@club.errors.count, "error")
+        prohibited this club from being saved:
+      %ul
+        - @club.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    Bitte den Namen des Vereins eingeben:
+    %br/
+    %br/
+    = f.text_field :name
+  .actions
+    = f.submit "absenden", class: "btn btn-primary"
