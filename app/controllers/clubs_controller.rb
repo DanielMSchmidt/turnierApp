@@ -15,8 +15,12 @@ class ClubsController < ApplicationController
   # GET /clubs/1.json
   def show
     @club = Club.find(params[:id])
-    @users = @club.users.includes(:tournaments)
-    @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+
+    @verified_users = @club.verified_members.includes(:tournaments)
+    @unverified_members = @club.unverified_members
+
+    @unenrolled_tournaments = @verified_users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+
 
     if @club.user_id == current_user.id
       @organisingTournaments = @unenrolled_tournaments
