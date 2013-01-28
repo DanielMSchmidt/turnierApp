@@ -40,4 +40,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def verified_clubs
+    self.memberships.verified.collect{|x| x.club}
+  end
+
+  def unverified_clubs
+    self.memberships.unverified.collect{|x| x.club}
+  end
+
 end
