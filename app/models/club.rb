@@ -44,6 +44,14 @@ class Club < ActiveRecord::Base
     self.tournaments.collect{|x| x.should_send_a_notification_mail?}.include?(true)
   end
 
+  def verified_members
+    self.memberships.verified.collect{|x| x.user}
+  end
+
+  def unverified_members
+    self.memberships.unverified.collect{|x| x.user}
+  end
+
   def to_s
     self.name
   end
