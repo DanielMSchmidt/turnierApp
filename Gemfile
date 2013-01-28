@@ -26,6 +26,11 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+
+  #html.erb to haml
+  gem 'haml-rails'
+  gem 'hpricot'
+  gem 'ruby_parser'
 end
 
 group :development, :test do
