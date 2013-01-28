@@ -43,4 +43,8 @@ class Club < ActiveRecord::Base
     return false if self.tournaments.nil?
     self.tournaments.collect{|x| x.should_send_a_notification_mail?}.include?(true)
   end
+
+  def to_s
+    self.name
+  end
 end
