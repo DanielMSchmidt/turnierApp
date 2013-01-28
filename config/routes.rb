@@ -1,7 +1,7 @@
 TurnierList::Application.routes.draw do
 
   get "membership/create"
-
+  put "/membership/verify/:user_id/:club_id" => "membership#verify", as: :verify_user
   get "membership/destroy"
 
   resources :clubs
