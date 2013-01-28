@@ -10,37 +10,8 @@
   <li><%= link_to "#{user.name}", user_tournaments_path(user) %></li>
 <% end %>
 </ul>
-
-<br>
 <% if current_user.id == @club.user_id %>
-  <h3>Noch zu meldende Paare</h3>
-  <table class="tournament-list table table-striped">
-    <tr>
-      <th>Paar</th>
-      <th>Datum</th>
-      <th>Zeit</th>
-      <th>Art</th>
-      <th>Platz</th>
-      <th>Adresse</th>
-      <th>Turniernr.</th>
-      <th></th>
-      <th></th>
-    </tr>
-
-    <%= render @unenrolled_tournaments, enrollable: true %>
-  </table>
-  <br />
-  <h3>Jemand anders meldet die Paare</h3>
-  <ul>
-  <% @users.reject{|x| x == current_user}.each do |user| %>
-    <li><%= link_to "Zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn" %></li>
-  <% end %>
-  </ul>
-
-  <br />
-
-  <%= link_to 'Verein umbenennen', edit_club_path(@club) %> |
-  <%= link_to 'Verein löschen', @club, :method => :delete, :confirm => "Bist du dir sicher?" %>
+<%= render 'owner_area' %>
 <% end %>
 
 <%= link_to 'Zurück', clubs_path %>
