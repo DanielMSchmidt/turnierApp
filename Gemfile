@@ -39,6 +39,13 @@ group :development, :test do
   gem 'sqlite3'
   gem 'bullet'
   gem 'brakeman'
+end
+
+group :test do
+  gem "spork", :git => "git://github.com/chrismdp/spork.git"
+
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
 
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
