@@ -35,3 +35,6 @@ This app is build for Dancesport Couples to manage their results at competitions
     added mail to me after user create and new relic
   v0.5.4
     improved speed and fixed some small bugs
+
+=Todo on deploy:
+  heroku config:add NEWRELIC_DISPATCHER=Puma
