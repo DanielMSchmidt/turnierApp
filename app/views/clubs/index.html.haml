@@ -1,13 +1,13 @@
 - if current_user
   .well
     %h1 Meine Vereine
-    %table.table.table-striped
+    %table.table.table-striped#own_clubs
       = render current_user.verified_clubs
 
   %br
   .well
     %h2 unbestaetigte Anmeldungen
-    %table.table.table-striped
+    %table.table.table-striped#pending
       - current_user.unverified_clubs.each do |club|
         %tr
           %td=club.name
@@ -16,7 +16,7 @@
   %br
   .well
     %h1 Alle Vereine
-    %table.table.table-striped
+    %table.table.table-striped#all_clubs
       = render @clubs.reject{|x| current_user.clubs.include?(x) if current_user.clubs}
 
   %br/
