@@ -45,18 +45,22 @@ class Club < ActiveRecord::Base
   end
 
   def verified_members
-    self.memberships.verified.collect{|x| x.user}
+    self.memberships.is_verified.collect{|x| x.user}
   end
 
   def unverified_members
-    self.memberships.unverified.collect{|x| x.user}
+    self.memberships.is_unverified.collect{|x| x.user}
   end
 
   def is_verified_member(user)
-    self.memberships.verified.collect{|x| x.user}.include?(user)
+    self.verified_members.include?(user)
   end
 
   def to_s
     self.name
+  end
+
+  def to_i
+    self.id
   end
 end

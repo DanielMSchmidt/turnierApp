@@ -41,11 +41,11 @@ class User < ActiveRecord::Base
   end
 
   def verified_clubs
-    self.memberships.verified.collect{|x| x.club}
+    self.memberships.is_verified.collect{|x| x.club}
   end
 
   def unverified_clubs
-    self.memberships.unverified.collect{|x| x.club}
+    self.memberships.is_unverified.collect{|x| x.club}
   end
 
   def to_i

@@ -7,20 +7,21 @@
   %br
   .well
     %h2 unbestaetigte Anmeldungen
-    %table.table.table-striped#pending
+    %ul#pending
       - current_user.unverified_clubs.each do |club|
-        %tr
-          %td=club.name
+        %li="#{club.name} wartet auf Bestaetigung"
 
 
   %br
   .well
     %h1 Alle Vereine
-    %table.table.table-striped#all_clubs
-      = render @clubs.reject{|x| current_user.clubs.include?(x) if current_user.clubs}
+    %ul#all_clubs
+      - @clubs.reject{|x| current_user.clubs.include?(x) if current_user.clubs}.each do |club|
+        %li
+          =link_to "#{club.name} hinzufuegen", add_club_path(club_id: club.id, user_id: current_user.id)
 
   %br/
-  = link_to 'Verein hinzufuegen', new_club_path, class: "btn btn-primary"
+  = link_to 'Neuen Verein hinzufuegen', new_club_path, class: "btn btn-primary"
 - else
   .well
     %h1 Alle Vereine

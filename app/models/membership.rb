@@ -3,6 +3,6 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :club
 
-  scope :verified, where(verified: true)
-  scope :unverified, where(verified: false)
+  scope :is_verified, where(verified: true)
+  scope :is_unverified, where(verified: false)
 end

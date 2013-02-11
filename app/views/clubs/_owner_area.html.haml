@@ -1,5 +1,5 @@
 %br/
-- if @unverified_members.nil?
+- unless @unverified_members.nil?
   %h3 Folgende Paare wollen Mitglieder sein
   %ul
     - @unverified_members.each do |user|
