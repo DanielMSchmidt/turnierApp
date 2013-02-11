@@ -39,10 +39,15 @@ group :development, :test do
   gem 'sqlite3'
   gem 'bullet'
   gem 'brakeman'
+
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  gem 'guard-cucumber'
 end
 
 group :test do
-  gem "spork", :git => "git://github.com/chrismdp/spork.git"
+  gem 'spork', '~> 1.0rc'
 
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
