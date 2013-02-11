@@ -4,6 +4,7 @@ gem 'rails'
 
 gem 'will_paginate', '~> 3.0'
 gem 'puma' #faster webserver
+gem 'foreman'
 gem 'haml'
 gem 'simple_form'
 gem 'devise'
