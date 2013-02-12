@@ -127,17 +127,25 @@ class Tournament < ActiveRecord::Base
         out[:address] = url.slice(30..url.length)
       end
       @date = event.search(".kategorie").first.text.slice(0..9)
-
     end
+
     agent.page.search(".markierung").each do |item|
-      out[:kind] = item.search(".turnier").first.text
-      @time = item.search(".uhrzeit").first.text
-      out[:notes] = item.search(".bemerkung").first.text
+
+      if item.search(".uhrzeit").first.text.empty?
+        puts "This Tournament seems to be a big one: #{number}"
+        puts "=> #{item.parent}"
+        #FIXME: Get node nr or sth and check next top filled in Uhrzeit (vlt ne while über die Uhrzeiten mit einem parent.has_class('markierung') und es wird das letzte gespeichert)
+      else
+        out[:kind] = item.search(".turnier").first.text
+        @time = item.search(".uhrzeit").first.text
+        out[:notes] = item.search(".bemerkung").first.text
+      end
     end
 
     out[:date] = DateTime.parse "#{@time} #{@date}"
 
     return out
   end
+
 
 end
