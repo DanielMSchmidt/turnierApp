@@ -133,8 +133,18 @@ class Tournament < ActiveRecord::Base
 
       if item.search(".uhrzeit").first.text.empty?
         puts "This Tournament seems to be a big one: #{number}"
-        puts "=> #{item.parent}"
-        #FIXME: Get node nr or sth and check next top filled in Uhrzeit (vlt ne while über die Uhrzeiten mit einem parent.has_class('markierung') und es wird das letzte gespeichert)
+        item.parent.children.each do |all_tournaments|
+          next_kind = all_tournaments.search(".turnier").first.text
+          next_time = all_tournaments.search(".uhrzeit").first.text
+          next_notes = all_tournaments.search(".bemerkung").first.text
+
+          out[:kind] = next_kind unless next_kind.empty?
+          @time = next_time unless next_time.empty?
+          out[:notes] = next_notes unless next_notes.empty?
+
+          break if all_tournaments.attributes().has_key?('class')
+        end
+
       else
         out[:kind] = item.search(".turnier").first.text
         @time = item.search(".uhrzeit").first.text
