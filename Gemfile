@@ -17,7 +17,7 @@ gem 'celluloid'
 
 
 group :production do
-  gem 'newrelic_rpm'
+  gem 'newrelic_rpm', '~> 3.5.6.46'
 	gem 'pg'
 end
 
