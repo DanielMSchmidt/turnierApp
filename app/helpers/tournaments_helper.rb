@@ -3,7 +3,7 @@ module TournamentsHelper
     finished_tournaments = tournaments.select{|tournament| !tournament.upcoming?}
 
     return "Ohne getanzte Turniere gibt es keine Statistik" if finished_tournaments.empty?
-    str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th>"
+    str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th><th>Latein (Platzierungen/Punkte)</th><th>Standard (Platzierungen/Punkte)</th>"
 
     tournaments_by_year(finished_tournaments).each do |year|
       str += print_year(year)
@@ -29,20 +29,33 @@ module TournamentsHelper
     <td>#{tournaments_of_year.count}</td>
     <td>#{placings(tournaments_of_year)}</td>
     <td>#{points(tournaments_of_year)}</td>
+    <td>#{latin_placings(tournaments_of_year)} / #{latin_points(tournaments_of_year)}</td>
+    <td>#{standard_placings(tournaments_of_year)} / #{standard_points(tournaments_of_year)}</td>
     </tr>"
   end
 
   def placings(tournaments)
-    count = 0
-    tournaments.each do |tournament|
-      count += 1 if tournament.got_placing?
-    end
+    tournaments.collect{|x| 1 if x.got_placing?}.inject(:+) || 0
+  end
 
-    return count
+  def latin_placings(tournaments)
+    tournaments.collect{|x| 1 if x.got_placing? && x.latin?}.inject(:+) || 0
+  end
+
+  def standard_placings(tournaments)
+    tournaments.collect{|x| 1 if x.got_placing? && !x.latin?}.inject(:+) || 0
   end
 
   def points(tournaments)
     tournaments.collect{|x| x.points}.inject(:+)
+  end
+
+  def latin_points(tournaments)
+    tournaments.collect{|x| x.points if x.latin?}.inject(:+) || 0
+  end
+
+  def standard_points(tournaments)
+    tournaments.collect{|x| x.points unless x.latin?}.inject(:+) || 0
   end
 
   def tournament_date(tournament)

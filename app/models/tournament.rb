@@ -72,11 +72,15 @@ class Tournament < ActiveRecord::Base
   def points
     participants = self.participants ||= 0
     place = self.place ||= 0
-    [(participants - place), 20].min
+    [(participants - place) , 20].min
   end
 
   def start_class
-    return self.kind.split(" ")[1]
+    return self.kind[0..-4].chop
+  end
+
+  def latin?
+    return self.kind[-3..-1] == "LAT"
   end
 
   def should_send_a_notification_mail?
@@ -156,6 +160,4 @@ class Tournament < ActiveRecord::Base
 
     return out
   end
-
-
 end
