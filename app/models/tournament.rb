@@ -160,4 +160,24 @@ class Tournament < ActiveRecord::Base
 
     return out
   end
+
+  def placing
+    1 if self.got_placing?
+  end
+
+  def latin_placing
+    self.placing if self.latin?
+  end
+
+  def standard_placing
+    self.placing unless self.latin?
+  end
+
+  def latin_points
+    self.points if self.latin?
+  end
+
+  def standard_points
+    self.points unless self.latin?
+  end
 end

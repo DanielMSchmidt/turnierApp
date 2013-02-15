@@ -29,33 +29,17 @@ module TournamentsHelper
     <td>#{tournaments_of_year.count}</td>
     <td>#{placings(tournaments_of_year)}</td>
     <td>#{points(tournaments_of_year)}</td>
-    <td>#{latin_placings(tournaments_of_year)} / #{latin_points(tournaments_of_year)}</td>
-    <td>#{standard_placings(tournaments_of_year)} / #{standard_points(tournaments_of_year)}</td>
+    <td>#{placings(tournaments_of_year, :latin_placing)} / #{points(tournaments_of_year, :latin_points)}</td>
+    <td>#{placings(tournaments_of_year, :standard_placing)} / #{points(tournaments_of_year, :standard_points)}</td>
     </tr>"
   end
 
-  def placings(tournaments)
-    tournaments.collect{|x| 1 if x.got_placing?}.inject(:+) || 0
+  def placings(tournaments, filter = :placing)
+    tournaments.collect(&filter).inject(:+) || 0
   end
 
-  def latin_placings(tournaments)
-    tournaments.collect{|x| 1 if x.got_placing? && x.latin?}.inject(:+) || 0
-  end
-
-  def standard_placings(tournaments)
-    tournaments.collect{|x| 1 if x.got_placing? && !x.latin?}.inject(:+) || 0
-  end
-
-  def points(tournaments)
-    tournaments.collect{|x| x.points}.inject(:+)
-  end
-
-  def latin_points(tournaments)
-    tournaments.collect{|x| x.points if x.latin?}.inject(:+) || 0
-  end
-
-  def standard_points(tournaments)
-    tournaments.collect{|x| x.points unless x.latin?}.inject(:+) || 0
+  def points(tournaments, filter = :points)
+    tournaments.collect(&filter).inject(:+) || 0
   end
 
   def tournament_date(tournament)
