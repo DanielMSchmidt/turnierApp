@@ -86,7 +86,7 @@ class ClubsController < ApplicationController
     @club.destroy
 
     respond_to do |format|
-      format.html { redirect_to clubs_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end
@@ -96,7 +96,7 @@ class ClubsController < ApplicationController
     new_user = User.find(params[:user_id])
     @club.transfer_to(new_user)
     logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
-    redirect_to root_path
+    redirect_to @club
   end
 
   def setClubsAsActive

@@ -3,7 +3,6 @@
 
 =Other todos
   = v0.6
-    - redirect after tournament delete to right path
     - Add extra buttons for add previous tournament and upcoming tournament
     - Mail asynch with sidekiq (http://manuel.manuelles.nl/blog/2012/11/13/scalable-heroku-worker-for-sidekiq/)
     - handle n+1 queries better

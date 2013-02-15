@@ -7,7 +7,8 @@ class TournamentsController < ApplicationController
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @tournaments = Tournament.includes(:user).all if current_user.email == "daniel.maximilian@gmx.net" #todo: irgendwann durch admin ersetzen
+    #todo: irgendwann durch admin ersetzen
+    @tournaments = Tournament.includes(:user).all if current_user.email == "daniel.maximilian@gmx.net"
     @tournaments ||= []
 
     @users = User.all
@@ -52,7 +53,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.new(enhanced_informations)
 
     if @tournament.save
-      redirect_to @tournament, notice: 'Tournament was successfully created.'
+      redirect_to user_tournaments_path(current_user), notice: 'Tournament was successfully created.'
     else
       render :new
     end
@@ -64,7 +65,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
 
     if @tournament.update_attributes(params[:tournament])
-      redirect_to @tournament, notice: 'Tournament was successfully updated.'
+      redirect_to user_tournaments_path(current_user), notice: 'Tournament was successfully updated.'
     else
       render :edit
     end
@@ -87,7 +88,7 @@ class TournamentsController < ApplicationController
     @tournament.destroy
 
     respond_to do |format|
-      format.html { redirect_to tournaments_url }
+      format.html { redirect_to user_tournaments_path(current_user) }
       format.json { head :no_content }
     end
   end
