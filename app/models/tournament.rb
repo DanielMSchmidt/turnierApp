@@ -103,15 +103,8 @@ class Tournament < ActiveRecord::Base
   end
 
   def send_mail_if_enrolled_tournament_is_deleted
-    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted started"
-
-    if self.is_enrolled_and_not_danced?
-      club_owners_mailaddresses = self.user.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
-      logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
-      NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, self).deliver
-    end
-    logger.debug "deleted tournament #{self.to_s}"
-    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted ended"
+    logger.debug "pushed delted tournament to MailDeletedTournamentsWorker"
+    MailDeletedTournamentsWorker.perform_async(self)
   end
 
   def self.find_by_number(number)

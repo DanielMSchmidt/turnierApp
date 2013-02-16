@@ -1,5 +1,4 @@
 class Club < ActiveRecord::Base
-  require 'celluloid'
 
   attr_accessible :name
   belongs_to :user
@@ -32,12 +31,8 @@ class Club < ActiveRecord::Base
   end
 
   def mail_owner_unenrolled_tournaments
-    if (self.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
-      NotificationMailer.enrollCouples(self.owner, self).deliver
-      self.tournaments.each{|x| x.notification_send}
-      logger.debug "send weekly mail to #{self.name} at mail #{self.owner.email}"
-    end
-    logger.debug "did not send weekly mail to #{self.name}"
+    logger.debug "Moved mail owner unenrolled tournaments to Worker for #{self.name}"
+    MailUnenrolledTournamentsWorker.perform_async(self)
   end
 
   def unenrolled_and_enrollable_tournaments_left_which_should_be_notified

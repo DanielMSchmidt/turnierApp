@@ -4,12 +4,13 @@
 =Other todos
 
    = v0.6
-    - Mail asynch with sidekiq (http://manuel.manuelles.nl/blog/2012/11/13/scalable-heroku-worker-for-sidekiq/)
     - handle n+1 queries better
 
   = v0.8
+    - put fetching of tournaments into a sidekiq worker
     - reorganise Users as Couples (of two new users)
     - Facebook login
+    - add images (to events & couples)
 
 =Refactorings
   - Data fetching should be refactored, really crappy! (and do it into service layer or lib)

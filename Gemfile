@@ -14,7 +14,8 @@ gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'celluloid'
+gem 'sidekiq'
+gem 'autoscaler'
 
 
 group :production do
