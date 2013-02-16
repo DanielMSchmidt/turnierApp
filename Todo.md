@@ -3,7 +3,7 @@
 
 =Other todos
 
-   = v0.6
+  = v0.6
     - handle n+1 queries better
 
   = v0.8
