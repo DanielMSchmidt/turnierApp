@@ -3,11 +3,12 @@
 
 =Other todos
 
-  = v0.6
-    - handle n+1 queries better
+  = v0.7
+    - put fetching of tournaments into a sidekiq worker
+    - put texts from controller to localization
 
   = v0.8
-    - put fetching of tournaments into a sidekiq worker
+
     - reorganise Users as Couples (of two new users)
     - Facebook login
     - add images (to events & couples)
