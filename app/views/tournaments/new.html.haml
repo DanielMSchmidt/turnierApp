@@ -1,0 +1,12 @@
+%h1 Neues Turnier hinzufügen
+- if params['time'].nil?
+  .new_tournament_controll
+    = link_to 'zukünftiges Turnier', new_tournament_path(time: "past"), class: 'btn btn-primary', id: 'past'
+    = link_to 'vergangenes Turnier', new_tournament_path(time: "future"), class: 'btn btn-primary', id: 'future'
+  = link_to 'Zurück', root_path
+
+- else
+  = render 'form' if params['time'] == "past"
+  = render 'future_form' if params['time'] == "future"
+  = link_to 'Zurück', new_tournament_path
+

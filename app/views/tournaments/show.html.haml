@@ -1,0 +1,19 @@
+%p#notice= notice
+%table.tournament-list
+  %tr
+    %th Paar
+    %th Datum
+    %th Zeit
+    %th Art
+    %th Platz
+    %th Adresse
+    %th Turniernr.
+    %th Status
+    %th
+    %th
+    %th
+  = render @tournament
+- if current_user == @user
+  = link_to 'Bearbeiten', edit_tournament_path(@tournament), class: "btn btn-warning"
+  |
+= link_to 'Zurueck', tournaments_path

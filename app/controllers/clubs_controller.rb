@@ -15,8 +15,14 @@ class ClubsController < ApplicationController
   # GET /clubs/1.json
   def show
     @club = Club.find(params[:id])
-    @users = @club.users.includes(:tournaments)
-    @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+
+    return redirect_to(clubs_path) if !@club.is_verified_member(current_user)
+
+    @verified_users = @club.verified_members
+    @unverified_members = @club.unverified_members
+
+    @unenrolled_tournaments = @verified_users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+
 
     if @club.user_id == current_user.id
       @organisingTournaments = @unenrolled_tournaments
@@ -54,6 +60,7 @@ class ClubsController < ApplicationController
 
 
     if @club.save
+      @club.memberships.create!(user_id: current_user)
       redirect_to @club, notice: 'Club was successfully created.'
     else
       render :new
@@ -79,7 +86,7 @@ class ClubsController < ApplicationController
     @club.destroy
 
     respond_to do |format|
-      format.html { redirect_to clubs_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end
@@ -89,7 +96,7 @@ class ClubsController < ApplicationController
     new_user = User.find(params[:user_id])
     @club.transfer_to(new_user)
     logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
-    redirect_to root_path
+    redirect_to @club
   end
 
   def setClubsAsActive

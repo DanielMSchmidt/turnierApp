@@ -5,13 +5,13 @@ de:
         club:
           attributes:
             name:
-              blank: "für den Verein bitte eingeben"
-              taken: "ist schon von einem Verein belegt. Wenn du ihn zu deinen Vereinen hinzufügen willst geht das auf deiner Profilseite"
+              blank: "fuer den Verein bitte eingeben"
+              taken: "ist schon von einem Verein belegt. Wenn du ihn zu deinen Vereinen hinzufuegen willst geht das auf deiner Profilseite"
         tournament:
           attributes:
             number:
-              blank: "bitte korrekt eingeben, damit zusätzliche Informationen über das Turnier gesammelt werden können."
-              not_a_number: "bitte korrekt eingeben, damit zusätzliche Informationen über das Turnier gesammelt werden können."
+              blank: "bitte korrekt eingeben, damit zusätzliche Informationen ueber das Turnier gesammelt werden können."
+              not_a_number: "bitte korrekt eingeben, damit zusätzliche Informationen ueber das Turnier gesammelt werden können."
             participants:
               blank: "(Teilnehmeranzahl) bitte eingeben"
               not_a_number: "(Teilnehmeranzahl) bitte als Zahl angeben"

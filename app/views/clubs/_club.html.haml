@@ -1,0 +1,7 @@
+%tr
+  %td
+    = link_to club.name, club
+    - if club.is_owner?(current_user)
+      = link_to 'umbenennen', edit_club_path(club)
+      |
+      \#{link_to 'löschen', club, :method => :delete, :confirm => "Bist du dir sicher?"}
