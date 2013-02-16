@@ -9,6 +9,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+
+
 module TurnierList
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -61,5 +63,12 @@ module TurnierList
 
     # Device deployment to Heroku
     config.assets.initialize_on_precompile = false
+
+    #For spork with autotest
+    if Rails.env.test?
+      initializer :after => :initialize_dependency_mechanism do
+        ActiveSupport::Dependencies.mechanism = :load
+      end
+    end
   end
 end

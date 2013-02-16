@@ -1,0 +1,27 @@
+%tr
+  %td
+    - tournament.user_name.split(" / ").each do |x|
+      = x
+      %br/
+  %td= tournament_date(tournament)
+  %td= tournament_time(tournament)
+  %td= tournament.kind
+  %td
+    = tournament.place || '?'
+    von #{tournament.participants || '??'}
+  %td= tournament_adress(tournament)
+  %td= tournament.number
+  - classes = 'icons-not_enrolled' unless tournament.enrolled?
+  - classes = 'icons-missing_information' if tournament.behind_time?
+  - classes ||= 'icons-ok'
+  %td#status
+    %div{:class => classes}
+  - enrollable ||= 'false'
+  - if @organisingTournaments.include?(tournament)
+    - if enrollable && !tournament.enrolled?
+      %td= link_to 'Als gemeldet markieren', just_enrolled_path(tournament.id), class: "btn"
+    - else
+      %td
+  - if current_user == tournament.user
+    %td= link_to 'Bearbeiten', edit_tournament_path(tournament), class: "btn"
+    %td= link_to 'Löschen', tournament, method: :delete, data: { confirm: 'Bist du dir sicher?' }, class: "btn btn-danger"

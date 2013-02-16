@@ -61,6 +61,7 @@ FactoryGirl.define do
     date (DateTime.now + 2.weeks).to_date
     participants 12
     place 3
+    enrolled true
   end
 
   factory :membership do

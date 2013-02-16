@@ -3,7 +3,7 @@ module TournamentsHelper
     finished_tournaments = tournaments.select{|tournament| !tournament.upcoming?}
 
     return "Ohne getanzte Turniere gibt es keine Statistik" if finished_tournaments.empty?
-    str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th>"
+    str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th><th>Latein (Platzierungen/Punkte)</th><th>Standard (Platzierungen/Punkte)</th>"
 
     tournaments_by_year(finished_tournaments).each do |year|
       str += print_year(year)
@@ -29,20 +29,17 @@ module TournamentsHelper
     <td>#{tournaments_of_year.count}</td>
     <td>#{placings(tournaments_of_year)}</td>
     <td>#{points(tournaments_of_year)}</td>
+    <td>#{placings(tournaments_of_year, :latin_placing)} / #{points(tournaments_of_year, :latin_points)}</td>
+    <td>#{placings(tournaments_of_year, :standard_placing)} / #{points(tournaments_of_year, :standard_points)}</td>
     </tr>"
   end
 
-  def placings(tournaments)
-    count = 0
-    tournaments.each do |tournament|
-      count += 1 if tournament.got_placing?
-    end
-
-    return count
+  def placings(tournaments, filter = :placing)
+    tournaments.collect(&filter).inject(:+) || 0
   end
 
-  def points(tournaments)
-    tournaments.collect{|x| x.points}.inject(:+)
+  def points(tournaments, filter = :points)
+    tournaments.collect(&filter).inject(:+) || 0
   end
 
   def tournament_date(tournament)

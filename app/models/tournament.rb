@@ -1,6 +1,5 @@
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
-  default_scope includes(:user)
   attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
   belongs_to :user
 
@@ -72,11 +71,15 @@ class Tournament < ActiveRecord::Base
   def points
     participants = self.participants ||= 0
     place = self.place ||= 0
-    [(participants - place), 20].min
+    [(participants - place) , 20].min
   end
 
   def start_class
-    return self.kind.split(" ")[1]
+    return self.kind[0..-4].chop
+  end
+
+  def latin?
+    return self.kind[-3..-1] == "LAT"
   end
 
   def should_send_a_notification_mail?
@@ -99,15 +102,8 @@ class Tournament < ActiveRecord::Base
   end
 
   def send_mail_if_enrolled_tournament_is_deleted
-    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted started"
-
-    if self.is_enrolled_and_not_danced?
-      club_owners_mailaddresses = self.user.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
-      logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
-      NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, self).deliver
-    end
-    logger.debug "deleted tournament #{self.to_s}"
-    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted ended"
+    logger.debug "pushed delted tournament to MailDeletedTournamentsWorker"
+    MailDeletedTournamentsWorker.perform_async(self)
   end
 
   def self.find_by_number(number)
@@ -127,12 +123,29 @@ class Tournament < ActiveRecord::Base
         out[:address] = url.slice(30..url.length)
       end
       @date = event.search(".kategorie").first.text.slice(0..9)
-
     end
+
     agent.page.search(".markierung").each do |item|
-      out[:kind] = item.search(".turnier").first.text
-      @time = item.search(".uhrzeit").first.text
-      out[:notes] = item.search(".bemerkung").first.text
+
+      if item.search(".uhrzeit").first.text.empty?
+        puts "This Tournament seems to be a big one: #{number}"
+        item.parent.children.each do |all_tournaments|
+          next_kind = all_tournaments.search(".turnier").first.text
+          next_time = all_tournaments.search(".uhrzeit").first.text
+          next_notes = all_tournaments.search(".bemerkung").first.text
+
+          out[:kind] = next_kind unless next_kind.empty?
+          @time = next_time unless next_time.empty?
+          out[:notes] = next_notes unless next_notes.empty?
+
+          break if all_tournaments.attributes().has_key?('class')
+        end
+
+      else
+        out[:kind] = item.search(".turnier").first.text
+        @time = item.search(".uhrzeit").first.text
+        out[:notes] = item.search(".bemerkung").first.text
+      end
     end
 
     out[:date] = DateTime.parse "#{@time} #{@date}"
@@ -140,4 +153,23 @@ class Tournament < ActiveRecord::Base
     return out
   end
 
+  def placing
+    1 if self.got_placing?
+  end
+
+  def latin_placing
+    self.placing if self.latin?
+  end
+
+  def standard_placing
+    self.placing unless self.latin?
+  end
+
+  def latin_points
+    self.points if self.latin?
+  end
+
+  def standard_points
+    self.points unless self.latin?
+  end
 end

@@ -22,14 +22,6 @@ describe "Club" do
         assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       end
 
-      it "should be false if the tournament is in the near future and enrolled" do
-        Tournament.all.each{|x| x.delete}
-        FactoryGirl.create(:enrolled_tournament)
-
-        assert_equal(Tournament.count, 1, 'there should only be one tournament')
-        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, 'got unenrolled and enrollable tournaments, where there should be none')
-      end
-
       it "should be false if a mail was allready send" do
         mail = Mail.new(:from => 'from@person.de', :to => 'to@person.de', :subject => 'a Subject')
         FactoryGirl.create(:tournament)
@@ -73,13 +65,6 @@ describe "Club" do
       FactoryGirl.create(:membership)
 
       assert_equal(@user.clubs.first, club)
-    end
-    it "should be able to have enrolled and unenrolled tournaments" do
-      unenrolled = FactoryGirl.create(:tournament)
-      enrolled = FactoryGirl.create(:enrolled_tournament)
-
-      assert(enrolled.enrolled?)
-      assert(!unenrolled.enrolled?)
     end
   end
 end
