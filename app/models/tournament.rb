@@ -103,7 +103,7 @@ class Tournament < ActiveRecord::Base
 
   def send_mail_if_enrolled_tournament_is_deleted
     logger.debug "pushed delted tournament to MailDeletedTournamentsWorker"
-    MailDeletedTournamentsWorker.perform_async(self)
+    MailDeletedTournamentsWorker.perform(self)
   end
 
   def self.find_by_number(number)
