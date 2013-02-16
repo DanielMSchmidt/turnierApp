@@ -1,4 +1,3 @@
-#encoding: utf-8
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
   attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled, :notificated_about

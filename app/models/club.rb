@@ -1,4 +1,3 @@
-#encoding: utf-8
 class Club < ActiveRecord::Base
   attr_accessible :name
   belongs_to :user

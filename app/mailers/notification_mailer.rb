@@ -17,6 +17,6 @@ class NotificationMailer < ActionMailer::Base
     @username = tournament.user_name
     @tournamentnumber = tournament.number
 
-    mail to: club_owners_mailaddresses, subject: "#{@username} hat ein Turnier gelöscht für das es schon gemeldet war"
+    mail to: club_owners_mailaddresses, subject: "#{@username} hat ein Turnier gelöscht fuer das es schon gemeldet war"
   end
 end
