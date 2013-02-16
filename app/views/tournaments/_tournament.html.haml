@@ -24,4 +24,4 @@
       %td
   - if current_user == tournament.user
     %td= link_to 'Bearbeiten', edit_tournament_path(tournament), class: "btn"
-    %td= link_to 'Loeschen', tournament, method: :delete, data: { confirm: 'Bist du dir sicher?' }, class: "btn btn-danger"
+    %td= link_to 'Löschen', tournament, method: :delete, data: { confirm: 'Bist du dir sicher?' }, class: "btn btn-danger"

@@ -1,3 +1,4 @@
+#encoding: utf-8
 class TournamentsController < ApplicationController
 
   before_filter :authenticate_user!

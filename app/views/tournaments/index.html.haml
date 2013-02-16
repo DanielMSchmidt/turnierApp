@@ -1,5 +1,5 @@
-%h1 Links zu den Turnieren aller Taenzer:
-%h2 Taenzer
+%h1 Links zu den Turnieren aller Tänzer:
+%h2 Tänzer
 %br/
 %ul
   - @users.each do |user|
@@ -21,4 +21,4 @@
   = render @tournaments
 %br/
 - if current_user == @user
-  = link_to 'Neues Turnier hinzufuegen', new_tournament_path, class: "btn btn-primary"
+  = link_to 'Neues Turnier hinzufügen', new_tournament_path, class: "btn btn-primary"

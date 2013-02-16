@@ -14,20 +14,20 @@
         = f.input :name, :required => true, :autofocus => true
         = f.input :email, :required => true
         %br/
-        %span.help-block Bitte frei lassen, falls du es nicht aendern moechtest.
+        %span.help-block Bitte frei lassen, falls du es nicht ändern möchtest.
         = f.input :password, :autocomplete => "off", :required => false
         = f.input :password_confirmation, :required => false
         %br/
         %span.help-block Bitte gib dein aktuelles Passwort an.
         = f.input :current_password, :required => true
       = f.button :submit, "Aktualisieren", class: "btn btn-primary"
-    %h3 Account loeschen
-    = link_to "Jetzt loeschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete, class: "btn btn-danger"
+    %h3 Account löschen
+    = link_to "Jetzt löschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete, class: "btn btn-danger"
     %br/
     %br/
-    = link_to "zurueck", :back
+    = link_to "zurück", :back
   .span4.offset1
-    %h2 Vereine aendern
+    %h2 Vereine ändern
     .form-inputs
       - if @clubs.nil?
         %p
@@ -39,13 +39,13 @@
           - @own_clubs.each do |club|
             %li= link_to club.name, delete_club_path(:club_id => club.id, :user_id => current_user.id)
         %hr/
-        %h4 Hinzufuegen
+        %h4 Hinzufügen
         %ul
           - @clubs.each do |club|
             %li= link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
       %br/
       %br/
-      = link_to 'Neuen Verein hinzufuegen', new_club_path, class: "btn btn-primary"
+      = link_to 'Neuen Verein hinzufügen', new_club_path, class: "btn btn-primary"
 :javascript
   $("li").removeClass("active");
   $(".profil").addClass("active");

@@ -1,4 +1,5 @@
 require 'rake'
+#encoding: utf-8
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -45,7 +46,7 @@ class User < ActiveRecord::Base
   end
 
   def unverified_clubs
-    self.memberships.is_unverified.collect{|x| x.club}
+    self.memberships.includes(:club).is_unverified.collect{|x| x.club}
   end
 
   def to_i

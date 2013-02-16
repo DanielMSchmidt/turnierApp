@@ -10,8 +10,8 @@ de:
         tournament:
           attributes:
             number:
-              blank: "bitte korrekt eingeben, damit zusaetzliche Informationen ueber das Turnier gesammelt werden koennen."
-              not_a_number: "bitte korrekt eingeben, damit zusaetzliche Informationen ueber das Turnier gesammelt werden koennen."
+              blank: "bitte korrekt eingeben, damit zusätzliche Informationen ueber das Turnier gesammelt werden können."
+              not_a_number: "bitte korrekt eingeben, damit zusätzliche Informationen ueber das Turnier gesammelt werden können."
             participants:
               blank: "(Teilnehmeranzahl) bitte eingeben"
               not_a_number: "(Teilnehmeranzahl) bitte als Zahl angeben"
@@ -22,9 +22,9 @@ de:
           attributes:
             email:
               blank: "bitte eingeben"
-              taken: "wurde bereits verwendet, waehle bitte ein anderes"
+              taken: "wurde bereits verwendet, wähle bitte ein anderes"
             password:
-              too_short: "ist zu kurz, bitte gib ein laengeres ein"
+              too_short: "ist zu kurz, bitte gib ein längeres ein"
               confirmation: "bitte erneut eingeben"
             current_password:
               invalid: "ist leider falsch."
