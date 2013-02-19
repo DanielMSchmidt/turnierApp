@@ -4,7 +4,8 @@
 =Other todos
 
   = v0.7
-    - put fetching of tournaments into a sidekiq worker
+    - change usabiliy, so that a new user sees that he has to add a club
+    - delte sidekiq workers again (doesn't work free with heroku)
     - put texts from controller to localization
 
   = v0.8
