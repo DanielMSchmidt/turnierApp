@@ -14,8 +14,6 @@ gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'sidekiq'
-
 
 group :production do
   gem "newrelic_rpm", "~> 3.5.5.38"
