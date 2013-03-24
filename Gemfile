@@ -38,7 +38,9 @@ group :development, :test do
   gem 'sqlite3'
   gem 'bullet'
   gem 'brakeman'
+  gem 'capybara'
 
+  gem "nyan-cat-formatter"
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-spork'

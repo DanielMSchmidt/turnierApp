@@ -19,6 +19,7 @@ FactoryGirl.define do
     user_id 1
     address 'testaddress'
     date (DateTime.now.to_date + 2.weeks).to_date
+    kind 'HGR C LAT'
     enrolled false
   end
 

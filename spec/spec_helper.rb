@@ -1,14 +1,24 @@
 require 'rubygems'
-require 'spork'
 
+
+
+require 'spork'
 Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
+
+  # Add this to load Capybara integration:
+  require 'capybara/rspec'
+  require 'capybara/rails'
+
+  require File.expand_path("../../config/environment", __FILE__)
+  require 'rspec/rails'
+
 end
 
 Spork.each_run do
-
+  FactoryGirl.reload
 end
 
 

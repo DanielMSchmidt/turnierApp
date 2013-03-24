@@ -18,9 +18,9 @@ class User < ActiveRecord::Base
 
   def self.send_user_notification(newUser)
     user = User.all
-    puts "start sending usercount notification about #{user.count} couples"
+    logger.info "start sending usercount notification about #{user.count} couples"
     NotificationMailer.userCount(user, newUser).deliver
-    puts "ended sending usercount notification"
+    logger.info "ended sending usercount notification"
   end
 
   def to_s
@@ -51,5 +51,4 @@ class User < ActiveRecord::Base
   def to_i
     self.id
   end
-
 end

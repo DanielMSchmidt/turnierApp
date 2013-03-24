@@ -11,10 +11,6 @@ class Tournament < ActiveRecord::Base
 
   delegate :name, to: :user, prefix: true
 
-  def to_s
-    "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
-  end
-
    def no_double_tournaments_are_allowed
      Tournament.where(number: number, user_id: user_id).size == 0
      errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
@@ -28,6 +24,7 @@ class Tournament < ActiveRecord::Base
     self.date.to_datetime
   end
 
+  #TODO: Refactor to service object
   def fillup_missing_data
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
     #set enrolled to false if it is upcoming
@@ -176,5 +173,9 @@ class Tournament < ActiveRecord::Base
 
   def standard_points
     self.points unless self.latin?
+  end
+
+  def to_s
+    "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
   end
 end

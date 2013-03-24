@@ -21,7 +21,6 @@ describe "Club" do
 
         assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       end
-
     end
   end
   describe "the factories should work" do
