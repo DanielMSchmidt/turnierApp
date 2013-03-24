@@ -18,7 +18,7 @@ FactoryGirl.define do
     number 28288
     user_id 1
     address 'testaddress'
-    date (DateTime.now + 2.weeks).to_date
+    date (DateTime.now.to_date + 2.weeks).to_date
     enrolled false
   end
 

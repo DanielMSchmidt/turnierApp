@@ -22,17 +22,6 @@ describe "Club" do
         assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
       end
 
-      it "should be false if a mail was allready send" do
-        mail = Mail.new(:from => 'from@person.de', :to => 'to@person.de', :subject => 'a Subject')
-        FactoryGirl.create(:tournament)
-
-        assert(@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, "mail wasnt send")
-
-        @club.mail_owner_unenrolled_tournaments
-
-        assert(!@club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified, "mail was send")
-      end
-
     end
   end
   describe "the factories should work" do
