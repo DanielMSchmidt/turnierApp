@@ -11,7 +11,7 @@
     von #{tournament.participants || '??'}
   %td= tournament_adress(tournament)
   %td= tournament.number
-  - classes = 'icons-not_enrolled' unless tournament.enrolled?
+  - classes = 'icons-not_enrolled' unless tournament.enrolled? && !tournament.behind_time?
   - classes = 'icons-missing_information' if tournament.behind_time?
   - classes ||= 'icons-ok'
   %td#status

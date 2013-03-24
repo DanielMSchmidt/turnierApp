@@ -36,13 +36,6 @@ describe "Tournament" do
     end
   end
 
-  describe "the appeareance" do
-    it "should have the class okay, if its danced and data is there"
-    it "should have the class okay, if its enrolled"
-    it "should have the class missing, if its danced and data is not there"
-    it "should have the class empty, if it snot danced and unenrolled"
-  end
-
   describe "the calculation" do
     before(:each) do
       tournament.place = 1
