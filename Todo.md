@@ -7,9 +7,7 @@ On deploy:
 
 Other todos
 ---------------------
-
   - v0.8
-
     - reorganise Users as Couples (of two new users)
     - Facebook login
     - add images (to events & couples)
