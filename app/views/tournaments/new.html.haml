@@ -6,7 +6,7 @@
   = link_to 'Zurück', root_path
 
 - else
-  = render 'form' if params['time'] == "past"
+  = render 'past_form' if params['time'] == "past"
   = render 'future_form' if params['time'] == "future"
   = link_to 'Zurück', new_tournament_path
 

@@ -1,0 +1,23 @@
+= form_for(@tournament) do |f|
+  - if @tournament.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@tournament.errors.count, "Fehler")
+        verhindern, dass dieses Turnier gespeichert wird:
+      %ul
+        - @tournament.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :place, "Platz (Bitte niedrigsten Platz bei geteilten Plätzen nehmen)"
+    = f.number_field :place
+
+  .field
+    = f.label :participants, "Teilnehmerzahl"
+    = f.number_field :participants
+  = f.hidden_field :user_id, :value => current_user.id
+
+  .actions
+    = f.submit "erstellen", class: "btn btn-primary"
+
+=render "has_clubs_popover"
