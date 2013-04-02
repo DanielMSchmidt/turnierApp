@@ -53,7 +53,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.new(enhanced_informations)
 
     if @tournament.save
-      redirect_to user_tournaments_path(current_user), notice: 'Tournament was successfully created.'
+      redirect_to user_tournaments_path(current_user), notice: "#{t(:tournament create)}"
     else
       render :new
     end
@@ -65,7 +65,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
 
     if @tournament.update_attributes(params[:tournament])
-      redirect_to user_tournaments_path(current_user), notice: 'Tournament was successfully updated.'
+      redirect_to user_tournaments_path(current_user), notice: "#{t(:club update)}"
     else
       render :edit
     end

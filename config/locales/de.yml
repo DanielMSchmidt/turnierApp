@@ -1,0 +1,13 @@
+de:
+  club:
+    create: "Der Verein wurde erfolgreich erstellt."
+    update: "Der Verein wurde erfolgreich aktualisiert."
+  membership:
+    create: "Der Verein wurde erfolgreich zu deinen Vereinen hinzugefügt. Du musst jetzt noch bestätigt werden."
+    verfify:
+      success: "Der Nutzer wurde bestaetigt."
+      fail: "Der Nutzer konnte nicht bestaetigt werden."
+    destroy: "Du bist jetzt nicht mehr in diesem Verein angemeldet."
+  club:
+    create: "Das Turnier wurde erfolgreich erstellt."
+    update: "Das Turnier wurde erfolgreich aktualisiert."

@@ -61,7 +61,7 @@ class ClubsController < ApplicationController
 
     if @club.save
       @club.memberships.create!(user_id: current_user)
-      redirect_to @club, notice: 'Club was successfully created.'
+      redirect_to @club, notice: "#{t(:club create)}"
     else
       render :new
     end
@@ -73,7 +73,7 @@ class ClubsController < ApplicationController
     @club = Club.find(params[:id])
 
     if @club.update_attributes(params[:club])
-      redirect_to @club, notice: 'Club was successfully updated.'
+      redirect_to @club, notice: "#{t(:club update)}"
     else
       render :edit
     end
