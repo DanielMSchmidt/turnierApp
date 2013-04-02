@@ -8,9 +8,6 @@ On deploy:
 Other todos
 ---------------------
 
-  - v0.7
-    - put texts from controller to localization
-
   - v0.8
 
     - reorganise Users as Couples (of two new users)
