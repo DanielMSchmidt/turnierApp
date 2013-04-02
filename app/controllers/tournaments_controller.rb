@@ -7,16 +7,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments
   # GET /tournaments.json
   def index
-    #todo: irgendwann durch admin ersetzen
-    @tournaments = Tournament.includes(:user).all if current_user.email == "daniel.maximilian@gmx.net"
-    @tournaments ||= []
-
-    @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @tournaments }
-    end
+    redirect_to root_path
   end
 
   # GET /tournaments/1
@@ -53,7 +44,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.new(enhanced_informations)
 
     if @tournament.save
-      redirect_to user_tournaments_path(current_user), notice: "#{t(:tournament create)}"
+      redirect_to user_tournaments_path(current_user), notice: t('tournament create')
     else
       render :new
     end
@@ -65,7 +56,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
 
     if @tournament.update_attributes(params[:tournament])
-      redirect_to user_tournaments_path(current_user), notice: "#{t(:club update)}"
+      redirect_to user_tournaments_path(current_user), notice: t('club update')
     else
       render :edit
     end
