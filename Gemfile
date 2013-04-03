@@ -39,6 +39,8 @@ group :development, :test do
   gem 'bullet'
   gem 'brakeman'
   gem 'capybara'
+  gem 'shoulda-matchers'
+  gem 'shoulda-context'
 
   gem "nyan-cat-formatter"
   gem 'guard'
