@@ -69,4 +69,19 @@ FactoryGirl.define do
     club_id 1
     user_id 1
   end
+
+  factory :couple do
+    man_id 1
+    woman_id 2
+    active true
+  end
+
+  factory :progress do
+    couple_id 1
+    kind "latin"
+    start_points 0
+    start_placings 0
+    start_class 'C'
+    finished false
+  end
 end
