@@ -1,5 +1,8 @@
 TurnierList::Application.routes.draw do
 
+  resources :progresses
+
+
   resources :couples
 
 

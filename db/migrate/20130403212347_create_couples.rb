@@ -1,5 +1,5 @@
 class CreateCouples < ActiveRecord::Migration
-  def change
+  def up
     create_table :couples do |t|
       t.integer :man_id
       t.integer :woman_id
@@ -7,5 +7,8 @@ class CreateCouples < ActiveRecord::Migration
 
       t.timestamps
     end
+  end
+  def down
+    drop_table :couples
   end
 end
