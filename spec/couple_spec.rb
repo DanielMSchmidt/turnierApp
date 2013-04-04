@@ -8,7 +8,7 @@ describe Couple do
   describe "structure" do
     it { should belong_to(:user) }
     it { should have_many(:progresses) }
-    it "should have an active flag"
+    it { should respond_to(:active) }
   end
 
   describe "interaction with" do
