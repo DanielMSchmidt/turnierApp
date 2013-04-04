@@ -38,11 +38,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'bullet'
   gem 'brakeman'
-  gem 'capybara'
-  gem 'shoulda-matchers'
-  gem 'shoulda-context'
 
-  gem "nyan-cat-formatter"
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-spork'
@@ -58,7 +54,10 @@ group :test do
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
   gem "capybara"
-
+  gem 'shoulda-matchers'
+  gem 'shoulda-context'
+  gem 'factory_girl_rails'
+  gem "nyan-cat-formatter"
 end
 
 # Gems used only for assets and not required
