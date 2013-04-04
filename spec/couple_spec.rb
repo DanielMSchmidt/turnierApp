@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'capybara/rails'
 
 describe Couple do
-  let(:couple) { FactoryGirl.create(:couple) }
+  subject(:couple) { FactoryGirl.create(:couple) }
 
 
   describe "structure" do

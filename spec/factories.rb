@@ -5,22 +5,23 @@ FactoryGirl.define do
     name 'Test User'
     email 'test@testuser.de'
     password 'testtest12345'
-    password_confirmation 'testtest12345'
-    remember_me true
+    initialize_with { User.find_or_create_by_email('test@testuser.de') }
   end
 
   factory :club do
     name 'Example Club'
     user_id 1
+    initialize_with { Club.find_or_create_by_name('Example Club') }
   end
 
   factory :tournament do
-    number 28288
-    user_id 1
-    address 'testaddress'
-    date (DateTime.now.to_date + 2.weeks).to_date
-    kind 'HGR C LAT'
-    enrolled false
+
+    ignore do
+      number 28288
+      user_id 1
+      data {{number: number, user_id: user_id, address: 'testaddress', date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: false}}
+    end
+    initialize_with { Tournament.where(number: number, user_id: user_id).first || Tournament.create(data) }
   end
 
   factory :d_class_tournament do
