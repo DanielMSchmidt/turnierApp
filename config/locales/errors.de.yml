@@ -1,6 +1,8 @@
 de:
   activerecord:
     errors:
+      messages:
+        record_invalid: "ist leider nicht valide."
       models:
         club:
           attributes:

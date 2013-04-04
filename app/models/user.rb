@@ -10,11 +10,7 @@ class User < ActiveRecord::Base
   has_many :tournaments
   has_many :memberships, :dependent => :destroy
   has_many :clubs, :through => :memberships
-
-  def notify_about_new_user
-    logger.debug "notifying about new user #{self.name}"
-    User.send_user_notification(self.name)
-  end
+  has_many :couples
 
   def self.send_user_notification(newUser)
     user = User.all
@@ -23,8 +19,9 @@ class User < ActiveRecord::Base
     logger.info "ended sending usercount notification"
   end
 
-  def to_s
-    "User: #{self.id} - #{self.email}"
+  def notify_about_new_user
+    logger.debug "notifying about new user #{self.name}"
+    User.send_user_notification(self.name)
   end
 
   def getOrganisedTournaments
@@ -40,6 +37,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def get_couples
+    Couple.all.select{|couple| couple.man_id == self.id || couple.woman_id == self.id}.uniq
+  end
+
+  def activeCouple
+    self.get_couples.select{|couple| couple.active}.first
+  end
+
   def verified_clubs
     self.memberships.is_verified.collect{|x| x.club}
   end
@@ -50,5 +55,9 @@ class User < ActiveRecord::Base
 
   def to_i
     self.id
+  end
+
+  def to_s
+    "User: #{self.id} - #{self.email}"
   end
 end
