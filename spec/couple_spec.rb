@@ -6,8 +6,18 @@ describe Couple do
 
 
   describe "structure" do
-    it { should belong_to(:user) }
-    it { should have_many(:progresses) }
+    it "should have a man assigned" do
+      couple.should respond_to(:man)
+    end
+
+    it "should have a woman assigned" do
+      couple.should respond_to(:woman)
+    end
+
+    it "should have many progresses" do
+      couple.should respond_to(:progresses)
+    end
+
     it { should respond_to(:active) }
   end
 
@@ -15,22 +25,15 @@ describe Couple do
     describe "progresses" do
       describe "should have always two progresses" do
         it "should on creation generate two new progresses" do
-          new_couple = FactoryGirl.create(:couple)
-          new_couple.progresses.count.should eq(2)
+          couple.progresses.count.should eq(2)
         end
         it "should finish the std progress if another std progress is created" do
-          std = couple.standard
-          std.finished = true
-          std.save
-          couple.progresses.count.should eq(2)
-          couple.standard.finished.should be_false
+          pending "write new with new method"
+          std = couple.standard.create_new(params)
         end
         it "should finish the lat progress if another lat progress is created" do
-          lat = couple.latin
-          lat.finished = true
-          lat.save
-          couple.progresses.count.should eq(2)
-          couple.latin.finished.should be_false
+          pending "write new with new method"
+          lat = couple.latin.create_new(params)
         end
       end
     end
