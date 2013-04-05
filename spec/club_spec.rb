@@ -5,12 +5,11 @@ describe Club do
   let!(:user){ FactoryGirl.create(:user) }
   let!(:membership){ FactoryGirl.create(:membership) }
   let!(:club){ FactoryGirl.create(:club) }
-  let(:tournament){ FactoryGirl.create(:tournament) }
+  let!(:tournament){ FactoryGirl.create(:tournament) }
 
   describe "sending of unenrollment mails" do
     describe "method unenrolled_and_enrollable_tournaments_left" do
       it "should be true if the tournament is in the near future and unenrolled" do
-        tournament
         club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified.should be_true
       end
 
@@ -22,22 +21,22 @@ describe Club do
   end
   describe "the factories should work" do
     it "should be the right user" do
-      assert_equal(user.name, 'Test User')
-      assert_equal(user.email, 'test@testuser.de')
+      user.name.should eq('Test User')
+      user.email.should eq('test@testuser.de')
     end
 
     it "should be the right tournament" do
-      assert_equal(tournament.number, 28288)
-      assert_equal(tournament, user.tournaments.first)
+      tournament.number.should eq(28288)
+      user.tournaments.first.id.should eq(tournament.id)
     end
 
     it "should be the right club" do
-      assert_equal(club.name, 'Example Club')
-      assert_equal(club.owner, user)
+      club.name.should eq('Example Club')
+      club.owner.id.should eq(user.id)
     end
 
     it "should be the right membership" do
-      assert_equal(user.clubs.first, club)
+      user.clubs.first.id.should eq(club.id)
     end
   end
 end

@@ -5,14 +5,20 @@ describe Progress do
   let(:progress) { FactoryGirl.create(:progress) }
 
   describe "structure" do
-    it { should belong_to(:couple) }
-    it { should have_many(:tournaments) }
 
-    its(:kind){ should be_present }
-    its(:start_points){ should be_present }
-    its(:start_placings){ should be_present }
-    its(:start_class){ should be_present }
-    its(:finished){ should be_present }
+    it "should belong to a couple" do
+      progress.should respond_to(:couple)
+    end
+
+    it "should have many tournaments" do
+      progress.should respond_to(:tournaments)
+    end
+
+    it{ should respond_to(:kind) }
+    it{ should respond_to(:start_points) }
+    it{ should respond_to(:start_placings) }
+    it{ should respond_to(:start_class) }
+    it{ should respond_to(:finished) }
 
     describe "shouldnt be able to have another kind then standard or latin" do
       it "should be possible to assign latin" do
@@ -58,7 +64,7 @@ describe Progress do
         progress.should_receive(:tournaments).and_return(all_tournaments)
         progress.should_receive(:start_points).and_return(5)
 
-        progress.placings.should eq(17)
+        progress.points.should eq(17)
       end
     end
   end
