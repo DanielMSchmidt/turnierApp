@@ -26,7 +26,7 @@ class Club < ActiveRecord::Base
 
   def tournaments
     return nil if self.user.nil? || self.user.tournaments.nil?
-    self.user.tournaments
+    self.users.collect{|user| user.tournaments}.flatten
   end
 
   def mail_owner_unenrolled_tournaments
