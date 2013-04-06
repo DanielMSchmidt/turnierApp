@@ -6,10 +6,13 @@ describe Club do
   let!(:membership){ FactoryGirl.create(:membership) }
   let!(:club){ FactoryGirl.create(:club) }
   let!(:tournament){ FactoryGirl.create(:tournament) }
+  let(:stubbed_tournament){ double('stubbed tournament') }
 
   describe "sending of unenrollment mails" do
     describe "method unenrolled_and_enrollable_tournaments_left" do
       it "should be true if the tournament is in the near future and unenrolled" do
+        club.should_receive(:tournaments).at_least(1).times.and_return([stubbed_tournament])
+        stubbed_tournament.stub(:should_send_a_notification_mail?).and_return(true)
         club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified.should be_true
       end
 
