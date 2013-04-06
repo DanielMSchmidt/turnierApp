@@ -48,4 +48,19 @@ describe "Tournament" do
       tournament.points.should eq(9)
     end
   end
+
+  describe "#should_send_a_notification_mail?" do
+    it "should be false if the tournament is enrolled" do
+      enrolled_tournament = Tournament.create(number: 28288, user_id: 1, address: "testadress", date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: true)
+      enrolled_tournament.should_send_a_notification_mail?.should be_false
+    end
+    it "should be false if the tournament is far away" do
+      future_tournament = Tournament.create(number: 28288, user_id: 1, address: "testadress", date: (DateTime.now.beginning_of_day.to_date + 8.weeks), kind: 'HGR C LAT', enrolled: false)
+      future_tournament.should_send_a_notification_mail?.should be_false
+    end
+    it "should be true if the tournament is near and unenrolled" do
+      next_tournament = Tournament.create(number: 28288, user_id: 1, address: "testadress", date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: false)
+      next_tournament.should_send_a_notification_mail?.should be_true
+    end
+  end
 end

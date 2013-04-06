@@ -67,5 +67,54 @@ describe Progress do
         progress.points.should eq(17)
       end
     end
+
+    describe "#reset" do
+      it "should create a new Progress" do
+        progress
+        expect{progress.reset}.to change{Progress.count}.by(1)
+      end
+
+      it "should have the same class as before" do
+        progress.reset.start_class.should eq(progress.start_class)
+      end
+    end
+
+    describe "#levelUp" do
+      it "should create a new Progress" do
+        progress
+        expect{progress.levelUp}.to change{Progress.count}.by(1)
+      end
+
+      it "should have the next class as before" do
+        progress.levelUp.start_class.should eq(progress.nextClass)
+      end
+    end
+
+    describe "#nextClass" do
+      it "should return C for D" do
+        progress.start_class = 'D'
+        progress.nextClass.should eq('C')
+      end
+
+      it "should return B for C" do
+        progress.start_class = 'C'
+        progress.nextClass.should eq('B')
+      end
+
+      it "should return A for B" do
+        progress.start_class = 'B'
+        progress.nextClass.should eq('A')
+      end
+
+      it "should return S for A" do
+        progress.start_class = 'A'
+        progress.nextClass.should eq('S')
+      end
+
+      it "should return S for S" do
+        progress.start_class = 'S'
+        progress.nextClass.should eq('S')
+      end
+    end
   end
 end
