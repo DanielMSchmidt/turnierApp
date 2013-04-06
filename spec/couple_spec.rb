@@ -27,14 +27,6 @@ describe Couple do
         it "should on creation generate two new progresses" do
           couple.progresses.count.should eq(2)
         end
-        it "should finish the std progress if another std progress is created" do
-          pending "write new with new method"
-          std = couple.standard.create_new(params)
-        end
-        it "should finish the lat progress if another lat progress is created" do
-          pending "write new with new method"
-          lat = couple.latin.create_new(params)
-        end
       end
     end
   end
