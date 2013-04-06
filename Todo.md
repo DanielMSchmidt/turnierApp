@@ -9,6 +9,9 @@ Other todos
 ---------------------
   - v0.8
     - reorganise Users as Couples (of two new users)
+    - dividing lat and std and introduce progress through class
+
+  - v0.9
     - Facebook login
     - add images (to events & couples)
 
