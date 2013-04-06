@@ -6,21 +6,21 @@ class Couple < ActiveRecord::Base
   has_many :progresses
 
   before_save :set_initial_values
-  after_create :deactivate_other_couples
+  before_create :deactivate_other_couples
   after_create :build_progresses
 
   #initialize
 
   def set_initial_values
-    self.active ||= true
+    self.active = true if self.active.nil?
   end
 
 
   #Activation
 
   def deactivate_other_couples
-    Couple.where(man_id: self.man_id, active: true).each{|couple| couple.deactivate}
-    Couple.where(woman_id: self.woman_id, active: true).each{|couple| couple.deactivate}
+    couples = Couple.where(man_id: self.man_id) + Couple.where(woman_id: self.woman_id)
+    couples.each{|couple| couple.deactivate}
   end
 
   def activate
