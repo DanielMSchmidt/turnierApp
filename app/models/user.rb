@@ -46,11 +46,11 @@ class User < ActiveRecord::Base
   end
 
   def verified_clubs
-    self.memberships.is_verified.collect{|x| x.club}
+    self.memberships.is_verified.collect{|x| x.club}.compact.uniq
   end
 
   def unverified_clubs
-    self.memberships.includes(:club).is_unverified.collect{|x| x.club}
+    self.memberships.includes(:club).is_unverified.collect{|x| x.club}.compact.uniq
   end
 
   def to_i
