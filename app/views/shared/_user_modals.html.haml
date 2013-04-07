@@ -1,1 +1,12 @@
-User modals
+#add_club_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Füge einen Verein hinzu
+  .modal-body
+    %ul
+      - @clubs.each do |club|
+        %li= link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
+
+  .modal-footer
+    = link_to 'Verein hinzufügen', new_club_path, class: "btn btn-primary"
+    %a.btn{:href => "#"} Schließen
