@@ -40,12 +40,14 @@ class CouplesController < ApplicationController
   # POST /couples
   # POST /couples.json
   def create
-    @couple = Couple.new(params[:couple])
+    man_id = isntSet(params[:couple][:man]) ? nil : User.where(name: params[:couple][:man]).first.id
+    woman_id = isntSet(params[:couple][:woman]) ? nil : User.where(name: params[:couple][:woman]).first.id
+
+    @couple = Couple.new(man_id: man_id, woman_id: woman_id, active: true)
 
     respond_to do |format|
       if @couple.save
-        format.html { redirect_to @couple, notice: 'Couple was successfully created.' }
-        format.json { render json: @couple, status: :created, location: @couple }
+        redirect_to root_path
       else
         format.html { render action: "new" }
         format.json { render json: @couple.errors, status: :unprocessable_entity }
@@ -79,5 +81,9 @@ class CouplesController < ApplicationController
       format.html { redirect_to couples_url }
       format.json { head :no_content }
     end
+  end
+
+  def isntSet(parameter)
+    nil || parameter == 'Noch nicht eingetragen' || parameter == ''
   end
 end

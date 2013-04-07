@@ -10,3 +10,20 @@
   .modal-footer
     = link_to 'Verein hinzufügen', new_club_path, class: "btn btn-primary"
     %a.btn{:href => "#"} Schließen
+
+
+#new_pair_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Neues Paar erstellen
+  .modal-body
+    = form_for @couple do |f|
+      .field
+        = f.label 'Herr'
+        = f.text_field :man, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}
+      .field
+        = f.label 'Dame'
+        = f.text_field :woman, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}
+      .actions
+        = f.submit 'Save'
+

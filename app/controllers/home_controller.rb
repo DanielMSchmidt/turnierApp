@@ -17,5 +17,6 @@ class HomeController < ApplicationController
 
   def setUserModalData
     @clubs = Club.all
+    @couple = Couple.new
   end
 end
