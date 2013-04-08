@@ -42,8 +42,11 @@ class CouplesController < ApplicationController
   def create
     man_id = isntSet(params[:couple][:man]) ? nil : User.where(name: params[:couple][:man]).first.id
     woman_id = isntSet(params[:couple][:woman]) ? nil : User.where(name: params[:couple][:woman]).first.id
-
     @couple = Couple.new(man_id: man_id, woman_id: woman_id, active: true)
+
+    #Add Progresses
+    latin = @couple.progresses.new(start_class: params[:couple][:latin], kind: 'latin')
+    standard = @couple.progresses.new(start_class: params[:couple][:standard], kind: 'standard')
 
     respond_to do |format|
       if @couple.save
