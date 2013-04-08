@@ -1,0 +1,23 @@
+#new_pair_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Neues Paar erstellen
+  .modal-body
+    = form_for @couple, :html => {:class => 'form-horizontal'} do |f|
+      .control-group
+        = f.label 'Herr', :class => 'control-label'
+        .controls
+          = f.text_field :man, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: 'Noch nicht eingetragen', autocomplete: "off"
+
+      .control-group
+        = f.label 'Dame', :class => 'control-label'
+        .controls
+          = f.text_field :woman, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: 'Noch nicht eingetragen', autocomplete: "off"
+      %hr
+      .control-group
+        = f.label 'Startklasse', :class => 'control-label'
+        .controls
+          = f.text_field :latin, placeholder: 'Latein', :class => 'input-small'
+          = f.text_field :standard, placeholder: 'Standard', :class => 'input-small'
+      .actions
+        = f.submit 'Jetzt erstellen', :class => "btn btn-primary"
