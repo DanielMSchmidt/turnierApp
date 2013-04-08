@@ -1,1 +1,20 @@
-user controlls
+.btn-toolbar
+  .btn-group
+    .btn
+      = link_to 'Turnier hinzufügen', '#add_tournament_modal', role: 'button', data: {toggle: 'modal'}
+
+  .btn-group
+    .btn
+      = link_to 'Punkte / Platzierungen ändern', '#change_progress_modal', role: 'button', data: {toggle: 'modal'}
+
+  .btn-group
+    .btn
+      = link_to 'Aufstieg vermelden', '#level_up_modal', role: 'button', data: {toggle: 'modal'}
+
+  .btn-group
+    .btn
+      = link_to 'Tanzpartner wechseln', '#change_partner_modal', role: 'button', data: {toggle: 'modal'}
+
+  .btn-group
+    .btn
+      = link_to 'Ergebnisse anschauen', '#view_results_modal', role: 'button', data: {toggle: 'modal'}
