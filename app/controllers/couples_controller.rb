@@ -40,8 +40,9 @@ class CouplesController < ApplicationController
   # POST /couples
   # POST /couples.json
   def create
-    man_id = isntSet(params[:couple][:man]) ? nil : User.where(name: params[:couple][:man]).first.id
-    woman_id = isntSet(params[:couple][:woman]) ? nil : User.where(name: params[:couple][:woman]).first.id
+    man_id = User.get_id_by_name(params[:couple][:man])
+    woman_id = User.get_id_by_name(params[:couple][:woman])
+
     @couple = Couple.new(man_id: man_id, woman_id: woman_id, active: true)
 
     #Add Progresses
@@ -86,7 +87,5 @@ class CouplesController < ApplicationController
     end
   end
 
-  def isntSet(parameter)
-    nil || parameter == 'Noch nicht eingetragen' || parameter == ''
-  end
+
 end

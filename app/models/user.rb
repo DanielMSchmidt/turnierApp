@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
     User.send_user_notification(self.name)
   end
 
+  # Accessors
+
   def getOrganisedTournaments
     logger.debug "setting organised tournaments for user #{self.id}"
     clubs = Club.where(user_id: self.id)
@@ -59,5 +61,24 @@ class User < ActiveRecord::Base
 
   def to_s
     "User: #{self.id} - #{self.email}"
+  end
+
+  # find users
+
+  def self.get_id_by_name(name)
+    unless isntSet(name)
+      user = User.where(name: name).first
+      if user.nil?
+        nil
+      else
+        user.id
+      end
+    else
+      nil
+    end
+  end
+
+  def isntSet(parameter)
+    nil || parameter == 'Noch nicht eingetragen' || parameter == ''
   end
 end

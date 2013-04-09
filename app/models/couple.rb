@@ -33,7 +33,7 @@ class Couple < ActiveRecord::Base
     self.save
   end
 
-  #Progresses
+  # Progresses
 
   def standard
     self.progresses.active.standard.first
