@@ -4,6 +4,7 @@ TurnierList::Application.routes.draw do
   resources :couples
 
   get "/couple/levelup/:kind" => "couples#levelup", as: :couple_level_up
+  match "/couple/change" => "couples#change", as: :change_active_couple
 
   match "/tournament/:id/enroll" => "tournaments#set_as_enrolled", as: :just_enrolled
   match "/user/:id/tournaments" => "tournaments#of_user", as: :user_tournaments

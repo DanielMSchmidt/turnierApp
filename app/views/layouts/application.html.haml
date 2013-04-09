@@ -39,11 +39,6 @@
           = yield
     %footer.navbar.navbar-fixed-bottom
       =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp", class: "btn btn-info high"
-      %form{:action => "https://www.paypal.com/cgi-bin/webscr", :method => "post"}
-        %input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
-          %input{:name => "hosted_button_id", :type => "hidden", :value => "4XFV2JU839HXL"}
-            %input{:alt => "Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.", :border => "0", :name => "submit", :src => "https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_SM.gif", :type => "image"}
-              %img{:alt => "", :border => "0", :height => "1", :src => "https://www.paypalobjects.com/de_DE/i/scr/pixel.gif", :width => "1"}
     - if Rails.env.production?
       :javascript
         var _gaq = _gaq || [];
