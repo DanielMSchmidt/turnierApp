@@ -10,6 +10,7 @@ Other todos
   - v0.8
     - reorganise Users as Couples (of two new users)
     - dividing lat and std and introduce progress through class
+    - add generation of pdfs for upcoming and danced tournaments
 
   - v0.9
     - Facebook login
