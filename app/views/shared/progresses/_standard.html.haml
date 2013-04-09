@@ -1,11 +1,21 @@
 = form_for(current_user.activeCouple.standard, remote: true) do |f|
   .help-block
     Die Punkte und Platzierungen, die du hier angibst werden auf deine bisherigen Turnierergebnisse addiert.
-  .field
-    = f.label "Punkte"
-    = f.number_field :start_points
-  .field
-    = f.label "Platzierungen"
-    = f.number_field :start_placings
-  .actions
-    = f.submit 'Speichern', :class => "btn btn-primary", data: {dismiss: 'modal'}
+
+  .row-fluid
+    .span6
+
+      .input-prepend
+        .add-on
+          Punkte
+        = f.number_field :start_points, :class => "span6"
+
+      .input-prepend
+        .add-on
+          Platzierungen
+        = f.number_field :start_placings, :class => "span4"
+
+      .actions
+        = f.submit 'Speichern', :class => "btn btn-primary", data: {dismiss: 'modal'}
+    .span4
+      = link_to 'Aufgestiegen!', couple_level_up_path(type: 'standard'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
