@@ -8,17 +8,24 @@
         - @tournament.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :number, "Turniernummer"
+  .input-prepend
+    .add-on
+      Turniernummer
     = f.number_field :number
 
-  .field
-    = f.label :place, "Platz (Bitte niedrigsten Platz bei geteilten Plätzen nehmen)"
+  .help-block
+    Bitte niedrigsten Platz bei geteilten Plätzen nehmen
+
+  .input-prepend
+    .add-on
+      Platz
     = f.number_field :place
 
-  .field
-    = f.label :participants, "Teilnehmerzahl"
+  .input-prepend
+    .add-on
+      Teilnehmerzahl
     = f.number_field :participants
+
   = f.hidden_field :user_id, :value => current_user.id
 
   .actions
