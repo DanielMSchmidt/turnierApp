@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def isntSet(parameter)
+  def self.isntSet(parameter)
     nil || parameter == 'Noch nicht eingetragen' || parameter == ''
   end
 end
