@@ -3,7 +3,7 @@ TurnierList::Application.routes.draw do
   resources :progresses
   resources :couples
 
-  get "/couple/levelup/:type" => "couples#levelup", as: :couple_level_up
+  get "/couple/levelup/:kind" => "couples#levelup", as: :couple_level_up
 
   match "/tournament/:id/enroll" => "tournaments#set_as_enrolled", as: :just_enrolled
   match "/user/:id/tournaments" => "tournaments#of_user", as: :user_tournaments

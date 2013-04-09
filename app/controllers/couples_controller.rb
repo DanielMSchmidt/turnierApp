@@ -87,5 +87,15 @@ class CouplesController < ApplicationController
     end
   end
 
+  def levelup
+    couple = current_user.activeCouple
+    if params[:kind] == 'latin'
+      couple.latin.levelUp
+    else
+      couple.standard.levelUp
+    end
+    respond_to :js
+  end
+
 
 end
