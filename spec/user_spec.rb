@@ -31,23 +31,85 @@ describe User do
 
   describe "functions" do
     describe "#getOrganisedTournaments" do
-      it "should return an empty array if the user hasnt got any clubs"
-      it "should return all tournaments of the clubs associated with this user"
+      it "should return an empty array if the user hasnt got any clubs" do
+        Club.stub(:where).and_return([])
+        user.getOrganisedTournaments.should eq([])
+      end
+      it "should return all tournaments of the clubs associated with this user" do
+
+        club1 = double('club1', name: 'club1' ,tournaments: [double('tournament1'), double('tournament2')])
+        club2 = double('club2', name: 'club2' ,tournaments: [double('tournament3')])
+        Club.stub(:where).and_return([club1, club2])
+
+        user.getOrganisedTournaments.length.should eq(3)
+      end
+    end
+
+    describe "#get_couples" do
+      it "should return an emtpy array if there is no couple with the right id" do
+        Couple.stub(:all).and_return([double('not_your_couple', man_id: 100, woman_id: 101)])
+        user.get_couples.should be_empty
+      end
+
+      it "should return an array if there is a couple with the right man_id" do
+        Couple.stub(:all).and_return([double('your_male_couple', man_id: user.id, woman_id: 101)])
+        user.get_couples.should_not be_empty
+      end
+
+      it "should return an array if there is a couple with the right woman_id" do
+        Couple.stub(:all).and_return([double('your_female_couple', man_id: 100, woman_id: user.id)])
+        user.get_couples.should_not be_empty
+      end
     end
 
     describe "#activeCouple" do
-    end
+      it "should return nil if no couple is assigned" do
+        user.stub(:get_couples).and_return([])
+        user.activeCouple.should be_nil
+      end
 
-    describe "#verified_clubs" do
-    end
+      it "should return nil if no active couple is assigned" do
+        couple = double('couple', active: false)
+        user.stub(:get_couples).and_return([couple])
+        user.activeCouple.should be_nil
+      end
 
-    describe "#unverified_clubs" do
+      it "should return a couple if an active couple is assigned" do
+        couple = double('couple', active: true)
+        user.stub(:get_couples).and_return([couple])
+        user.activeCouple.should eq(couple)
+      end
     end
 
     describe "#get_id_by_name" do
+      it "should return nil if no user was found" do
+        User.stub(:where).and_return([])
+        User.get_id_by_name('test').should be_nil
+      end
+
+      it "should return the id if a user was found" do
+        User.stub(:where).and_return([double('user', id:1)])
+        User.get_id_by_name('test').should_not be_nil
+        User.get_id_by_name('test').should eq(1)
+      end
     end
 
     describe "#isntSet" do
+      it "should return true if the param is nil" do
+        User.isntSet(nil).should be_true
+      end
+
+      it "should return true if the param is 'Noch nicht eingetragen'" do
+        User.isntSet('Noch nicht eingetragen').should be_true
+      end
+
+      it "should return true if the param is ''" do
+        User.isntSet('').should be_true
+      end
+
+      it "should return false if it's something else" do
+        User.isntSet('Test').should be_false
+      end
     end
   end
 end

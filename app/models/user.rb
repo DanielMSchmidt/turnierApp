@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  # access couples
+
   def get_couples
     Couple.all.select{|couple| couple.man_id == self.id || couple.woman_id == self.id}.uniq
   end
@@ -47,20 +49,14 @@ class User < ActiveRecord::Base
     self.get_couples.select{|couple| couple.active}.first
   end
 
+  # access clubs
+
   def verified_clubs
     self.memberships.is_verified.collect{|x| x.club}.compact.uniq
   end
 
   def unverified_clubs
     self.memberships.includes(:club).is_unverified.collect{|x| x.club}.compact.uniq
-  end
-
-  def to_i
-    self.id
-  end
-
-  def to_s
-    "User: #{self.id} - #{self.email}"
   end
 
   # find users
@@ -79,6 +75,14 @@ class User < ActiveRecord::Base
   end
 
   def self.isntSet(parameter)
-    nil || parameter == 'Noch nicht eingetragen' || parameter == ''
+    parameter.nil? || parameter == 'Noch nicht eingetragen' || parameter == ''
+  end
+
+  def to_i
+    self.id
+  end
+
+  def to_s
+    "User: #{self.id} - #{self.email}"
   end
 end
