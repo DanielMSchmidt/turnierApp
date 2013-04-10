@@ -21,11 +21,6 @@ class Progress < ActiveRecord::Base
     self.start_points ||= 0
   end
 
-  def finish
-    self.finished = true
-    self.save
-  end
-
   def levelUp
     finishAndSetStartClass(self.nextClass)
   end
@@ -35,7 +30,8 @@ class Progress < ActiveRecord::Base
   end
 
   def finishAndSetStartClass(start_class)
-    self.finish
+    self.finished = true
+    self.save
     Progress.create(couple_id: self.couple_id, start_class: start_class, kind: self.kind)
   end
 
