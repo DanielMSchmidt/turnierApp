@@ -18,7 +18,7 @@
       .control-group
         = f.label 'Startklasse', :class => 'control-label'
         .controls
-          = f.text_field :latin, placeholder: 'Latein', :class => 'input-small'
-          = f.text_field :standard, placeholder: 'Standard', :class => 'input-small'
+          = f.text_field :latin_kind, placeholder: 'Latein', :class => 'input-small', value: active_couple.latin.kind
+          = f.text_field :standard_kind, placeholder: 'Standard', :class => 'input-small', value: active_couple.latin.kind
       .actions
         = f.submit 'Jetzt ändern', :class => "btn btn-primary"

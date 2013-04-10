@@ -3,6 +3,7 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :club
 
+  default_scope includes(:user)
   scope :is_verified, where(verified: true)
   scope :is_unverified, where(verified: false)
 end

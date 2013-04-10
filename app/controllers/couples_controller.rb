@@ -46,8 +46,8 @@ class CouplesController < ApplicationController
     @couple = Couple.new(man_id: man_id, woman_id: woman_id, active: true)
 
     #Add Progresses
-    latin = @couple.progresses.new(start_class: params[:couple][:latin], kind: 'latin')
-    standard = @couple.progresses.new(start_class: params[:couple][:standard], kind: 'standard')
+    latin = @couple.progresses.new(start_class: params[:couple][:latin_kind], kind: 'latin')
+    standard = @couple.progresses.new(start_class: params[:couple][:standard_kind], kind: 'standard')
 
     respond_to do |format|
       if @couple.save
