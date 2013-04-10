@@ -4,7 +4,6 @@
 
   .row-fluid
     .span6
-
       .input-prepend
         .add-on
           Punkte
@@ -17,6 +16,8 @@
 
       .actions
         = f.submit 'Speichern', :class => "btn btn-primary", data: {dismiss: 'modal'}
+
     .span4
-      = link_to 'Aufgestiegen!', couple_level_up_path(kind: 'standard'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
-      = link_to 'Nochmal!', couple_reset_path(kind: 'standard'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
+      .btn-group
+        = link_to 'Aufgestiegen!', couple_level_up_path(kind: 'standard'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
+        = link_to 'Nochmal!', couple_reset_path(kind: 'standard'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
