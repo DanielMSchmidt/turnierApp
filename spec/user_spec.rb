@@ -111,5 +111,25 @@ describe User do
         User.isntSet('Test').should be_false
       end
     end
+
+    describe "#to_i" do
+      it "should return the id" do
+        user.to_i.should eq(user.id)
+      end
+    end
+
+    describe "#to_s" do
+      it "should return the right string" do
+        user.to_s.should eq("User: #{user.id} - #{user.email}")
+      end
+    end
+
+    describe "#send_user_notification" do
+      it "should send a mail with the right params" do
+        newUser = double('new user')
+        NotificationMailer.should_receive(:userCount).with(User.all, newUser).and_return(double('mail', deliver: true))
+        User.send_user_notification(newUser)
+      end
+    end
   end
 end
