@@ -28,4 +28,26 @@ describe User do
       user.get_couples.count.should eq(2)
     end
   end
+
+  describe "functions" do
+    describe "#getOrganisedTournaments" do
+      it "should return an empty array if the user hasnt got any clubs"
+      it "should return all tournaments of the clubs associated with this user"
+    end
+
+    describe "#activeCouple" do
+    end
+
+    describe "#verified_clubs" do
+    end
+
+    describe "#unverified_clubs" do
+    end
+
+    describe "#get_id_by_name" do
+    end
+
+    describe "#isntSet" do
+    end
+  end
 end
