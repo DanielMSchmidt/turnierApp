@@ -46,8 +46,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'spork', '~> 1.0rc'
-
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 
@@ -58,6 +56,7 @@ group :test do
   gem 'shoulda-context'
   gem 'factory_girl_rails'
   gem "nyan-cat-formatter"
+  gem 'simplecov', :require => false
 end
 
 # Gems used only for assets and not required
