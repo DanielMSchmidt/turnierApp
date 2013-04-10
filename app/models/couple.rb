@@ -1,8 +1,9 @@
 class Couple < ActiveRecord::Base
   attr_accessible :active, :man_id, :woman_id
+  default_scope includes(:man, :woman)
+
   belongs_to :man, :class_name => "User"
   belongs_to :woman, :class_name => "User"
-
   has_many :progresses
 
   before_save :set_initial_values
