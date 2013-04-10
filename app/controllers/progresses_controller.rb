@@ -60,8 +60,7 @@ class ProgressesController < ApplicationController
 
     respond_to do |format|
       if @progress.update_attributes(params[:progress])
-        format.html { redirect_to @progress, notice: 'Progress was successfully updated.' }
-        format.json { head :no_content }
+        format.js
       else
         format.html { render action: "edit" }
         format.json { render json: @progress.errors, status: :unprocessable_entity }
