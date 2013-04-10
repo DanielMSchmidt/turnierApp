@@ -26,15 +26,17 @@ class Progress < ActiveRecord::Base
     self.save
   end
 
-  # TODO: Dry up
   def levelUp
-    self.finish
-    Progress.create(couple_id: self.couple_id, start_class: self.nextClass, kind: self.kind)
+    finishAndSetStartClass(self.nextClass)
   end
 
   def reset
+    finishAndSetStartClass(self.start_class)
+  end
+
+  def finishAndSetStartClass(start_class)
     self.finish
-    Progress.create(couple_id: self.couple_id, start_class: self.start_class, kind: self.kind)
+    Progress.create(couple_id: self.couple_id, start_class: start_class, kind: self.kind)
   end
 
   def nextClass
