@@ -57,6 +57,10 @@ class Club < ActiveRecord::Base
     self.verified_members.include?(user)
   end
 
+  def is_unverified_member(user)
+    self.unverified_members.include?(user)
+  end
+
   def to_s
     self.name
   end

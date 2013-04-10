@@ -1,12 +1,4 @@
-= form_for(@tournament) do |f|
-  - if @tournament.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@tournament.errors.count, "Fehler")
-        verhindern, dass dieses Turnier gespeichert wird:
-      %ul
-        - @tournament.errors.full_messages.each do |msg|
-          %li= msg
+= form_for(Tournament.new) do |f|
   .input-prepend
     .add-on
       Turniernummer

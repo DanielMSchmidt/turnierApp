@@ -20,23 +20,34 @@
           = link_to 'TurnierApp', root_path, class: 'brand'
           .nav-collapse.collapse.navbar-responsive-collapse
             %ul.nav
-              %li
-              %li.clubs= link_to 'Vereine', clubs_path
-
               - if user_signed_in?
-                %li.add_result= link_to 'Turnier hinzufügen', new_tournament_path
-                %li.results= link_to 'Meine Turnierergebnisse', user_tournaments_path(current_user)
-                %li.profil= link_to "Profil bearbeiten", edit_user_registration_path
-                %li.signout= link_to "Abmelden", destroy_user_session_path, method: :delete
+                %li.add_result
+                  = link_to 'Turnier hinzufügen', '#add_tournament_modal', role: 'button', data: {toggle: 'modal'}
+                %li.clubs
+                  = link_to 'Verein hinzufügen', '#add_club_modal', role: 'button', data: {toggle: 'modal'}
+                %li
+                  = link_to 'Ausstehende Anmeldungen', '#pending_club_modal', role: 'button', data: {toggle: 'modal'}
+                %li.profil
+                  = link_to "Profil bearbeiten", edit_user_registration_path
+                %li.signout
+                  = link_to "Abmelden", destroy_user_session_path, method: :delete
               - else
-                %li.signup= link_to "Registrieren", new_user_registration_path
-                %li.signin= link_to "Anmelden", new_user_session_path
-              %li.impressum= link_to 'Impressum', impressum_path
+                %li.signup
+                  = link_to "Registrieren", new_user_registration_path
+                %li.signin
+                  = link_to "Anmelden", new_user_session_path
+              %li.impressum
+                = link_to 'Impressum', impressum_path
 
     .content
       .row-fluid
         .offset1.span10
           = yield
+
+    .assets
+      = render "shared/user_modals"
+      = render "shared/modals/add_tournament_modal"
+
     %footer.navbar.navbar-fixed-bottom
       =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp", class: "btn btn-info high"
     - if Rails.env.production?
