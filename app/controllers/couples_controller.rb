@@ -87,6 +87,7 @@ class CouplesController < ApplicationController
     end
   end
 
+  # TODO: Dry up
   def levelup
     couple = current_user.activeCouple
     if params[:kind] == 'latin'
@@ -97,5 +98,13 @@ class CouplesController < ApplicationController
     respond_to :js
   end
 
-
+  def reset
+    couple = current_user.activeCouple
+    if params[:kind] == 'latin'
+      couple.latin.reset
+    else
+      couple.standard.reset
+    end
+    respond_to :js
+  end
 end

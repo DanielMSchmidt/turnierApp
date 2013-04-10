@@ -16,3 +16,4 @@
         = f.number_field :start_placings, :class => "span4"
     .span4
       = link_to 'Aufgestiegen!', couple_level_up_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
+      = link_to 'Nochmal!', couple_reset_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
