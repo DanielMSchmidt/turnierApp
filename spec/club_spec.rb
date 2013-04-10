@@ -8,6 +8,14 @@ describe Club do
   let!(:tournament){ FactoryGirl.create(:tournament) }
   let(:stubbed_tournament){ double('stubbed tournament') }
 
+  describe "#mail_owner_unenrolled_tournaments" do
+    it "should send the unenrolled tournaments to the owner" do
+      NotificationMailer.should_receive(:enrollCouples).and_return(double('mail', deliver: true))
+      club.should_receive(:unenrolled_and_enrollable_tournaments_left_which_should_be_notified).and_return(true)
+      club.mail_owner_unenrolled_tournaments
+    end
+  end
+
   describe "sending of unenrollment mails" do
     describe "method unenrolled_and_enrollable_tournaments_left" do
       it "should be true if the tournament is in the near future and unenrolled" do
@@ -22,6 +30,7 @@ describe Club do
       end
     end
   end
+
   describe "the factories should work" do
     it "should be the right user" do
       user.name.should eq('Test User')
@@ -40,6 +49,43 @@ describe Club do
 
     it "should be the right membership" do
       user.clubs.first.id.should eq(club.id)
+    end
+  end
+
+  describe "#is_owner?" do
+    it "should be true if user is owner" do
+      club.user_id = user.id
+      club.is_owner?(user).should be_true
+    end
+
+    it "should be false if user isn't owner" do
+      club.user_id = 10
+      club.is_owner?(user).should be_false
+    end
+
+    it "should be false if user is nil" do
+      club.is_owner?(nil).should be_false
+    end
+  end
+
+  describe "#transfer_to" do
+    it "it should change the owner" do
+      club.user_id = 10
+      club.owner.should be_nil
+
+      club.transfer_to(user)
+      club.owner.id.should eq(user.id)
+    end
+  end
+
+  describe "#is_verified_member" do
+    it "should be false if the user is not verified" do
+      club.should_receive(:verified_members).and_return([])
+      club.is_verified_member(user).should be_false
+    end
+    it "should be true if the user is verified" do
+      club.should_receive(:verified_members).and_return([user])
+      club.is_verified_member(user).should be_true
     end
   end
 end
