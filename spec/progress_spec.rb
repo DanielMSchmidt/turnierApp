@@ -116,5 +116,89 @@ describe Progress do
         progress.nextClass.should eq('S')
       end
     end
+
+    describe "#maxPointsOfClass" do
+      it "should be 100 if D Class" do
+        progress.stub(:start_class).and_return('D')
+        progress.maxPointsOfClass.should eq(100)
+      end
+      it "should be 150 if C Class" do
+        progress.stub(:start_class).and_return('C')
+        progress.maxPointsOfClass.should eq(150)
+      end
+      it "should be 200 if B Class" do
+        progress.stub(:start_class).and_return('B')
+        progress.maxPointsOfClass.should eq(200)
+      end
+      it "should be 250 if A Class" do
+        progress.stub(:start_class).and_return('A')
+        progress.maxPointsOfClass.should eq(250)
+      end
+    end
+
+    describe "#maxPlacingsOfClass" do
+      it "should be 7 if D Class" do
+        progress.stub(:start_class).and_return('D')
+        progress.maxPlacingsOfClass.should eq(7)
+      end
+      it "should be 7 if C Class" do
+        progress.stub(:start_class).and_return('C')
+        progress.maxPlacingsOfClass.should eq(7)
+      end
+      it "should be 7 if B Class" do
+        progress.stub(:start_class).and_return('B')
+        progress.maxPlacingsOfClass.should eq(7)
+      end
+      it "should be 10 if A Class" do
+        progress.stub(:start_class).and_return('A')
+        progress.maxPlacingsOfClass.should eq(10)
+      end
+    end
+
+    describe "#points_in_percentage" do
+      it "should calculate 20% for 20 points in D class" do
+        progress.stub(:start_class).and_return('D')
+        progress.stub(:points).and_return(20)
+        progress.points_in_percentage.should eq(20)
+      end
+      it "should calculate 20% for 30 points in C class" do
+        progress.stub(:start_class).and_return('C')
+        progress.stub(:points).and_return(30)
+        progress.points_in_percentage.should eq(20)
+      end
+      it "should calculate 14% for 21 points in C class" do
+        progress.stub(:start_class).and_return('C')
+        progress.stub(:points).and_return(21)
+        progress.points_in_percentage.should eq(14)
+      end
+      it "should calculate 100% for 121 points in C class" do
+        progress.stub(:start_class).and_return('C')
+        progress.stub(:points).and_return(171)
+        progress.points_in_percentage.should eq(100)
+      end
+    end
+
+    describe "#placings_in_percentage" do
+      it "should calculate 42,85% for 3 placings in B class" do
+        progress.stub(:start_class).and_return('B')
+        progress.stub(:placings).and_return(3)
+        progress.placings_in_percentage.should eq(42.86)
+      end
+      it "should calculate 30% for 3 placings in A class" do
+        progress.stub(:start_class).and_return('A')
+        progress.stub(:placings).and_return(3)
+        progress.placings_in_percentage.should eq(30)
+      end
+      it "should calculate 50% for 5 placings in A class" do
+        progress.stub(:start_class).and_return('A')
+        progress.stub(:placings).and_return(5)
+        progress.placings_in_percentage.should eq(50)
+      end
+      it "should calculate 100% for 12 placings in A class" do
+        progress.stub(:start_class).and_return('A')
+        progress.stub(:placings).and_return(12)
+        progress.placings_in_percentage.should eq(100)
+      end
+    end
   end
 end

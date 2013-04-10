@@ -16,7 +16,7 @@ class Progress < ActiveRecord::Base
 
   def set_initial_values
     self.finished = false if self.finished.nil?
-    self.start_class ||= 'D'
+    self.start_class = 'D' if start_class.nil? || start_class == ''
     self.start_placings ||= 0
     self.start_points ||= 0
   end
@@ -35,6 +35,32 @@ class Progress < ActiveRecord::Base
     Progress.create(couple_id: self.couple_id, start_class: start_class, kind: self.kind)
   end
 
+  def maxPointsOfClass
+    case self.start_class
+      when 'D'
+        100
+      when 'C'
+        150
+      when 'B'
+        200
+      else
+        250
+    end
+  end
+
+  def maxPlacingsOfClass
+    case self.start_class
+      when 'D'
+        7
+      when 'C'
+        7
+      when 'B'
+        7
+      else
+        10
+    end
+  end
+
   def nextClass
     case self.start_class
       when 'D'
@@ -48,11 +74,22 @@ class Progress < ActiveRecord::Base
     end
   end
 
+  # Points & Placings
   def placings
-    self.start_placings + self.tournaments.collect{|tournament| tournament.placing}.inject(:+)
+    self.start_placings + (self.tournaments.collect{|tournament| tournament.placing}.inject(:+) || 0)
   end
 
   def points
-    self.start_points + self.tournaments.collect{|tournament| tournament.points}.inject(:+)
+    self.start_points + (self.tournaments.collect{|tournament| tournament.points}.inject(:+) || 0)
+  end
+
+  def points_in_percentage
+    percentage = (self.points * 100) / maxPointsOfClass.to_f
+    (percentage > 100) ? 100 : percentage.round(2)
+  end
+
+  def placings_in_percentage
+    percentage = (self.placings * 100) / maxPlacingsOfClass.to_f
+    (percentage > 100) ? 100 : percentage.round(2)
   end
 end
