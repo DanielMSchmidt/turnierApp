@@ -11,6 +11,8 @@ Other todos
     - add generation of pdfs for upcoming and danced tournaments
     - make all forms horizontal forms (with bootstrap)
     - statistics for dashboard
+    - write job to reassign existing tournaments
+    - improve data search
 
   - v0.9
     - Facebook login
