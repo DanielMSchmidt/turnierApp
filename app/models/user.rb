@@ -39,6 +39,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def tournaments
+    unless self.activeCouple.nil?
+      self.activeCouple.latin.tournaments + self.activeCouple.standard.tournaments
+    else
+      []
+    end
+  end
+
   # access couples
 
   def get_couples
