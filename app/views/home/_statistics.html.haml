@@ -20,18 +20,31 @@
     ykeys: ["po", "pl"]
     labels: ["Punkte", "Platzierungen"]
 
-:coffeescript
   Morris.Bar
-    element: "latin-standard-balance"
+    element: "latin-standard-balance-tournaments"
     data: [
       y: "Turniere"
       a: 100
       b: 90
-    ,
+    ]
+    xkey: "y"
+    ykeys: ["a", "b"]
+    labels: ["Latein", "Standard"]
+
+  Morris.Bar
+    element: "latin-standard-balance-points"
+    data: [
       y: "Punkte"
       a: 75
       b: 65
-    ,
+    ]
+    xkey: "y"
+    ykeys: ["a", "b"]
+    labels: ["Latein", "Standard"]
+
+  Morris.Bar
+    element: "latin-standard-balance-placings"
+    data: [
       y: "Platzierungen"
       a: 50
       b: 40
