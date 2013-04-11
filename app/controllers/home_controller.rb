@@ -1,9 +1,6 @@
 class HomeController < ApplicationController
   def index
-    if user_signed_in?
-      checkIfUserIsReadyToStart(current_user)
-      setUserModalData
-    end
+    checkIfUserIsReadyToStart(current_user) if user_signed_in?
   end
 
   def impressum
@@ -13,11 +10,5 @@ class HomeController < ApplicationController
   def checkIfUserIsReadyToStart(user)
     @has_couple = user.activeCouple.present?
     @has_a_club = user.clubs.first.present?
-  end
-
-  def setUserModalData
-    @clubs = Club.all
-    @couple = Couple.new
-    @tournament = Tournament.new
   end
 end
