@@ -3,13 +3,14 @@ require 'capybara/rails'
 
 describe Club do
   let!(:user){ FactoryGirl.create(:user) }
+  let!(:couple){ FactoryGirl.create(:couple) }
   let!(:membership){ FactoryGirl.create(:membership) }
   let!(:club){ FactoryGirl.create(:club) }
   let!(:tournament){ FactoryGirl.create(:tournament) }
   let(:stubbed_tournament){ double('stubbed tournament') }
 
   describe "#mail_owner_unenrolled_tournaments" do
-    it "should send the unenrolled tournaments to the owner" do
+    it "should send the unenrolled tournaments to the owner", slow: true do
       NotificationMailer.should_receive(:enrollCouples).and_return(double('mail', deliver: true))
       club.should_receive(:unenrolled_and_enrollable_tournaments_left_which_should_be_notified).and_return(true)
       club.mail_owner_unenrolled_tournaments
@@ -24,7 +25,7 @@ describe Club do
         club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified.should be_true
       end
 
-      it "should be false if the tournament is in the wide future and unenrolled" do
+      it "should be false if the tournament is in the wide future and unenrolled", slow: true do
         FactoryGirl.create(:tournament, date: (DateTime.now.beginning_of_day.to_date + 2.months).to_date)
         club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified.should be_false
       end
@@ -37,9 +38,14 @@ describe Club do
       user.email.should eq('test@testuser.de')
     end
 
-    it "should be the right tournament" do
-      tournament.number.should eq(28288)
-      user.tournaments.first.id.should eq(tournament.id)
+    it "should have a couple" do
+      user.activeCouple.should_not be_nil
+    end
+
+    it "should habe the right progresses" do
+      couple = user.activeCouple
+      couple.latin.should_not be_nil
+      couple.standard.should_not be_nil
     end
 
     it "should be the right club" do
