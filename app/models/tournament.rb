@@ -11,10 +11,22 @@ class Tournament < ActiveRecord::Base
 
   delegate :name, to: :user, prefix: true
 
-   def no_double_tournaments_are_allowed
-     Tournament.where(number: number, user_id: user_id).size == 0
-     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
-   end
+  def no_double_tournaments_are_allowed
+    Tournament.where(number: number, user_id: user_id).size == 0
+    errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
+  end
+
+
+  def new_for_active_user(params)
+    tournament = Tournament.new(params)
+    if tournament.latin?
+      id = current_user.activeCouple.latin.id
+    else
+      id = current_user.activeCouple.standard.id
+    end
+    tournament.progress_id = id
+    tournament
+  end
 
   def incomplete?
     return self.participants.nil? && self.place.nil?

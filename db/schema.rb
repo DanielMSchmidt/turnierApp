@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405175839) do
+ActiveRecord::Schema.define(:version => 20130411092140) do
 
   create_table "clubs", :force => true do |t|
     t.string   "name"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20130405175839) do
 
   create_table "tournaments", :force => true do |t|
     t.integer  "number"
-    t.integer  "user_id"
+    t.integer  "progress_id"
     t.integer  "place"
     t.integer  "participants"
     t.datetime "created_at",                          :null => false
@@ -65,10 +65,9 @@ ActiveRecord::Schema.define(:version => 20130405175839) do
     t.string   "notes"
     t.boolean  "enrolled",          :default => true
     t.date     "notificated_about"
-    t.integer  "progress_id"
   end
 
-  add_index "tournaments", ["user_id"], :name => "index_tournaments_on_user_id"
+  add_index "tournaments", ["progress_id"], :name => "index_tournaments_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
