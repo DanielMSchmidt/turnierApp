@@ -122,14 +122,17 @@ describe Progress do
         progress.stub(:start_class).and_return('D')
         progress.maxPointsOfClass.should eq(100)
       end
+
       it "should be 150 if C Class" do
         progress.stub(:start_class).and_return('C')
         progress.maxPointsOfClass.should eq(150)
       end
+
       it "should be 200 if B Class" do
         progress.stub(:start_class).and_return('B')
         progress.maxPointsOfClass.should eq(200)
       end
+
       it "should be 250 if A Class" do
         progress.stub(:start_class).and_return('A')
         progress.maxPointsOfClass.should eq(250)
@@ -141,14 +144,17 @@ describe Progress do
         progress.stub(:start_class).and_return('D')
         progress.maxPlacingsOfClass.should eq(7)
       end
+
       it "should be 7 if C Class" do
         progress.stub(:start_class).and_return('C')
         progress.maxPlacingsOfClass.should eq(7)
       end
+
       it "should be 7 if B Class" do
         progress.stub(:start_class).and_return('B')
         progress.maxPlacingsOfClass.should eq(7)
       end
+
       it "should be 10 if A Class" do
         progress.stub(:start_class).and_return('A')
         progress.maxPlacingsOfClass.should eq(10)
@@ -161,16 +167,19 @@ describe Progress do
         progress.stub(:points).and_return(20)
         progress.points_in_percentage.should eq(20)
       end
+
       it "should calculate 20% for 30 points in C class" do
         progress.stub(:start_class).and_return('C')
         progress.stub(:points).and_return(30)
         progress.points_in_percentage.should eq(20)
       end
+
       it "should calculate 14% for 21 points in C class" do
         progress.stub(:start_class).and_return('C')
         progress.stub(:points).and_return(21)
         progress.points_in_percentage.should eq(14)
       end
+
       it "should calculate 100% for 121 points in C class" do
         progress.stub(:start_class).and_return('C')
         progress.stub(:points).and_return(171)
@@ -184,20 +193,77 @@ describe Progress do
         progress.stub(:placings).and_return(3)
         progress.placings_in_percentage.should eq(42.86)
       end
+
       it "should calculate 30% for 3 placings in A class" do
         progress.stub(:start_class).and_return('A')
         progress.stub(:placings).and_return(3)
         progress.placings_in_percentage.should eq(30)
       end
+
       it "should calculate 50% for 5 placings in A class" do
         progress.stub(:start_class).and_return('A')
         progress.stub(:placings).and_return(5)
         progress.placings_in_percentage.should eq(50)
       end
+
       it "should calculate 100% for 12 placings in A class" do
         progress.stub(:start_class).and_return('A')
         progress.stub(:placings).and_return(12)
         progress.placings_in_percentage.should eq(100)
+      end
+    end
+
+    describe "#points_at_time" do
+      before(:each) do
+        @date = DateTime.now
+        @tm1 = double("tournament1", date: @date, points: 4)
+        @tm2 = double("tournament2", date: @date - 1.week, points: 5)
+        @tm3 = double("tournament3", date: @date + 1.week, points: 6)
+        progress.stub(:tournaments).and_return([@tm1, @tm2, @tm3])
+      end
+
+      it "should be all tournaments included until this point of time" do
+        @tm1.should_receive(:points)
+        @tm2.should_receive(:points)
+
+        progress.points_at_time(@date)
+      end
+
+      it "should be all tournaments excluded after this point of time" do
+        @tm3.should_not_receive(:points)
+
+        progress.points_at_time(@date)
+      end
+
+      it "should add all points until this point of time" do
+        progress.points_at_time(@date).should eq(9)
+      end
+    end
+
+    describe "#placings_at_time" do
+      before(:each) do
+        @date = DateTime.now
+        @tm1 = double("tournament1", date: @date, placings: 4)
+        @tm2 = double("tournament2", date: @date - 1.week, placings: 5)
+        @tm3 = double("tournament3", date: @date + 1.week, placings: 6)
+        progress.stub(:tournaments).and_return([@tm1, @tm2, @tm3])
+      end
+
+      it "should be all tournaments included until this point of time" do
+        @tm1.should_receive(:placings)
+        @tm2.should_receive(:placings)
+
+        progress.placings_at_time(@date)
+      end
+
+      it "should be all tournaments excluded after this point of time" do
+        @tm3.should_not_receive(:placings)
+
+        progress.placings_at_time(@date)
+      end
+
+      it "should add all placings until this point of time" do
+        progress.placings_at_time(@date).should eq(9)
       end
     end
   end

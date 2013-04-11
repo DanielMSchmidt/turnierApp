@@ -83,12 +83,16 @@ class Progress < ActiveRecord::Base
     self.start_placings + (self.tournaments.collect{|tournament| tournament.placing}.inject(:+) || 0)
   end
 
-  def points_at_time
-    42
+  def points_at_time(time)
+    get_tournaments_before(time).collect{|tournament| tournament.points}.inject(:+)
   end
 
-  def placings_at_time
-    5
+  def placings_at_time(time)
+    get_tournaments_before(time).collect{|tournament| tournament.placings}.inject(:+)
+  end
+
+  def get_tournaments_before(time)
+    self.tournaments.select{|tournament| tournament.date <= time}
   end
 
   def points_in_percentage
