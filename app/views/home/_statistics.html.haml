@@ -2,8 +2,7 @@
 %script{:src => "http://cdn.oesmith.co.uk/morris-0.4.1.min.js"}
 
 #progress-over-time{style: "height: 500px"}
-#latin-standard-balance-by-points{style: "height: 250px"}
-#latin-standard-balance-by-placings{style: "height: 250px"}
+#latin-standard-balance{style: "height: 250px"}
 
 %input#progress-over-time-data{:type => "hidden", :value => "#{getProgressOverTimeData(current_user.activeCouple)}"}
 
@@ -15,3 +14,23 @@
     xkey: "y"
     ykeys: ["po", "pl"]
     labels: ["Punkte", "Platzierungen"]
+
+:coffeescript
+  Morris.Bar
+    element: "latin-standard-balance"
+    data: [
+      y: "Turniere"
+      a: 100
+      b: 90
+    ,
+      y: "Punkte"
+      a: 75
+      b: 65
+    ,
+      y: "Platzierungen"
+      a: 50
+      b: 40
+    ]
+    xkey: "y"
+    ykeys: ["a", "b"]
+    labels: ["Latein", "Standard"]
