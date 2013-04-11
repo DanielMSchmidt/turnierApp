@@ -21,8 +21,6 @@
       Teilnehmerzahl
     = f.number_field :participants
 
-  = f.hidden_field :user_id, :value => current_user.id
-
   .actions
     = f.submit "erstellen", class: "btn btn-primary"
 
