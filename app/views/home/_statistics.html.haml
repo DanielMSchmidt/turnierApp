@@ -1,1 +1,17 @@
-Statistics
+%script{:src => "//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"}
+%script{:src => "http://cdn.oesmith.co.uk/morris-0.4.1.min.js"}
+
+#progress-over-time{style: "height: 500px"}
+#latin-standard-balance-by-points{style: "height: 250px"}
+#latin-standard-balance-by-placings{style: "height: 250px"}
+
+%input#progress-over-time-data{:type => "hidden", :value => "#{getProgressOverTimeData(current_user.activeCouple)}"}
+
+:coffeescript
+  progress_over_time_data = $("#progress-over-time-data").val()
+  Morris.Line
+    element: "progress-over-time"
+    data: progress_over_time_data
+    xkey: "y"
+    ykeys: ["po", "pl"]
+    labels: ["Punkte", "Platzierungen"]

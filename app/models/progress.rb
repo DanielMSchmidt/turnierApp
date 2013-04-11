@@ -75,12 +75,20 @@ class Progress < ActiveRecord::Base
   end
 
   # Points & Placings
+  def points
+    self.start_points + (self.tournaments.collect{|tournament| tournament.points}.inject(:+) || 0)
+  end
+
   def placings
     self.start_placings + (self.tournaments.collect{|tournament| tournament.placing}.inject(:+) || 0)
   end
 
-  def points
-    self.start_points + (self.tournaments.collect{|tournament| tournament.points}.inject(:+) || 0)
+  def points_at_time
+    42
+  end
+
+  def placings_at_time
+    5
   end
 
   def points_in_percentage

@@ -53,4 +53,27 @@ module TournamentsHelper
   def tournament_adress(tournament)
     raw tournament.address.split(", ").join("<br />") if tournament.address?
   end
+
+
+  # TODO: Write tests for this
+  def getProgressOverTimeData(couple)
+    mergeProgressArrays(getProgressOverTime(couple.latin), getProgressOverTime(couple.standard))
+  end
+
+  def mergeProgressArrays(latin_array, standard_array)
+    merged = latin_array
+    merged.concat(standard_array)
+    merged.sort { |a,b| a[:y] <=> b[:y] }
+  end
+
+  def getProgressOverTime(progress)
+    progress.tournaments.reject{|tournament| tournament.upcoming?}.collect do |tournament|
+      point_of_time = tournament.date
+      {
+        y: point_of_time.strftime("%d.%m.%y"),
+        po: progress.points_at_time(point_of_time),
+        pl: progress.placings_at_time(point_of_time)
+       }
+    end
+  end
 end
