@@ -54,16 +54,12 @@ module TournamentsHelper
     raw tournament.address.split(", ").join("<br />") if tournament.address?
   end
 
-
-  # TODO: Write tests for this
   def getProgressOverTimeData(couple)
     mergeProgressArrays(getProgressOverTime(couple.latin), getProgressOverTime(couple.standard))
   end
 
   def mergeProgressArrays(latin_array, standard_array)
-    merged = latin_array
-    merged.concat(standard_array)
-    merged.sort { |a,b| a[:y] <=> b[:y] }
+    (latin_array + standard_array).sort{ |a,b| a[:y] <=> b[:y] }
   end
 
   def getProgressOverTime(progress)
