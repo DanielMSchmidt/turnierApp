@@ -41,10 +41,11 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new(enhanced_informations)
+    @tournament = Tournament.new_for_active_user(enhanced_informations)
+
 
     if @tournament.save
-      redirect_to user_tournaments_path(current_user), notice: t('tournament create')
+      redirect_to root_path, notice: t('tournament create')
     else
       render :new
     end
