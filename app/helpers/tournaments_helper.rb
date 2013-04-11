@@ -72,4 +72,15 @@ module TournamentsHelper
        }
     end
   end
+
+  # TODO: Fill and write tests
+  def getTournamentsData(couple)
+  end
+
+  def getPlacingsData(couple)
+  end
+
+  def getPointsData(couple)
+  end
+
 end

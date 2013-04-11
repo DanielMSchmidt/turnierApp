@@ -1,7 +1,16 @@
+- active_couple = current_user.activeCouple
 #progress-over-time{style: "height: 500px"}
-#latin-standard-balance{style: "height: 250px"}
+#latin-standard-balance-tournaments{style: "height: 250px; width: 33%;"}
+#latin-standard-balance-points{style: "height: 250px; width: 33%;"}
+#latin-standard-balance-placings{style: "height: 250px; width: 33%;"}
 
-%input#progress-over-time-data{:type => "hidden", :value => "#{getProgressOverTimeData(current_user.activeCouple)}"}
+%input#progress-over-time-data{:type => "hidden", :value => "#{getProgressOverTimeData(active_couple)}"}
+%input#latin-standard-balance-tournaments-data{:type => "hidden", :value => "#{getTournamentsData(active_couple)}"}
+%input#latin-standard-balance-placings-data{:type => "hidden", :value => "#{getPlacingsData(active_couple)}"}
+%input#latin-standard-balance-points-data{:type => "hidden", :value => "#{getPointsData(active_couple)}"}
+
+%script{:src => "//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"}
+%script{:src => "http://cdn.oesmith.co.uk/morris-0.4.1.min.js"}
 
 :coffeescript
   Morris.Line
