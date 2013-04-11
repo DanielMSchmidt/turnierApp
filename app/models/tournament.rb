@@ -12,8 +12,8 @@ class Tournament < ActiveRecord::Base
   delegate :name, to: :user, prefix: true
 
   def no_double_tournaments_are_allowed
-    Tournament.where(number: number, user_id: user_id).size == 0
-    errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
+    Tournament.where(number: number, progress_id: progress_id).size == 0
+    errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
   end
 
 

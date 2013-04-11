@@ -15,14 +15,14 @@ FactoryGirl.define do
   end
 
   factory :tournament do
-
     ignore do
       number 28288
-      user_id 1
-      data {{number: number, user_id: user_id, address: 'testaddress', date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: false}}
+      progress_id 1
+      data {{number: number, progress_id: progress_id, address: 'testaddress', date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: false}}
     end
-    initialize_with { Tournament.where(number: number, user_id: user_id).first || Tournament.create(data) }
+    initialize_with { Tournament.where(number: number, progress_id: progress_id).first || Tournament.create(data) }
   end
+
 
   factory :d_class_tournament do
     number 27114
@@ -50,7 +50,7 @@ FactoryGirl.define do
 
   factory :future_tournament do
     number 29239
-    user_id 1
+    progress_id 1
     address 'testaddress'
     date (DateTime.now + 2.weeks).to_date
     enrolled false
