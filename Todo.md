@@ -13,6 +13,7 @@ Other todos
     - statistics for dashboard
     - write job to reassign existing tournaments
     - improve data search
+    - alert box for missing data in any tournament
 
   - v0.9
     - Facebook login
