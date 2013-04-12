@@ -73,14 +73,16 @@ module TournamentsHelper
     end
   end
 
-  # TODO: Fill and write tests
   def getTournamentsData(couple)
+    [{ b: "Turniere" ,l: couple.latin.tournaments.count ,s: couple.standard.tournaments.count }]
   end
 
   def getPlacingsData(couple)
+    [{ b: "Platzierungen" ,l: couple.latin.placings ,s: couple.standard.placings }]
   end
 
   def getPointsData(couple)
+    [{ b: "Punkte" ,l: couple.latin.points ,s: couple.standard.points }]
   end
 
 end

@@ -4,6 +4,8 @@ describe TournamentsHelper, :type => :helper do
   before(:each) do
     @time_now = DateTime.now
     DateTime.stub(:now).and_return(@time_now)
+    @tournament1 = double("tournament1", upcoming?: false, date: @time_now)
+    @tournament2 = double("tournament2", upcoming?: false, date: @time_now + 1.week)
   end
 
   describe "#getProgressOverTimeData" do
@@ -46,8 +48,6 @@ describe TournamentsHelper, :type => :helper do
 
   describe "#getProgressOverTime" do
     before(:each) do
-      @tournament1 = double("tournament1", upcoming?: false, date: @time_now)
-      @tournament2 = double("tournament2", upcoming?: false, date: @time_now + 1.week)
       @progress = double("progress", tournaments: [@tournament1, @tournament2], points_at_time: 42, placings_at_time: 23)
       @result = helper.getProgressOverTime(@progress)
     end
@@ -107,12 +107,11 @@ describe TournamentsHelper, :type => :helper do
 
   describe "#getPlacingsData" do
     before(:each) do
-      @tournament1.stub(:placing).and_return(0)
-      @tournament2.stub(:placing).and_return(1)
-      latin_progress = double("LAT - progress", tournaments: [@tournament1, @tournament2])
-      standard_progess = double("STD - progress", tournaments: [@tournament1])
+      latin_progress = double("LAT - progress", placings: 1)
+      standard_progess = double("STD - progress", placings: 0)
+
       couple = double("couple", latin: latin_progress, standard: standard_progess)
-      @result = helper.getTournamentsData(couple)
+      @result = helper.getPlacingsData(couple)
     end
 
     it "should return an array with one hash" do
@@ -127,23 +126,21 @@ describe TournamentsHelper, :type => :helper do
       @result.first.should have_key(:s)
     end
 
-    it "should have all latin tournaments counted" do
+    it "should have the right placing count for latin" do
       @result.first[:l].should eq(1)
     end
 
-    it "should have all standard tournaments counted" do
+    it "should have the right placing count for standard" do
       @result.first[:s].should eq(0)
     end
   end
 
   describe "#getPointsData" do
     before(:each) do
-      @tournament1.stub(:points).and_return(5)
-      @tournament2.stub(:points).and_return(3)
-      latin_progress = double("LAT - progress", tournaments: [@tournament1, @tournament2])
-      standard_progess = double("STD - progress", tournaments: [@tournament1])
+      latin_progress = double("LAT - progress", points: 8)
+      standard_progess = double("STD - progress", points: 5)
       couple = double("couple", latin: latin_progress, standard: standard_progess)
-      @result = helper.getTournamentsData(couple)
+      @result = helper.getPointsData(couple)
     end
 
     it "should return an array with one hash" do
@@ -158,11 +155,11 @@ describe TournamentsHelper, :type => :helper do
       @result.first.should have_key(:s)
     end
 
-    it "should have all latin tournaments counted" do
+    it "should have the right points count for standard" do
       @result.first[:l].should eq(8)
     end
 
-    it "should have all standard tournaments counted" do
+    it "should have the right points count for standard" do
       @result.first[:s].should eq(5)
     end
   end
