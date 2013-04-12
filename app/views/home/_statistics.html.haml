@@ -6,51 +6,15 @@
 
 %input#progress-over-time-data{:type => "hidden", :value => "#{getProgressOverTimeData(active_couple)}"}
 %input#latin-standard-balance-tournaments-data{:type => "hidden", :value => "#{getTournamentsData(active_couple)}"}
-%input#latin-standard-balance-placings-data{:type => "hidden", :value => "#{getPlacingsData(active_couple)}"}
 %input#latin-standard-balance-points-data{:type => "hidden", :value => "#{getPointsData(active_couple)}"}
+%input#latin-standard-balance-placings-data{:type => "hidden", :value => "#{getPlacingsData(active_couple)}"}
 
 %script{:src => "//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"}
 %script{:src => "http://cdn.oesmith.co.uk/morris-0.4.1.min.js"}
 
 
-# TODO: Refactor in JS and with helper to build values right in
-:coffeescript
-  Morris.Line
-    element: "progress-over-time"
-    data: $("#progress-over-time-data").val()
-    xkey: "y"
-    ykeys: ["po", "pl"]
-    labels: ["Punkte", "Platzierungen"]
-
-  Morris.Bar
-    element: "latin-standard-balance-tournaments"
-    data: [
-      y: "Turniere"
-      a: 100
-      b: 90
-    ]
-    xkey: "y"
-    ykeys: ["a", "b"]
-    labels: ["Latein", "Standard"]
-
-  Morris.Bar
-    element: "latin-standard-balance-points"
-    data: [
-      y: "Punkte"
-      a: 75
-      b: 65
-    ]
-    xkey: "y"
-    ykeys: ["a", "b"]
-    labels: ["Latein", "Standard"]
-
-  Morris.Bar
-    element: "latin-standard-balance-placings"
-    data: [
-      y: "Platzierungen"
-      a: 50
-      b: 40
-    ]
-    xkey: "y"
-    ykeys: ["a", "b"]
-    labels: ["Latein", "Standard"]
+%script
+  = print_graph('line', 'progress-over-time', getProgressOverTimeData(active_couple), {po: "Punkte", pl: "Platzierungen"} )
+  = print_graph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
+  = print_graph('bar', 'latin-standard-balance-placings', getPlacingsData(active_couple), {l: "Latein", s: "Standard"} )
+  = print_graph('bar', 'latin-standard-balance-points', getPointsData(active_couple), {l: "Latein", s: "Standard"} )

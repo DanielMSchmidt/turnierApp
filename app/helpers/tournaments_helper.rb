@@ -54,6 +54,8 @@ module TournamentsHelper
     raw tournament.address.split(", ").join("<br />") if tournament.address?
   end
 
+  # TODO: refactor via decorator
+
   def getProgressOverTimeData(couple)
     mergeProgressArrays(getProgressOverTime(couple.latin), getProgressOverTime(couple.standard))
   end
@@ -62,27 +64,43 @@ module TournamentsHelper
     (latin_array + standard_array).sort{ |a,b| a[:y] <=> b[:y] }
   end
 
+  # TODO: Fix, just returns [] by now
   def getProgressOverTime(progress)
     progress.tournaments.reject{|tournament| tournament.upcoming?}.collect do |tournament|
       point_of_time = tournament.date
-      {
+      hash = {
         y: point_of_time.strftime("%d.%m.%y"),
         po: progress.points_at_time(point_of_time),
         pl: progress.placings_at_time(point_of_time)
        }
+      hash
     end
   end
 
   def getTournamentsData(couple)
-    [{ b: "Turniere" ,l: couple.latin.tournaments.count ,s: couple.standard.tournaments.count }]
+    [{ y: "Turniere" ,l: couple.latin.tournaments.count ,s: couple.standard.tournaments.count }]
   end
 
   def getPlacingsData(couple)
-    [{ b: "Platzierungen" ,l: couple.latin.placings ,s: couple.standard.placings }]
+    [{ y: "Platzierungen" ,l: couple.latin.placings ,s: couple.standard.placings }]
   end
 
   def getPointsData(couple)
-    [{ b: "Punkte" ,l: couple.latin.points ,s: couple.standard.points }]
+    [{ y: "Punkte" ,l: couple.latin.points ,s: couple.standard.points }]
+  end
+
+  #               Line or Bar        Hash of keys
+  #               |                  |
+  def print_graph(type, field, data, keys)
+    key_names = keys.keys.collect{|key| "'"+key.to_s+"'"}.join(", ")
+    key_values = keys.values.collect{|value| "'"+value.to_s+"'"}.join(", ")
+
+    str = raw ("Morris.#{type.capitalize}({")
+    str += raw("element: '#{field}',")
+    str += raw("data: #{data.to_json},")
+    str += raw("xkey: 'y',")
+    str += raw("ykeys: [#{key_names}],")
+    str += raw("labels: [#{key_values}]});")
   end
 
 end
