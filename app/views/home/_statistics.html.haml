@@ -7,9 +7,14 @@
 %script{:src => "//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"}
 %script{:src => "http://cdn.oesmith.co.uk/morris-0.4.1.min.js"}
 
+- progressOverTimeData = getProgressOverTimeData(active_couple)
+- unless progressOverTimeData.empty?
+  %script
+    = print_graph('line', 'progress-over-time', progressOverTimeData, {po: "Punkte", pl: "Platzierungen"} )
+- else
+  %img#line-placeholder{src: "http://www.placehold.it/250x500&text='Du musst Turniere tanzen für einen Verlauf'"}
 
 %script
-  = print_graph('line', 'progress-over-time', getProgressOverTimeData(active_couple), {po: "Punkte", pl: "Platzierungen"} )
   = print_graph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
   = print_graph('bar', 'latin-standard-balance-placings', getPlacingsData(active_couple), {l: "Latein", s: "Standard"} )
   = print_graph('bar', 'latin-standard-balance-points', getPointsData(active_couple), {l: "Latein", s: "Standard"} )
