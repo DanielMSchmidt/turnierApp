@@ -75,4 +75,95 @@ describe TournamentsHelper, :type => :helper do
       helper.getProgressOverTime(progress2).size.should eq(2)
     end
   end
+
+  describe "#getTournamentsData" do
+    before(:each) do
+      latin_progress = double("LAT - progress", tournaments: [@tournament1, @tournament2])
+      standard_progess = double("STD - progress", tournaments: [@tournament1])
+      couple = double("couple", latin: latin_progress, standard: standard_progess)
+      @result = helper.getTournamentsData(couple)
+    end
+
+    it "should return an array with one hash" do
+      @result.should be_an Array
+      @result.length.should eq(1)
+      @result.first.should be_a Hash
+    end
+
+    it "should have the right attributes in the hash" do
+      @result.first.should have_key(:b)
+      @result.first.should have_key(:l)
+      @result.first.should have_key(:s)
+    end
+
+    it "should have all latin tournaments counted" do
+      @result.first[:l].should eq(2)
+    end
+
+    it "should have all standard tournaments counted" do
+      @result.first[:s].should eq(1)
+    end
+  end
+
+  describe "#getPlacingsData" do
+    before(:each) do
+      @tournament1.stub(:placing).and_return(0)
+      @tournament2.stub(:placing).and_return(1)
+      latin_progress = double("LAT - progress", tournaments: [@tournament1, @tournament2])
+      standard_progess = double("STD - progress", tournaments: [@tournament1])
+      couple = double("couple", latin: latin_progress, standard: standard_progess)
+      @result = helper.getTournamentsData(couple)
+    end
+
+    it "should return an array with one hash" do
+      @result.should be_an Array
+      @result.length.should eq(1)
+      @result.first.should be_a Hash
+    end
+
+    it "should have the right attributes in the hash" do
+      @result.first.should have_key(:b)
+      @result.first.should have_key(:l)
+      @result.first.should have_key(:s)
+    end
+
+    it "should have all latin tournaments counted" do
+      @result.first[:l].should eq(1)
+    end
+
+    it "should have all standard tournaments counted" do
+      @result.first[:s].should eq(0)
+    end
+  end
+
+  describe "#getPointsData" do
+    before(:each) do
+      @tournament1.stub(:points).and_return(5)
+      @tournament2.stub(:points).and_return(3)
+      latin_progress = double("LAT - progress", tournaments: [@tournament1, @tournament2])
+      standard_progess = double("STD - progress", tournaments: [@tournament1])
+      couple = double("couple", latin: latin_progress, standard: standard_progess)
+      @result = helper.getTournamentsData(couple)
+    end
+
+    it "should return an array with one hash" do
+      @result.should be_an Array
+      @result.length.should eq(1)
+      @result.first.should be_a Hash
+    end
+
+    it "should have the right attributes in the hash" do
+      @result.first.should have_key(:b)
+      @result.first.should have_key(:l)
+      @result.first.should have_key(:s)
+    end
+
+    it "should have all latin tournaments counted" do
+      @result.first[:l].should eq(8)
+    end
+
+    it "should have all standard tournaments counted" do
+      @result.first[:s].should eq(5)
+    end
+  end
 end
