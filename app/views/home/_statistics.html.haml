@@ -12,7 +12,7 @@
   %script
     = print_graph('line', 'progress-over-time', progressOverTimeData, {po: "Punkte", pl: "Platzierungen"} )
 - else
-  %img#line-placeholder{src: "http://www.placehold.it/250x500&text='Du musst Turniere tanzen für einen Verlauf'"}
+  %img#line-placeholder{src: "http://www.placehold.it/500x250&text=Tanze+Turniere+für+einen+Verlauf", style: "margin-top: -768px;"}
 
 %script
   = print_graph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
