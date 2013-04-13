@@ -9,9 +9,9 @@ Other todos
 ---------------------
   - v0.8
     - add generation of pdfs for upcoming and danced tournaments
-    - make all forms horizontal forms (with bootstrap)
     - statistics for dashboard
-    - write job to reassign existing tournaments
+
+    - make all forms horizontal forms (with bootstrap)
     - improve data search
     - alert box for missing data in any tournament
 
