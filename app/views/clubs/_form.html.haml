@@ -1,4 +1,4 @@
-= form_for(@club) do |f|
+= form_for(@club, :html => {:class => "form-horizontal"}) do |f|
   - if @club.errors.any?
     #error_explanation
       %h2
@@ -7,10 +7,10 @@
       %ul
         - @club.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    Bitte den Namen des Vereins eingeben:
-    %br/
-    %br/
-    = f.text_field :name
-  .actions
-    = f.submit "absenden", class: "btn btn-primary"
+  .control-group
+    = f.label :club, "Bitte den Namen des Vereins eingeben", :class => "control-label"
+    .controls
+      = f.text_field :name
+  .control-group
+    .controls
+      = f.submit "absenden", class: "btn btn-primary"

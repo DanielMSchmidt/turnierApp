@@ -1,10 +1,12 @@
 - active_couple = current_user.activeCouple
+
 #change_partner_modal.modal.hide.fade
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Tanzpartner ändern
   .modal-body.row-fluid
     = form_for active_couple, :html => {:class => 'form-horizontal'} do |f|
+
       .control-group
         = f.label 'Herr', :class => 'control-label'
         .controls
@@ -14,13 +16,17 @@
         = f.label 'Dame', :class => 'control-label'
         .controls
           = f.text_field :woman, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: 'Noch nicht eingetragen', autocomplete: "off"
+
       %hr
+
       .control-group
         = f.label 'Startklasse', :class => 'control-label'
         .controls
           = f.text_field :latin_kind, placeholder: 'Latein', :class => 'input-small', value: active_couple.latin.start_class
           = f.text_field :standard_kind, placeholder: 'Standard', :class => 'input-small', value: active_couple.latin.start_class
-      .actions
+
+      .form-actions.span11
         = f.submit 'Jetzt ändern', :class => "btn btn-primary"
+
   .modal-footer
     %a.btn{:href => "#"} Schließen
