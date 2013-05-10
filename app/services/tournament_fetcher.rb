@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class TournamentFetcher
   def initialize(number)
     @number = number
@@ -25,7 +26,7 @@ class TournamentFetcher
     raw_data = get_raw_data(page)
     extracted_results = {}
     raw_data.each do |key, value|
-      extracted_results[key] = send("extract_#{key}", value)
+      extracted_results[key] = send("extract_#{key}", value) unless value.nil?
     end
     join_time_and_date extracted_results
   end
@@ -57,12 +58,42 @@ class TournamentFetcher
   end
 
   def get_raw_data(page)
-    kind = page.search(".markierung .turnier")
-    date = page.search(".kategorie")
-    time = page.search(".markierung .uhrzeit")
-    notes = page.search(".markierung .bemerkung")
-    address = page.search(".ort")
+    #Test id its a multiline tournament
+    if page.search(".markierung .uhrzeit").first.text.empty?
+      puts "This Tournament seems to be a big one: #{@number}"
 
+      page.search(".turniere tr").each do |single_tournament|
+        puts "Puh, lets see what we can get: #{single_tournament}"
+        next_kind = get_subelement_if_available(single_tournament, ".turnier")
+        kind = next_kind unless next_kind.nil?
+
+        # FIXME: Values get overwritten each turn
+        next_time = get_subelement_if_available(single_tournament, ".uhrzeit")
+        puts "the next time is: #{next_time}"
+        time = next_time unless next_time.nil?
+
+        next_notes = get_subelement_if_available(single_tournament, ".bemerkung")
+        notes = next_notes unless next_notes.nil?
+
+        puts "so, my state now is: #{kind}, #{time}, #{notes}"
+        break if single_tournament.attributes().has_key?('class')
+      end
+    else
+      kind = page.search(".markierung .turnier")
+      time = page.search(".markierung .uhrzeit")
+      notes = page.search(".markierung .bemerkung")
+    end
+    date = page.search(".kategorie")
+    address = page.search(".ort")
     {kind: kind, date: date, time: time, notes: notes, address: address}
+  end
+
+  def get_subelement_if_available(element, selector)
+    unless element.search(selector).first.nil?
+      puts "subelement: #{element}, #{selector}, #{element.search(selector).first.text}"
+      return element.search(selector).first.text
+    else
+      return nil
+    end
   end
 end
