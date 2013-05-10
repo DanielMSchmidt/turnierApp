@@ -11,21 +11,29 @@ class Tournament < ActiveRecord::Base
 
   delegate :name, to: :user, prefix: true
 
+  def self.new_for_user(params)
+    tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
+    tournament = Tournament.new(tournament_fetcher.get_tournament_data)
+    tournament.fillup_missing_data
+    tournament.assign_to_user(params[:tournament][:user_id])
+    tournament
+  end
+
   def no_double_tournaments_are_allowed
     Tournament.where(number: number, progress_id: progress_id).size == 0
     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
   end
 
+  def assign_to_user(user_id)
+    user = User.find(user_id)
 
-  def new_for_active_user(params)
-    tournament = Tournament.new(params)
-    if tournament.latin?
-      id = current_user.activeCouple.latin.id
+    if self.latin?
+      id = user.activeCouple.latin.id
     else
-      id = current_user.activeCouple.standard.id
+      id = user.activeCouple.standard.id
     end
-    tournament.progress_id = id
-    tournament
+
+    self.progress_id = id
   end
 
   def incomplete?
@@ -118,53 +126,6 @@ class Tournament < ActiveRecord::Base
       NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament).deliver
     end
     logger.debug "deleted tournament #{tournament.to_s}"
-  end
-
-  def self.find_by_number(number)
-    return nil if number.nil? || number == ""
-
-    agent = Mechanize.new
-    agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
-    form = agent.page.forms.last
-    form.nr = number
-    form.submit
-
-    out = {}
-
-    agent.page.search(".veranstaltung").each do |event|
-      event.search(".ort a").each do |link|
-        url = link.attributes["href"].value
-        out[:address] = url.slice(30..url.length)
-      end
-      @date = event.search(".kategorie").first.text.slice(0..9)
-    end
-
-    agent.page.search(".markierung").each do |item|
-
-      if item.search(".uhrzeit").first.text.empty?
-        puts "This Tournament seems to be a big one: #{number}"
-        item.parent.children.each do |all_tournaments|
-          next_kind = all_tournaments.search(".turnier").first.text
-          next_time = all_tournaments.search(".uhrzeit").first.text
-          next_notes = all_tournaments.search(".bemerkung").first.text
-
-          out[:kind] = next_kind unless next_kind.empty?
-          @time = next_time unless next_time.empty?
-          out[:notes] = next_notes unless next_notes.empty?
-
-          break if all_tournaments.attributes().has_key?('class')
-        end
-
-      else
-        out[:kind] = item.search(".turnier").first.text
-        @time = item.search(".uhrzeit").first.text
-        out[:notes] = item.search(".bemerkung").first.text
-      end
-    end
-
-    out[:date] = DateTime.parse "#{@time} #{@date}"
-
-    return out
   end
 
   def placing

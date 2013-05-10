@@ -74,6 +74,11 @@ class Progress < ActiveRecord::Base
     end
   end
 
+  # Finders
+  def danced_tournaments
+    self.tournaments.reject{|tournament| tournament.upcoming?}
+  end
+
   # Points & Placings
   def points
     self.start_points + (self.tournaments.collect{|tournament| tournament.points}.inject(:+) || 0)

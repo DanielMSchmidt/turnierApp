@@ -91,7 +91,7 @@ describe TournamentsHelper, :type => :helper do
     end
 
     it "should have the right attributes in the hash" do
-      @result.first.should have_key(:b)
+      @result.first.should have_key(:y)
       @result.first.should have_key(:l)
       @result.first.should have_key(:s)
     end
@@ -121,7 +121,7 @@ describe TournamentsHelper, :type => :helper do
     end
 
     it "should have the right attributes in the hash" do
-      @result.first.should have_key(:b)
+      @result.first.should have_key(:y)
       @result.first.should have_key(:l)
       @result.first.should have_key(:s)
     end
@@ -150,7 +150,7 @@ describe TournamentsHelper, :type => :helper do
     end
 
     it "should have the right attributes in the hash" do
-      @result.first.should have_key(:b)
+      @result.first.should have_key(:y)
       @result.first.should have_key(:l)
       @result.first.should have_key(:s)
     end

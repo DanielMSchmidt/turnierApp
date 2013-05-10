@@ -41,8 +41,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new_for_active_user(enhanced_informations)
-
+    @tournament = Tournament.new_for_user(params)
 
     if @tournament.save
       redirect_to root_path, notice: t('tournament create')
@@ -88,19 +87,6 @@ class TournamentsController < ApplicationController
   def of_user
     @user = User.find(params[:id])
     @tournaments = @user.tournaments
-  end
-
-  def enhanced_informations
-    logger.debug "enhance information for tournament number #{params[:tournament][:number]}"
-
-    new_informations = Tournament.find_by_number(params[:tournament][:number])
-    unless new_informations.nil?
-      logger.debug "Enhanced informations"
-      return params[:tournament].merge!(new_informations)
-    else
-      logger.debug "Didn't enhanced informations"
-      return params[:tournament]
-    end
   end
 
   def setActivePage

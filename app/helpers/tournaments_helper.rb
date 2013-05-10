@@ -78,7 +78,7 @@ module TournamentsHelper
   end
 
   def getTournamentsData(couple)
-    [{ y: "Turniere" ,l: couple.latin.tournaments.count ,s: couple.standard.tournaments.count }]
+    [{ y: "Turniere" ,l: couple.latin.danced_tournaments.count ,s: couple.standard.danced_tournaments.count }]
   end
 
   def getPlacingsData(couple)
