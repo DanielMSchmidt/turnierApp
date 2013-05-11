@@ -93,7 +93,7 @@ class Progress < ActiveRecord::Base
   end
 
   def placings_at_time(time)
-    get_tournaments_before(time).collect{|tournament| tournament.placings}.inject(:+)
+    get_tournaments_before(time).collect{|tournament| tournament.placing}.inject(:+)
   end
 
   def get_tournaments_before(time)

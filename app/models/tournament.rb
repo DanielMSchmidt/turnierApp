@@ -14,8 +14,10 @@ class Tournament < ActiveRecord::Base
   def self.new_for_user(params)
     tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
     tournament = Tournament.new(tournament_fetcher.get_tournament_data)
-    tournament.fillup_missing_data
     tournament.assign_to_user(params[:tournament][:user_id])
+    tournament.participants = params[:tournament][:participants]
+    tournament.place        = params[:tournament][:place]
+    tournament.fillup_missing_data
     tournament
   end
 
@@ -129,7 +131,11 @@ class Tournament < ActiveRecord::Base
   end
 
   def placing
-    1 if self.got_placing?
+    if self.got_placing?
+      1
+    else
+      0
+    end
   end
 
   def latin_placing

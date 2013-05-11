@@ -64,17 +64,17 @@ module TournamentsHelper
     (latin_array + standard_array).sort{ |a,b| a[:y] <=> b[:y] }
   end
 
-  # TODO: Fix, just returns [] by now
   def getProgressOverTime(progress)
-    progress.tournaments.reject{|tournament| tournament.upcoming?}.collect do |tournament|
+    array = progress.tournaments.reject{|tournament| tournament.upcoming?}.collect do |tournament|
       point_of_time = tournament.date
       hash = {
-        y: point_of_time.strftime("%d.%m.%y"),
+        y: point_of_time.strftime("%Y-%m-%d"),
         po: progress.points_at_time(point_of_time),
         pl: progress.placings_at_time(point_of_time)
        }
       hash
     end
+    array
   end
 
   def getTournamentsData(couple)
