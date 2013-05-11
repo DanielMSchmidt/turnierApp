@@ -64,14 +64,11 @@ class CouplesController < ApplicationController
   def update
     @couple = Couple.find(params[:id])
 
+    #FIXME: See at create and change update like it
+
     respond_to do |format|
-      if @couple.update_attributes(params[:couple])
-        format.html { redirect_to @couple, notice: 'Couple was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @couple.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @couple, notice: 'Couple was successfully updated.' }
+      format.json { head :no_content }
     end
   end
 
