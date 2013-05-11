@@ -71,7 +71,7 @@ describe "Tournament" do
       tournament.number.should eq(31193)
       tournament.date.should eq("2013-05-19 18:30:00")
       tournament.kind.should eq("HGR B ST")
-      tournament.notes.should eq("")
+      tournament.notes.should eq("Startgebühr für HGR je 5,- €/Paar")
       tournament.enrolled.should be_false
     end
 
@@ -81,7 +81,7 @@ describe "Tournament" do
       tournament.date.should eq("Sun, 10 Mar 2013 11:00:00 UTC +00:00")
       tournament.kind.should eq("HGR C LAT")
       tournament.notes.should eq("Startgebühr je 5,- €/Paar")
-      tournament.enrolled.should be_false
+      tournament.enrolled.should be_true
     end
   end
 end

@@ -78,8 +78,8 @@ describe TournamentsHelper, :type => :helper do
 
   describe "#getTournamentsData" do
     before(:each) do
-      latin_progress = double("LAT - progress", tournaments: [@tournament1, @tournament2])
-      standard_progess = double("STD - progress", tournaments: [@tournament1])
+      latin_progress = double("LAT - progress", danced_tournaments: [@tournament1, @tournament2])
+      standard_progess = double("STD - progress", danced_tournaments: [@tournament1])
       couple = double("couple", latin: latin_progress, standard: standard_progess)
       @result = helper.getTournamentsData(couple)
     end

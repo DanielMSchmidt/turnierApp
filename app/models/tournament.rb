@@ -7,7 +7,6 @@ class Tournament < ActiveRecord::Base
   validates :number, presence: true, numericality: true
   validate :no_double_tournaments_are_allowed, on: :create
 
-  before_create :fillup_missing_data
   before_destroy :send_mail_if_enrolled_tournament_is_deleted
 
   delegate :name, to: :user, prefix: true

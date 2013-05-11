@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class TournamentFetcher
+  attr_accessor :kind, :time, :date, :notes, :address
   def initialize(number)
     @number = number
     @mechanize = Mechanize.new
@@ -38,23 +39,31 @@ class TournamentFetcher
   end
 
   def extract_kind(content)
-    content.text
+    convert_to_text(content)
   end
 
   def extract_date(content)
-    content.text.scan(/^\d{1,2}.\d{1,2}.\d{4}/).first
+    convert_to_text(content).scan(/^\d{1,2}.\d{1,2}.\d{4}/).first
   end
 
   def extract_time(content)
-    content.text.scan(/\d{1,2}:\d{2}/).first
+    convert_to_text(content).scan(/\d{1,2}:\d{2}/).first
   end
 
   def extract_notes(content)
-    content.text
+    convert_to_text(content)
   end
 
   def extract_address(content)
-    content.text.split("\t").join("").split("\n").join(" ").strip
+    convert_to_text(content).split("\t").join("").split("\n").join(" ").strip
+  end
+
+  def convert_to_text(content)
+    if content.class ==  String
+      content
+    else
+      content.text
+    end
   end
 
   def get_raw_data(page)
@@ -63,34 +72,26 @@ class TournamentFetcher
       puts "This Tournament seems to be a big one: #{@number}"
 
       page.search(".turniere tr").each do |single_tournament|
-        puts "Puh, lets see what we can get: #{single_tournament}"
         next_kind = get_subelement_if_available(single_tournament, ".turnier")
-        kind = next_kind unless next_kind.nil?
+        self.kind = next_kind unless next_kind.nil? || next_kind.blank?
 
-        # FIXME: Values get overwritten each turn
         next_time = get_subelement_if_available(single_tournament, ".uhrzeit")
-        puts "the next time is: #{next_time}"
-        time = next_time unless next_time.nil?
+        self.time = next_time unless next_time.nil? || next_time.blank?
 
-        next_notes = get_subelement_if_available(single_tournament, ".bemerkung")
-        notes = next_notes unless next_notes.nil?
-
-        puts "so, my state now is: #{kind}, #{time}, #{notes}"
         break if single_tournament.attributes().has_key?('class')
       end
     else
-      kind = page.search(".markierung .turnier")
-      time = page.search(".markierung .uhrzeit")
-      notes = page.search(".markierung .bemerkung")
+      self.kind = page.search(".markierung .turnier")
+      self.time = page.search(".markierung .uhrzeit")
     end
-    date = page.search(".kategorie")
-    address = page.search(".ort")
-    {kind: kind, date: date, time: time, notes: notes, address: address}
+    self.notes = page.search(".turniere tr .bemerkung").to_a.collect(&:text).reject{|x| x.nil? || x.blank?}.join("\n")
+    self.date = page.search(".kategorie")
+    self.address = page.search(".ort")
+    {kind: self.kind, date: self.date, time: self.time, notes: self.notes, address: self.address}
   end
 
   def get_subelement_if_available(element, selector)
     unless element.search(selector).first.nil?
-      puts "subelement: #{element}, #{selector}, #{element.search(selector).first.text}"
       return element.search(selector).first.text
     else
       return nil
