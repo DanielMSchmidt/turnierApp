@@ -8,6 +8,7 @@ On deploy:
 Other todos
 ---------------------
   - v0.8
+    - Line Graph umbauen, sodass da 4 Punkte (2 std 2 lat) draus werden
     - add generation of pdfs for upcoming and danced tournaments
     - make all forms horizontal forms (with bootstrap)
     - New Admin dashboard
