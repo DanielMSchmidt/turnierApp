@@ -57,34 +57,22 @@ module TournamentsHelper
   # TODO: refactor via decorator
 
   def getProgressOverTimeData(couple)
-    mergeProgressArrays(getProgressOverTime(couple.latin), getProgressOverTime(couple.standard))
+    getProgressOverTime(couple.latin, couple.standard).sort{ |a,b| a[:y] <=> b[:y] }
   end
 
-  def mergeProgressArrays(latin_array, standard_array)
-    # FIXME: After merging we have to add the missing keys to the elements (std points/placing at Lat tournaments)
-    merged_arrays = (prefix_data(latin_array, 'latin') + prefix_data(standard_array, 'standard')).sort{ |a,b| a[:y] <=> b[:y] }
-    merged_arrays
-  end
-
-  def prefix_data(progress_array, prefix)
-    progress_array.collect do |element|
-      element["#{prefix}_po".to_sym] = element.delete(:po)
-      element["#{prefix}_pl".to_sym] = element.delete(:pl)
-    end
-    progress_array
-  end
-
-  def getProgressOverTime(progress)
-    array = progress.tournaments.reject{|tournament| tournament.upcoming?}.collect do |tournament|
+  def getProgressOverTime(latin, standard)
+    tournaments = (latin.tournaments + standard.tournaments).reject{|tournament| tournament.upcoming?}.collect do |tournament|
       point_of_time = tournament.date
       hash = {
         y: point_of_time.strftime("%Y-%m-%d"),
-        po: progress.points_at_time(point_of_time),
-        pl: progress.placings_at_time(point_of_time)
+        latin_po: latin.points_at_time(point_of_time),
+        latin_pl: latin.placings_at_time(point_of_time),
+        standard_po: standard.points_at_time(point_of_time),
+        standard_pl: standard.placings_at_time(point_of_time)
        }
       hash
     end
-    array
+    tournaments
   end
 
   def getTournamentsData(couple)
