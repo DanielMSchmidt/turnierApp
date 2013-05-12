@@ -9,10 +9,10 @@ Other todos
 ---------------------
   - v0.8
     - add generation of pdfs for upcoming and danced tournaments
-    - statistics for dashboard
     - make all forms horizontal forms (with bootstrap)
-
-    - improve data search
+    - New Admin dashboard
+      - Tabs for different Clubs if more then one (AJAX)
+      - Panels for incoming requests, unenrolled tournaments, tabwise user stats
     - alert box for missing data in any tournament
 
   - v0.9
