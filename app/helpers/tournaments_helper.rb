@@ -61,7 +61,17 @@ module TournamentsHelper
   end
 
   def mergeProgressArrays(latin_array, standard_array)
-    (latin_array + standard_array).sort{ |a,b| a[:y] <=> b[:y] }
+    # FIXME: After merging we have to add the missing keys to the elements (std points/placing at Lat tournaments)
+    merged_arrays = (prefix_data(latin_array, 'latin') + prefix_data(standard_array, 'standard')).sort{ |a,b| a[:y] <=> b[:y] }
+    merged_arrays
+  end
+
+  def prefix_data(progress_array, prefix)
+    progress_array.collect do |element|
+      element["#{prefix}_po".to_sym] = element.delete(:po)
+      element["#{prefix}_pl".to_sym] = element.delete(:pl)
+    end
+    progress_array
   end
 
   def getProgressOverTime(progress)

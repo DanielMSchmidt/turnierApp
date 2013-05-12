@@ -10,7 +10,7 @@
 - progressOverTimeData = getProgressOverTimeData(active_couple)
 - unless progressOverTimeData.empty?
   %script
-    = print_graph('line', 'progress-over-time', progressOverTimeData, {po: "Punkte", pl: "Platzierungen"} )
+    = print_graph('line', 'progress-over-time', progressOverTimeData, {latin_po: "Punkte in Latein", latin_pl: "Platzierungen in Latein", standard_po: "Punkte in Standard", standard_pl: "Platzierungen in Standard"} )
 - else
   %img#line-placeholder{src: "http://www.placehold.it/500x250&text=Tanze+Turniere+für+einen+Verlauf", style: "margin-top: -768px;"}
 
