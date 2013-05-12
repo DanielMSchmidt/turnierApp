@@ -9,8 +9,6 @@ class Tournament < ActiveRecord::Base
 
   before_destroy :send_mail_if_enrolled_tournament_is_deleted
 
-  delegate :name, to: :user, prefix: true
-
   def self.new_for_user(params)
     tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
     tournament = Tournament.new(tournament_fetcher.get_tournament_data)
@@ -24,6 +22,15 @@ class Tournament < ActiveRecord::Base
   def no_double_tournaments_are_allowed
     Tournament.where(number: number, progress_id: progress_id).size == 0
     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
+  end
+
+  def is_from_user(user)
+    self.users.include?(user)
+  end
+
+  def users
+    couple = self.progress.couple
+    [couple.man, couple.woman]
   end
 
   def assign_to_user(user_id)

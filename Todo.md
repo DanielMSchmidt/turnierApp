@@ -13,7 +13,6 @@ Other todos
       - Tabs for different Clubs if more then one (AJAX)
       - Panels for incoming requests, unenrolled tournaments, tabwise user stats
       - add generation of pdfs for upcoming and danced tournaments
-    - Alert box for missing data in any tournament
     - Make all forms horizontal forms (with bootstrap)
 
   - v0.9

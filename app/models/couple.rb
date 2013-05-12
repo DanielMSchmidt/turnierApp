@@ -48,4 +48,10 @@ class Couple < ActiveRecord::Base
     self.progresses.create(kind: 'latin') if self.latin.nil?
     self.progresses.create(kind: 'standard') if self.standard.nil?
   end
+
+  # Users
+  def users
+    [self.man, self.woman]
+  end
+
 end

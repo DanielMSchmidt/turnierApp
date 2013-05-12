@@ -35,11 +35,11 @@ module TournamentsHelper
   end
 
   def placings(tournaments, filter = :placing)
-    tournaments.collect(&filter).inject(:+) || 0
+    tournaments.collect(&filter).compact.inject(:+) || 0
   end
 
   def points(tournaments, filter = :points)
-    tournaments.collect(&filter).inject(:+) || 0
+    tournaments.collect(&filter).compact.inject(:+) || 0
   end
 
   def tournament_date(tournament)
