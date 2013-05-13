@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RenameUserIdToProgressIdForTournaments < ActiveRecord::Migration
   def up
     rename_column :tournaments, :user_id, :progress_id

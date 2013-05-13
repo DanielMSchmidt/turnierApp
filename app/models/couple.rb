@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Couple < ActiveRecord::Base
   attr_accessible :active, :man_id, :woman_id
   default_scope includes(:man, :woman)

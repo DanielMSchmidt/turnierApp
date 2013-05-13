@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CouplesController < ApplicationController
   # GET /couples
   # GET /couples.json

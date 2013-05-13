@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ProgressesController < ApplicationController
   # GET /progresses
   # GET /progresses.json

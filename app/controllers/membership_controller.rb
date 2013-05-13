@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class MembershipController < ApplicationController
   def create
     Membership.create!(user_id: params[:user_id], club_id: params[:club_id], verified: false)

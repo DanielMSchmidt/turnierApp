@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Progress < ActiveRecord::Base
   attr_accessible :couple_id, :finished, :kind, :start_class, :start_placings, :start_points
   scope :active, lambda { where(finished: false) }

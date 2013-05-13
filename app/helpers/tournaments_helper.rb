@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module TournamentsHelper
   def print_stats(tournaments = [])
     finished_tournaments = tournaments.select{|tournament| !tournament.upcoming?}

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ClubsController < ApplicationController
   # GET /clubs
   # GET /clubs.json

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateCouples < ActiveRecord::Migration
   def up
     create_table :couples do |t|
