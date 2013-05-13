@@ -9,9 +9,13 @@ Other todos
 ---------------------
   - v0.8
     - New Admin dashboard
-      - Tabs for different Clubs if more then one (AJAX)
-      - Panels for incoming requests, unenrolled tournaments, tabwise user stats
+      - Panels for tabwise user stats
       - add generation of pdfs for upcoming and danced tournaments
+        - by month
+        - by year
+      - change memberships from user to couples
+      - js für die tab aktivierung schreiben oder schauen wieso die nicht active sind
+      - Test it out and hopefully write tests for it
     - Make all forms horizontal forms (with bootstrap)
 
   - v0.85

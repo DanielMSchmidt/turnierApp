@@ -9,6 +9,9 @@ class HomeController < ApplicationController
     if @user_clubs.empty?
       redirect_to root_path
     else
+      @verified_users = @active_club.verified_members
+      @unverified_members = @active_club.unverified_members
+      @unenrolled_tournaments = @verified_users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
     end
   end
 
@@ -31,6 +34,7 @@ class HomeController < ApplicationController
     @user_clubs = Club.owned_by(current_user)
     if params[:club_id].nil?
       @active_club = @user_clubs.first
+      redirect_to admin_dashboard_path(club_id: @active_club.id)
     else
       @active_club = @user_clubs.select{|x| x.id == params[:club_id].to_i}.first
     end

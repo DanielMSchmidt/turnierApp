@@ -6,3 +6,53 @@
 
   .span12
     %h2="Dashboard von #{@active_club.name}"
+    .row-fluid
+      .btn-toolbar
+        .btn-group
+          .btn
+            = link_to 'Turnierübersicht drucken', '#print_tournaments_modal', role: 'button', data: {toggle: 'modal'}
+        .btn-group
+          .btn
+            = link_to 'Jemand anders meldet', '#change_owner_modal', role: 'button', data: {toggle: 'modal'}
+        .btn-group
+          .btn
+            = link_to 'Verein umbenennen', edit_club_path(@active_club)
+        .btn-group
+          .btn
+            = link_to 'Verein löschen', @active_club, :method => :delete, :confirm => "Bist du dir sicher?"
+        .btn-group
+          .btn
+            = link_to 'Zurück', root_path
+
+    .row-fluid
+      .span6
+        %h4 Aktuelle Anfragen
+        %hr
+
+      .span6
+        %h4 ungemeldete Turniere
+        %hr
+        %table.tournament-list.table.table-striped
+          %tr
+            %th Paar
+            %th Datum
+            %th Zeit
+            %th Art
+            %th Platz
+            %th Adresse
+            %th Turniernr.
+            %th
+            %th
+            - if current_user.tournaments.collect{|x| @unenrolled_tournaments.include? x }.include? true
+              %th
+              %th
+          = render @unenrolled_tournaments, enrollable: true
+
+    .row-fluid
+      %h4 Deine Paare
+      %img{:src => "http://placehold.it/350x550&text=Auflistung der Paare"}
+      %img{:src => "http://placehold.it/650x750&text=Stats des aktiven Paars"}
+
+
+
+= render 'shared/admin_modals'

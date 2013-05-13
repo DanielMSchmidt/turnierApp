@@ -1,0 +1,11 @@
+#change_owner_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Jemand anders meldet die Paare
+  .modal-body
+    %ul
+      - if @verified_users.reject{|x| x == current_user}.empty?
+        %p Es gibt keine Mitglieder außer dir.
+      - else
+        - @verified_users.reject{|x| x == current_user}.each do |user|
+          %li= link_to "Zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn"
