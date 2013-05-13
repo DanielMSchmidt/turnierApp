@@ -8,12 +8,14 @@ On deploy:
 Other todos
 ---------------------
   - v0.8
-
     - New Admin dashboard
       - Tabs for different Clubs if more then one (AJAX)
       - Panels for incoming requests, unenrolled tournaments, tabwise user stats
       - add generation of pdfs for upcoming and danced tournaments
     - Make all forms horizontal forms (with bootstrap)
+
+  - v0.85
+    - Make a basic layout for all dashboards which is responsive
 
   - v0.9
     - Facebook login
