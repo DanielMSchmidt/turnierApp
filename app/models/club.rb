@@ -6,6 +6,11 @@ class Club < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   default_scope order: 'name ASC'
 
+
+  def self.owned_by(current_user_id)
+    Club.where(user_id: current_user_id)
+  end
+
   def owner
     if self.user_id.nil?
       nil

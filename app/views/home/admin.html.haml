@@ -1,0 +1,8 @@
+.row-fluid
+  %ul.nav.nav-tabs.span12
+    - @user_clubs.each do |club|
+      %li{:class => "#{'active' if club.id == @active_club.id}" }
+        = link_to club.name, admin_dashboard_path(club_id: club.id)
+
+  .span12
+    %h2="Dashboard von #{@active_club.name}"

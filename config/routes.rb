@@ -15,6 +15,9 @@ TurnierList::Application.routes.draw do
   match "/membership/verify/:user_id/:club_id" => "membership#verify", as: :verify_user
   match "/membership/delete/:user_id/:club_id" => "membership#destroy", as: :delete_club
 
+  match "/dashboard/" => "home#admin", as: :admin_dashboard
+  match "/dashboard/:club_id" => "home#admin", as: :admin_dashboard
+
   match "/impressum" => "home#impressum"
 
 
