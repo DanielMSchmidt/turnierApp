@@ -244,27 +244,27 @@ describe Progress do
     describe "#placings_at_time" do
       before(:each) do
         @date = DateTime.now
-        @tm1 = double("tournament1", date: @date, placings: 4)
-        @tm2 = double("tournament2", date: @date - 1.week, placings: 5)
-        @tm3 = double("tournament3", date: @date + 1.week, placings: 6)
+        @tm1 = double("tournament1", date: @date, placing: 1)
+        @tm2 = double("tournament2", date: @date - 1.week, placing: 0)
+        @tm3 = double("tournament3", date: @date + 1.week, placing: 1)
         progress.stub(:tournaments).and_return([@tm1, @tm2, @tm3])
       end
 
       it "should be all tournaments included until this point of time" do
-        @tm1.should_receive(:placings)
-        @tm2.should_receive(:placings)
+        @tm1.should_receive(:placing)
+        @tm2.should_receive(:placing)
 
         progress.placings_at_time(@date)
       end
 
       it "should be all tournaments excluded after this point of time" do
-        @tm3.should_not_receive(:placings)
+        @tm3.should_not_receive(:placing)
 
         progress.placings_at_time(@date)
       end
 
       it "should add all placings until this point of time" do
-        progress.placings_at_time(@date).should eq(9)
+        progress.placings_at_time(@date).should eq(1)
       end
     end
   end
