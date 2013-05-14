@@ -7,6 +7,9 @@ On deploy:
 
 Other todos
 ---------------------
+  - v0.7
+    - Integration level tests!!!
+
   - v0.8
     - New Admin dashboard
       - Panels for tabwise user stats
@@ -19,7 +22,7 @@ Other todos
 
   - v0.85
     - Make a basic layout for all dashboards which is responsive
-    - Integration level tests
+
 
   - v0.9
     - Facebook login
