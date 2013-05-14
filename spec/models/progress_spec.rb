@@ -45,8 +45,8 @@ describe Progress do
         tournament2 = double("tournament2")
         all_tournaments = [tournament1, tournament2]
 
-        tournament1.should_receive(:placings).and_return(1)
-        tournament2.should_receive(:placings).and_return(0)
+        tournament1.should_receive(:placing).and_return(1)
+        tournament2.should_receive(:placing).and_return(0)
         progress.should_receive(:tournaments).and_return(all_tournaments)
         progress.should_receive(:start_placings).and_return(1)
 
