@@ -8,7 +8,6 @@ On deploy:
 Other todos
 ---------------------
   - v0.8
-    - change memberships from user to couples
     - New Admin dashboard
       - Panels for tabwise user stats
       - add generation of pdfs for upcoming and danced tournaments
