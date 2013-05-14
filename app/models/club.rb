@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Club < ActiveRecord::Base
   attr_accessible :name
   belongs_to :user
@@ -5,6 +6,11 @@ class Club < ActiveRecord::Base
   has_many :users, through: :memberships, order: 'name ASC'
   validates :name, presence: true, uniqueness: true
   default_scope order: 'name ASC'
+
+
+  def self.owned_by(current_user_id)
+    Club.where(user_id: current_user_id)
+  end
 
   def owner
     if self.user_id.nil?
@@ -26,17 +32,17 @@ class Club < ActiveRecord::Base
 
   def tournaments
     return nil if self.user.nil? || self.user.tournaments.nil?
-    self.user.tournaments
+    self.couples.collect{|couple| couple.tournaments}.flatten
   end
 
   def mail_owner_unenrolled_tournaments
     logger.debug "Moved mail owner unenrolled tournaments to Worker for #{self.name}"
-    if (club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
-      NotificationMailer.enrollCouples(club.owner, club).deliver
-      club.tournaments.each{|x| x.notification_send}
-      logger.debug "send weekly mail to #{club.name} at mail #{club.owner.email}"
+    if (self.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
+      NotificationMailer.enrollCouples(self.owner, self).deliver
+      self.tournaments.each{|x| x.notification_send}
+      logger.debug "send weekly mail to #{self.name} at mail #{self.owner.email}"
     else
-      logger.debug "did not send weekly mail to #{club.name}"
+      logger.debug "did not send weekly mail to #{self.name}"
     end
   end
 
@@ -46,15 +52,19 @@ class Club < ActiveRecord::Base
   end
 
   def verified_members
-    self.memberships.is_verified.collect{|x| x.user}
+    self.memberships.is_verified.collect{|x| x.user}.flatten
   end
 
   def unverified_members
-    self.memberships.is_unverified.collect{|x| x.user}
+    self.memberships.is_unverified.collect{|x| x.user}.flatten
   end
 
   def is_verified_member(user)
     self.verified_members.include?(user)
+  end
+
+  def is_unverified_member(user)
+    self.unverified_members.include?(user)
   end
 
   def to_s

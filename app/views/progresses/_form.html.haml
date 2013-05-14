@@ -1,0 +1,28 @@
+= form_for @progress do |f|
+  - if @progress.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@progress.errors.count, "error")} prohibited this progress from being saved:"
+      %ul
+        - @progress.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :couple_id
+    = f.number_field :couple_id
+  .field
+    = f.label :kind
+    = f.text_field :kind
+  .field
+    = f.label :start_points
+    = f.number_field :start_points
+  .field
+    = f.label :start_placings
+    = f.number_field :start_placings
+  .field
+    = f.label :start_class
+    = f.text_field :start_class
+  .field
+    = f.label :finished
+    = f.check_box :finished
+  .actions
+    = f.submit 'Save'

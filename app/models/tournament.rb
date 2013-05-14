@@ -1,20 +1,49 @@
+# -*- encoding : utf-8 -*-
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
-  attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
-  belongs_to :user
+  attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
+  belongs_to :progress
 
   validates :number, presence: true, numericality: true
   validate :no_double_tournaments_are_allowed, on: :create
 
-  before_create :fillup_missing_data
   before_destroy :send_mail_if_enrolled_tournament_is_deleted
 
-  delegate :name, to: :user, prefix: true
+  def self.new_for_user(params)
+    tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
+    tournament = Tournament.new(tournament_fetcher.get_tournament_data)
+    tournament.assign_to_user(params[:tournament][:user_id])
+    tournament.participants = params[:tournament][:participants]
+    tournament.place        = params[:tournament][:place]
+    tournament.fillup_missing_data
+    tournament
+  end
 
-   def no_double_tournaments_are_allowed
-     Tournament.where(number: number, user_id: user_id).size == 0
-     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
-   end
+  def no_double_tournaments_are_allowed
+    Tournament.where(number: number, progress_id: progress_id).size == 0
+    errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
+  end
+
+  def is_from_user(user)
+    self.users.include?(user)
+  end
+
+  def users
+    couple = self.progress.couple
+    [couple.man, couple.woman]
+  end
+
+  def assign_to_user(user_id)
+    user = User.find(user_id)
+
+    if self.latin?
+      id = user.activeCouple.latin.id
+    else
+      id = user.activeCouple.standard.id
+    end
+
+    self.progress_id = id
+  end
 
   def incomplete?
     return self.participants.nil? && self.place.nil?
@@ -108,55 +137,12 @@ class Tournament < ActiveRecord::Base
     logger.debug "deleted tournament #{tournament.to_s}"
   end
 
-  def self.find_by_number(number)
-    return nil if number.nil? || number == ""
-
-    agent = Mechanize.new
-    agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
-    form = agent.page.forms.last
-    form.nr = number
-    form.submit
-
-    out = {}
-
-    agent.page.search(".veranstaltung").each do |event|
-      event.search(".ort a").each do |link|
-        url = link.attributes["href"].value
-        out[:address] = url.slice(30..url.length)
-      end
-      @date = event.search(".kategorie").first.text.slice(0..9)
-    end
-
-    agent.page.search(".markierung").each do |item|
-
-      if item.search(".uhrzeit").first.text.empty?
-        puts "This Tournament seems to be a big one: #{number}"
-        item.parent.children.each do |all_tournaments|
-          next_kind = all_tournaments.search(".turnier").first.text
-          next_time = all_tournaments.search(".uhrzeit").first.text
-          next_notes = all_tournaments.search(".bemerkung").first.text
-
-          out[:kind] = next_kind unless next_kind.empty?
-          @time = next_time unless next_time.empty?
-          out[:notes] = next_notes unless next_notes.empty?
-
-          break if all_tournaments.attributes().has_key?('class')
-        end
-
-      else
-        out[:kind] = item.search(".turnier").first.text
-        @time = item.search(".uhrzeit").first.text
-        out[:notes] = item.search(".bemerkung").first.text
-      end
-    end
-
-    out[:date] = DateTime.parse "#{@time} #{@date}"
-
-    return out
-  end
-
   def placing
-    1 if self.got_placing?
+    if self.got_placing?
+      1
+    else
+      0
+    end
   end
 
   def latin_placing

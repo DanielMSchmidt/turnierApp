@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class NotificationMailer < ActionMailer::Base
   default from: "turnierlist@psv-kiel.de"
 
@@ -14,9 +15,9 @@ class NotificationMailer < ActionMailer::Base
   end
 
   def enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament)
-    @username = tournament.user_name
+    @username = tournament.users.compact.collect{|x| x.name}.join(", ")
     @tournamentnumber = tournament.number
 
-    mail to: club_owners_mailaddresses, subject: "#{@username} hat ein Turnier geloescht fuer das es schon gemeldet war"
+    mail to: club_owners_mailaddresses, subject: "#{@username} hat ein Turnier geloescht für das es schon gemeldet war"
   end
 end

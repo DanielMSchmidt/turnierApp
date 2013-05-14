@@ -1,0 +1,30 @@
+#change_progress_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Bitte wählen
+  .modal-body.row-fluid
+    = link_to 'Latein', '#change_latin_progress_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn span3 offset1"
+    = link_to 'Standard', '#change_standard_progress_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn span3 offset2"
+  .modal-footer
+    %a.btn{:href => "#"} Schließen
+
+
+
+#change_latin_progress_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Latein
+  .modal-body
+    = render 'shared/progresses/latin'
+  .modal-footer
+    %a.btn{:href => "#"} Schließen
+
+
+#change_standard_progress_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Standard
+  .modal-body
+    = render 'shared/progresses/standard'
+  .modal-footer
+    %a.btn{:href => "#"} Schließen

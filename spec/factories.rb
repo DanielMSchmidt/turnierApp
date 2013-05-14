@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'factory_girl'
 
 FactoryGirl.define do
@@ -5,23 +6,24 @@ FactoryGirl.define do
     name 'Test User'
     email 'test@testuser.de'
     password 'testtest12345'
-    password_confirmation 'testtest12345'
-    remember_me true
+    initialize_with { User.find_or_create_by_email('test@testuser.de') }
   end
 
   factory :club do
     name 'Example Club'
     user_id 1
+    initialize_with { Club.find_or_create_by_name('Example Club') }
   end
 
   factory :tournament do
-    number 28288
-    user_id 1
-    address 'testaddress'
-    date (DateTime.now.to_date + 2.weeks).to_date
-    kind 'HGR C LAT'
-    enrolled false
+    ignore do
+      number 28288
+      progress_id 1
+      data {{number: number, progress_id: progress_id, address: 'testaddress', date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: false}}
+    end
+    initialize_with { Tournament.where(number: number, progress_id: progress_id).first || Tournament.create(data) }
   end
+
 
   factory :d_class_tournament do
     number 27114
@@ -49,7 +51,7 @@ FactoryGirl.define do
 
   factory :future_tournament do
     number 29239
-    user_id 1
+    progress_id 1
     address 'testaddress'
     date (DateTime.now + 2.weeks).to_date
     enrolled false
@@ -68,5 +70,20 @@ FactoryGirl.define do
   factory :membership do
     club_id 1
     user_id 1
+  end
+
+  factory :couple do
+    man_id 1
+    woman_id 2
+    active true
+  end
+
+  factory :progress do
+    couple_id 1
+    kind "latin"
+    start_points 0
+    start_placings 0
+    start_class 'C'
+    finished false
   end
 end

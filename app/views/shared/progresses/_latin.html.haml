@@ -1,0 +1,24 @@
+.row-fluid
+  .span6
+    = form_for(current_user.activeCouple.latin, remote: true) do |f|
+      .help-block
+        Die Punkte und Platzierungen, die du hier angibst werden auf deine bisherigen Turnierergebnisse addiert.
+
+
+      .control-group
+        = f.label :place, "Punkte", :class =>"control-label"
+        .controls
+          = f.number_field :start_points
+
+      .control-group
+        = f.label :place, "Platzierungen", :class =>"control-label"
+        .controls
+          = f.number_field :start_placings
+
+      .form-actions
+        = f.submit 'Speichern', :class => "btn btn-primary", remote: true
+
+  .span4
+    .btn-group
+      = link_to 'Aufgestiegen!', couple_level_up_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
+      = link_to 'Nochmal!', couple_reset_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true

@@ -38,9 +38,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'bullet'
   gem 'brakeman'
-  gem 'capybara'
 
-  gem "nyan-cat-formatter"
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-spork'
@@ -48,15 +46,17 @@ group :development, :test do
 end
 
 group :test do
-  gem 'spork', '~> 1.0rc'
-
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
   gem "capybara"
-
+  gem 'shoulda-matchers'
+  gem 'shoulda-context'
+  gem 'factory_girl_rails'
+  gem "nyan-cat-formatter"
+  gem 'simplecov', :require => false
 end
 
 # Gems used only for assets and not required

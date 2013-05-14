@@ -1,0 +1,21 @@
+- length = (!@has_couple && !@has_a_club) ? 6 : 12
+
+- if @has_missing_data
+  .row-fluid
+    .span12
+      .alert.alert-block.alert-error.fade.in
+        Du hast ein Turnier bei dem Informationen fehlen, bitte trage sie nach
+        %a.close{"data-dismiss" => "alert", :href => "#"} &times;
+
+.row-fluid
+  - unless @has_couple
+    %div{:class => "span#{length}"}
+      .alert.alert-error.fade.in
+        Du gehörst noch zu keinem Paar, ändere das #{link_to 'hier', '#new_pair_modal', role: 'button', data: {toggle: 'modal'}}
+        %button.close{"data-dismiss" => "alert", :type => "button"} ×
+
+  - unless @has_a_club
+    %div{:class => "span#{length}"}
+      .alert.alert-error.fade.in
+        Du hast noch keinen Verein, wähle ihn #{link_to 'hier', '#add_club_modal', role: 'button', data: {toggle: 'modal'}}
+        %button.close{"data-dismiss" => "alert", :type => "button"} ×

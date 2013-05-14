@@ -3,7 +3,7 @@
   %h3 Folgende Paare wollen Mitglieder sein
   %ul
     - @unverified_members.each do |user|
-      %li= link_to "#{user.name} bestätigen", verify_user_path(user_id: user.id, club_id: @club.id), class: "btn"
+      %li= link_to "#{user.name} bestätigen", verify_user_path(couple_id: user.activeCouple.id, club_id: @club.id), class: "btn"
 
 %br/
 %h3 Noch zu meldende Paare

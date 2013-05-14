@@ -8,7 +8,21 @@ On deploy:
 Other todos
 ---------------------
   - v0.8
-    - reorganise Users as Couples (of two new users)
+    - change memberships from user to couples
+    - New Admin dashboard
+      - Panels for tabwise user stats
+      - add generation of pdfs for upcoming and danced tournaments
+        - by month
+        - by year
+      - js für die tab aktivierung schreiben oder schauen wieso die nicht active sind
+      - Test it out and hopefully write tests for it
+    - Make all forms horizontal forms (with bootstrap)
+
+  - v0.85
+    - Make a basic layout for all dashboards which is responsive
+    - Integration level tests
+
+  - v0.9
     - Facebook login
     - add images (to events & couples)
 
@@ -16,7 +30,4 @@ Refactorings
 ---------------------
   - Data fetching should be refactored, really crappy! (and do it into service layer or lib)
   - merge tournaments _form and _future_form
-
-Next Up
----------------------
-  - write tests about existing behavior
+  - refactor views/shared/progresses

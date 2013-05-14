@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateClubs < ActiveRecord::Migration
   def change
     create_table :clubs do |t|

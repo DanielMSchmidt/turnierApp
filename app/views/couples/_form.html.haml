@@ -1,0 +1,26 @@
+= form_for @couple, :html => {:class => "form-horizontal"} do |f|
+  - if @couple.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@couple.errors.count, "error")} prohibited this couple from being saved:"
+      %ul
+        - @couple.errors.full_messages.each do |msg|
+          %li= msg
+
+  .control-group
+    = f.label :man_id, :class =>"control-label"
+    .controls
+      = f.number_field :man_id
+
+  .control-group
+    = f.label :woman_id, :class =>"control-label"
+    .controls
+      = f.number_field :woman_id
+
+  .control-group
+    = f.label :active, :class =>"control-label"
+    .controls
+      = f.check_box :active
+
+  .control-group
+    .controls
+      = f.submit 'Save', :class => "btn btn-primary"

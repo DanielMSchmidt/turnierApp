@@ -1,0 +1,22 @@
+.btn-toolbar
+  - unless Club.owned_by(current_user.id).empty?
+    .btn-group
+      .btn
+        = link_to 'Verwaltung', admin_dashboard_path
+
+  .btn-group
+    .btn
+      = link_to 'Turnier hinzufügen', '#add_tournament_modal', role: 'button', data: {toggle: 'modal'}
+
+  .btn-group
+    .btn
+      = link_to 'Punkte / Platzierungen / Startklasse ändern', '#change_progress_modal', role: 'button', data: {toggle: 'modal'}
+
+  .btn-group
+    .btn
+      = link_to 'Tanzpartner wechseln', '#change_partner_modal', role: 'button', data: {toggle: 'modal'}
+
+  .btn-group
+    .btn
+      = link_to 'Ergebnisse anschauen', user_tournaments_path(current_user)
+

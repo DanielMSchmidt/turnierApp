@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddFurtherInformationToTournament < ActiveRecord::Migration
   def change
 	add_column :tournaments, :address, :string

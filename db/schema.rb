@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130121112601) do
+ActiveRecord::Schema.define(:version => 20130514173901) do
 
   create_table "clubs", :force => true do |t|
     t.string   "name"
@@ -22,8 +22,16 @@ ActiveRecord::Schema.define(:version => 20130121112601) do
 
   add_index "clubs", ["user_id"], :name => "index_clubs_on_user_id"
 
+  create_table "couples", :force => true do |t|
+    t.integer  "man_id"
+    t.integer  "woman_id"
+    t.boolean  "active"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "memberships", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "couple_id"
     t.integer  "club_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -31,43 +39,35 @@ ActiveRecord::Schema.define(:version => 20130121112601) do
   end
 
   add_index "memberships", ["club_id"], :name => "index_memberships_on_club_id"
-  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+  add_index "memberships", ["couple_id"], :name => "index_memberships_on_user_id"
 
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context",       :limit => 128
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
-  add_index "taggings", ["tagger_id", "tagger_type"], :name => "index_taggings_on_tagger_id_and_tagger_type"
-
-  create_table "tags", :force => true do |t|
-    t.string "name"
+  create_table "progresses", :force => true do |t|
+    t.integer  "couple_id"
+    t.string   "kind"
+    t.integer  "start_points"
+    t.integer  "start_placings"
+    t.string   "start_class"
+    t.boolean  "finished"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "tournaments", :force => true do |t|
     t.integer  "number"
-    t.integer  "user_id"
+    t.integer  "progress_id"
     t.integer  "place"
     t.integer  "participants"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.string   "address"
-    t.string   "date"
-    t.string   "time"
+    t.datetime "date"
     t.string   "kind"
     t.string   "notes"
     t.boolean  "enrolled",          :default => true
     t.date     "notificated_about"
   end
 
-  add_index "tournaments", ["user_id"], :name => "index_tournaments_on_user_id"
+  add_index "tournaments", ["progress_id"], :name => "index_tournaments_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

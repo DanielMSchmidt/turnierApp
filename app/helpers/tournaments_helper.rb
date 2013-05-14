@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module TournamentsHelper
   def print_stats(tournaments = [])
     finished_tournaments = tournaments.select{|tournament| !tournament.upcoming?}
@@ -35,11 +36,11 @@ module TournamentsHelper
   end
 
   def placings(tournaments, filter = :placing)
-    tournaments.collect(&filter).inject(:+) || 0
+    tournaments.collect(&filter).compact.inject(:+) || 0
   end
 
   def points(tournaments, filter = :points)
-    tournaments.collect(&filter).inject(:+) || 0
+    tournaments.collect(&filter).compact.inject(:+) || 0
   end
 
   def tournament_date(tournament)
@@ -53,4 +54,52 @@ module TournamentsHelper
   def tournament_adress(tournament)
     raw tournament.address.split(", ").join("<br />") if tournament.address?
   end
+
+  # TODO: refactor via decorator
+
+  def getProgressOverTimeData(couple)
+    getProgressOverTime(couple.latin, couple.standard).sort{ |a,b| a[:y] <=> b[:y] }
+  end
+
+  def getProgressOverTime(latin, standard)
+    tournaments = (latin.tournaments + standard.tournaments).reject{|tournament| tournament.upcoming?}.collect do |tournament|
+      point_of_time = tournament.date
+      hash = {
+        y: point_of_time.strftime("%Y-%m-%d"),
+        latin_po: latin.points_at_time(point_of_time),
+        latin_pl: latin.placings_at_time(point_of_time),
+        standard_po: standard.points_at_time(point_of_time),
+        standard_pl: standard.placings_at_time(point_of_time)
+       }
+      hash
+    end
+    tournaments
+  end
+
+  def getTournamentsData(couple)
+    [{ y: "Turniere" ,l: couple.latin.danced_tournaments.count ,s: couple.standard.danced_tournaments.count }]
+  end
+
+  def getPlacingsData(couple)
+    [{ y: "Platzierungen" ,l: couple.latin.placings ,s: couple.standard.placings }]
+  end
+
+  def getPointsData(couple)
+    [{ y: "Punkte" ,l: couple.latin.points ,s: couple.standard.points }]
+  end
+
+  #               Line or Bar        Hash of keys
+  #               |                  |
+  def print_graph(type, field, data, keys)
+    key_names = keys.keys.collect{|key| "'"+key.to_s+"'"}.join(", ")
+    key_values = keys.values.collect{|value| "'"+value.to_s+"'"}.join(", ")
+
+    str = raw ("Morris.#{type.capitalize}({")
+    str += raw("element: '#{field}',")
+    str += raw("data: #{data.to_json},")
+    str += raw("xkey: 'y',")
+    str += raw("ykeys: [#{key_names}],")
+    str += raw("labels: [#{key_values}]});")
+  end
+
 end

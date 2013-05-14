@@ -1,0 +1,30 @@
+#add_tournament_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Neues Turnier hinzufügen
+  .modal-body.row-fluid.btn-group
+    = link_to 'zukünftiges Turnier', '#add_future_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn span4 offset2"
+    = link_to 'vergangenes Turnier', '#add_past_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn span4 offset2"
+  .modal-footer
+    %a.btn{:href => "#"} Schließen
+
+
+
+#add_future_tournament_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 zukünftiges Turnier hinzufügen
+  .modal-body
+    = render 'tournaments/future_form'
+  .modal-footer
+    %a.btn{:href => "#"} Schließen
+
+
+#add_past_tournament_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 vergangenes Turnier hinzufügen
+  .modal-body
+    = render 'tournaments/past_form'
+  .modal-footer
+    %a.btn{:href => "#"} Schließen
