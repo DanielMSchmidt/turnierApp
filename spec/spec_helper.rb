@@ -16,6 +16,9 @@ require 'capybara/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+include Warden::Test::Helpers
+Warden.test_mode!
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
