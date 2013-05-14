@@ -37,12 +37,12 @@
         %h4 Entfernen
         %ul
           - @own_clubs.each do |club|
-            %li= link_to club.name, delete_club_path(:club_id => club.id, :user_id => current_user.id)
+            %li= link_to club.name, delete_club_path(:club_id => club.id, :couple_id => current_user.activeCouple.id)
         %hr/
         %h4 Hinzufügen
         %ul
           - @clubs.each do |club|
-            %li= link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
+            %li= link_to club.name, add_club_path(:club_id => club.id, :coulpe_id => current_user.activeCouple.id)
       %br/
       %br/
       = link_to 'Neuen Verein hinzufügen', new_club_path, class: "btn btn-primary"

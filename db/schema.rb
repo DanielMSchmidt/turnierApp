@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411092140) do
+ActiveRecord::Schema.define(:version => 20130514173901) do
 
   create_table "clubs", :force => true do |t|
     t.string   "name"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20130411092140) do
   end
 
   create_table "memberships", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "couple_id"
     t.integer  "club_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20130411092140) do
   end
 
   add_index "memberships", ["club_id"], :name => "index_memberships_on_club_id"
-  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+  add_index "memberships", ["couple_id"], :name => "index_memberships_on_user_id"
 
   create_table "progresses", :force => true do |t|
     t.integer  "couple_id"

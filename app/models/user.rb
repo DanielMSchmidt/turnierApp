@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
   after_create :notify_about_new_user
 
   has_many :tournaments
-  has_many :memberships, :dependent => :destroy
-  has_many :clubs, :through => :memberships
   has_many :couples
 
   def self.send_user_notification(newUser)
@@ -61,11 +59,11 @@ class User < ActiveRecord::Base
   # access clubs
 
   def verified_clubs
-    self.memberships.is_verified.collect{|x| x.club}.compact.uniq
+    self.activeCouple.memberships.is_verified.collect{|x| x.club}.compact.uniq
   end
 
   def unverified_clubs
-    self.memberships.includes(:club).is_unverified.collect{|x| x.club}.compact.uniq
+    self.activeCouple.memberships.includes(:club).is_unverified.collect{|x| x.club}.compact.uniq
   end
 
   # find users

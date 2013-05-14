@@ -5,6 +5,8 @@ class Couple < ActiveRecord::Base
 
   belongs_to :man, :class_name => "User"
   belongs_to :woman, :class_name => "User"
+  has_many :memberships, :dependent => :destroy
+  has_many :clubs, :through => :memberships
   has_many :progresses
 
   before_save :set_initial_values
@@ -16,7 +18,6 @@ class Couple < ActiveRecord::Base
   def set_initial_values
     self.active = true if self.active.nil?
   end
-
 
   #Activation
 
@@ -53,6 +54,11 @@ class Couple < ActiveRecord::Base
   # Users
   def users
     [self.man, self.woman]
+  end
+
+  # Tournaments
+  def tournaments
+    self.latin.tournaments + self.standard.tournaments
   end
 
 end

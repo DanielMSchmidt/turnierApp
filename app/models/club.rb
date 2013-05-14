@@ -32,7 +32,7 @@ class Club < ActiveRecord::Base
 
   def tournaments
     return nil if self.user.nil? || self.user.tournaments.nil?
-    self.users.collect{|user| user.tournaments}.flatten
+    self.couples.collect{|couple| couple.tournaments}.flatten
   end
 
   def mail_owner_unenrolled_tournaments
@@ -52,11 +52,11 @@ class Club < ActiveRecord::Base
   end
 
   def verified_members
-    self.memberships.is_verified.collect{|x| x.user}
+    self.memberships.is_verified.collect{|x| x.user}.flatten
   end
 
   def unverified_members
-    self.memberships.is_unverified.collect{|x| x.user}
+    self.memberships.is_unverified.collect{|x| x.user}.flatten
   end
 
   def is_verified_member(user)
