@@ -66,6 +66,10 @@ class User < ActiveRecord::Base
     self.activeCouple.memberships.includes(:club).is_unverified.collect{|x| x.club}.compact.uniq
   end
 
+  def clubs
+    self.activeCouple.clubs
+  end
+
   # find users
 
   def self.get_id_by_name(name)
