@@ -67,7 +67,12 @@ class User < ActiveRecord::Base
   end
 
   def clubs
-    self.activeCouple.clubs
+    unless self.activeCouple.nil?
+      self.activeCouple.clubs
+    else
+      []
+    end
+
   end
 
   # find users
