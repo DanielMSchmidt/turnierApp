@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def clubs
+    self.get_couples.map{|c| c.clubs}.flatten.uniq
+  end
+
   # access couples
 
   def get_couples
