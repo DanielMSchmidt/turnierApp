@@ -19,7 +19,8 @@ Other todos
     - Model side caching for data grabbing (http://railscasts.com/episodes/115-model-caching-revised)
 
   - v0.85
-    - Make a basic layout for all dashboards which is responsive
+    - Make a basic layout for all dashboards, which is responsive
+    - Save address of user and add google maps directions
     - Integration level tests
 
   - v0.9
