@@ -16,7 +16,12 @@ Other todos
       - js für die tab aktivierung schreiben oder schauen wieso die nicht active sind
       - Test it out and hopefully write tests for it
     - Make all forms horizontal forms (with bootstrap)
+
+  - v0.82
     - Model side caching for data grabbing (http://railscasts.com/episodes/115-model-caching-revised)
+
+  - v0.83
+    - CSS3 Effekte einbauen
 
   - v0.85
     - Make a basic layout for all dashboards, which is responsive
