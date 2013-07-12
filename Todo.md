@@ -5,6 +5,11 @@ On deploy:
 ---------------------
   - heroku config:add NEWRELIC_DISPATCHER=Puma
 
+
+Bugfixes
+---------------------
+  - fix membership setup (totaly screwed) and add some valid tests (integration level would be nice) about it
+
 Other todos
 ---------------------
   - v0.8
