@@ -12,9 +12,9 @@ TurnierList::Application.routes.draw do
   match "/user/:id/tournaments" => "tournaments#of_user", as: :user_tournaments
   match "/club/:club_id/transfer/:user_id" => "clubs#transfer_ownership", as: :transfer_ownership_to
 
-  match "/membership/new/:couple_id/:club_id" => "membership#create", as: :add_club
-  match "/membership/verify/:couple_id/:club_id" => "membership#verify", as: :verify_user
-  match "/membership/delete/:couple_id/:club_id" => "membership#destroy", as: :delete_club
+  match "/membership/new/:user_id/:club_id" => "membership#create", as: :add_club
+  match "/membership/verify/:user_id/:club_id" => "membership#verify", as: :verify_user
+  match "/membership/delete/:user_id/:club_id" => "membership#destroy", as: :delete_club
 
   match "/dashboard/(:club_id)" => "home#admin", as: :admin_dashboard
 
