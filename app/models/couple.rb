@@ -5,6 +5,7 @@ class Couple < ActiveRecord::Base
 
   belongs_to :man, :class_name => "User"
   belongs_to :woman, :class_name => "User"
+
   has_many :memberships, :dependent => :destroy
   has_many :clubs, :through => :memberships
   has_many :progresses
