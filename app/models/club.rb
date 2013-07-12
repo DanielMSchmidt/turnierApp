@@ -3,7 +3,7 @@ class Club < ActiveRecord::Base
   attr_accessible :name
   belongs_to :user
   has_many :memberships, dependent: :destroy
-  has_many :users, through: :memberships, order: 'name ASC'
+  has_many :couples, through: :memberships
   validates :name, presence: true, uniqueness: true
   default_scope order: 'name ASC'
 
