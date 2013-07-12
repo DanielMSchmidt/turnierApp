@@ -52,11 +52,11 @@ class Club < ActiveRecord::Base
   end
 
   def verified_members
-    self.memberships.is_verified.collect{|x| x.user}.flatten
+    self.memberships.is_verified.collect{|x| x.user}.flatten.compact
   end
 
   def unverified_members
-    self.memberships.is_unverified.collect{|x| x.user}.flatten
+    self.memberships.is_unverified.collect{|x| x.user}.flatten.compact
   end
 
   def is_verified_member(user)
