@@ -52,14 +52,29 @@ class Couple < ActiveRecord::Base
     self.progresses.create(kind: 'standard') if self.standard.nil?
   end
 
-  # Users
-  def users
-    [self.man, self.woman]
+  # Accessors
+
+  def getMan
+    if self.man.nil?
+      User.new(name: 'Noch nicht eingetragen')
+    else
+      self.man
+    end
   end
 
-  # Tournaments
+  def getWoman
+    if self.woman.nil?
+      User.new(name: 'Noch nicht eingetragen')
+    else
+      self.woman
+    end
+  end
+
+  def users
+    [self.getMan, self.getWoman]
+  end
+
   def tournaments
     self.latin.tournaments + self.standard.tournaments
   end
-
 end

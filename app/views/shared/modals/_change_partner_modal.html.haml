@@ -10,12 +10,12 @@
       .control-group
         = f.label 'Herr', :class => 'control-label'
         .controls
-          = f.text_field :man, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: 'Noch nicht eingetragen', autocomplete: "off"
+          = f.text_field :man, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: active_couple.getMan.name, autocomplete: "off"
 
       .control-group
         = f.label 'Dame', :class => 'control-label'
         .controls
-          = f.text_field :woman, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: 'Noch nicht eingetragen', autocomplete: "off"
+          = f.text_field :woman, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: active_couple.getWoman.name, autocomplete: "off"
 
       %hr
 
