@@ -24,7 +24,7 @@ class Couple < ActiveRecord::Base
 
   def deactivate_other_couples
     couples = Couple.where(man_id: self.man_id) + Couple.where(woman_id: self.woman_id)
-    couples.each{|couple| couple.deactivate}
+    couples.each{|couple| couple.deactivate unless couple == self}
   end
 
   def activate

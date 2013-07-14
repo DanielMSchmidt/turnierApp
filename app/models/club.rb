@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Club < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :user_id
   belongs_to :user
   has_many :memberships, dependent: :destroy
   has_many :couples, through: :memberships
