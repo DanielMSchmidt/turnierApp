@@ -14,24 +14,12 @@ class Couple < ActiveRecord::Base
   after_create :deactivate_other_couples
   after_create :build_progresses
 
-  validate :consistsOfCurrentUser
-
-  #Validation
-  def consistsOfCurrentUser
-    unless current_user.id == self.man_id || current_user.id == self.woman_id
-      errors.add_to_base('You are neither the man or the woman of this couple')
-    end
-  end
-
-
   #Initialize
-
   def set_initial_values
     self.active = true if self.active.nil?
   end
 
   #Activation
-
   def deactivate_other_couples
     couples = Couple.where(man_id: self.man_id) + Couple.where(woman_id: self.woman_id)
     couples.each{|couple| couple.deactivate unless couple == self}
@@ -47,8 +35,12 @@ class Couple < ActiveRecord::Base
     self.save
   end
 
-  # Progresses
+  #Validation
+  def consistsOfCurrentUser(user)
+    user.id == self.man_id || user.id == self.woman_id
+  end
 
+  # Progresses
   def standard
     self.progresses.active.standard.first
   end

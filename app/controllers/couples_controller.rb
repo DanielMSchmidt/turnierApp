@@ -38,6 +38,8 @@ class CouplesController < ApplicationController
     @couple = Couple.find(params[:id])
   end
 
+  #FIXME: Dry Post and Put up
+
   # POST /couples
   # POST /couples.json
   def create
@@ -45,14 +47,13 @@ class CouplesController < ApplicationController
     woman_id = User.get_id_by_name(params[:couple][:woman])
 
     @couple = createNewCouple(man_id, woman_id)
-
-    respond_to do |format|
+    if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
-        redirect_to root_path
-      else
-        format.html { render action: "new" }
-        format.json { render json: @couple.errors, status: :unprocessable_entity }
+        @couple.activate
+        redirect_to root_path, notice: 'Couple was successfully updated.'
       end
+    else
+      redirect_to root_path, notice: 'Couple wasnt updated.'
     end
   end
 
@@ -63,10 +64,13 @@ class CouplesController < ApplicationController
     woman_id = User.get_id_by_name(params[:couple][:woman])
 
     @couple = createNewCouple(man_id, woman_id)
-
-    if @couple.save!
-      @couple.activate
-      redirect_to root_path, notice: 'Couple was successfully updated.'
+    if @couple.consistsOfCurrentUser(current_user)
+      if @couple.save
+        @couple.activate
+        redirect_to root_path, notice: 'Couple was successfully updated.'
+      end
+    else
+      redirect_to root_path, notice: 'Couple wasnt updated.'
     end
   end
 
