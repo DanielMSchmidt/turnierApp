@@ -55,6 +55,7 @@ describe Club do
     end
 
     it "should be the right membership" do
+      #FIXME: Fails to no reason
       user.clubs.first.id.should eq(club.id)
     end
   end
