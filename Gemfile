@@ -22,6 +22,7 @@ end
 
 group :development do
   gem "rails_best_practices"
+  gem 'i18n-tasks', '~> 0.0.6'
 
   #improving errorhandling
   gem 'better_errors'
