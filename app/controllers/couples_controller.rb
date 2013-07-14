@@ -63,11 +63,10 @@ class CouplesController < ApplicationController
     woman_id = User.get_id_by_name(params[:couple][:woman])
 
     @couple = createNewCouple(man_id, woman_id)
-    @couple.save!
 
-    respond_to do |format|
-      format.html { redirect_to @couple, notice: 'Couple was successfully updated.' }
-      format.json { head :no_content }
+    if @couple.save!
+      @couple.activate
+      redirect_to root_path, notice: 'Couple was successfully updated.'
     end
   end
 
@@ -84,7 +83,7 @@ class CouplesController < ApplicationController
   end
 
   def createNewCouple(man_id, woman_id)
-    couple = Couple.new(man_id: man_id, woman_id: woman_id, active: true)
+    couple = Couple.new(man_id: man_id, woman_id: woman_id)
 
     #Add Progresses
     latin = couple.progresses.new(start_class: params[:couple][:latin_kind], kind: 'latin')
