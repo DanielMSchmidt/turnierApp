@@ -44,11 +44,7 @@ class CouplesController < ApplicationController
     man_id = User.get_id_by_name(params[:couple][:man])
     woman_id = User.get_id_by_name(params[:couple][:woman])
 
-    @couple = Couple.new(man_id: man_id, woman_id: woman_id, active: true)
-
-    #Add Progresses
-    latin = @couple.progresses.new(start_class: params[:couple][:latin_kind], kind: 'latin')
-    standard = @couple.progresses.new(start_class: params[:couple][:standard_kind], kind: 'standard')
+    @couple = createNewCouple(man_id, woman_id)
 
     respond_to do |format|
       if @couple.save
@@ -63,9 +59,11 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    @couple = Couple.find(params[:id])
+    man_id = User.get_id_by_name(params[:couple][:man])
+    woman_id = User.get_id_by_name(params[:couple][:woman])
 
-    #FIXME: See at create and change update like it
+    @couple = createNewCouple(man_id, woman_id)
+    @couple.save!
 
     respond_to do |format|
       format.html { redirect_to @couple, notice: 'Couple was successfully updated.' }
@@ -83,6 +81,16 @@ class CouplesController < ApplicationController
       format.html { redirect_to couples_url }
       format.json { head :no_content }
     end
+  end
+
+  def createNewCouple(man_id, woman_id)
+    couple = Couple.new(man_id: man_id, woman_id: woman_id, active: true)
+
+    #Add Progresses
+    latin = couple.progresses.new(start_class: params[:couple][:latin_kind], kind: 'latin')
+    standard = couple.progresses.new(start_class: params[:couple][:standard_kind], kind: 'standard')
+
+    couple
   end
 
   # TODO: Dry up
