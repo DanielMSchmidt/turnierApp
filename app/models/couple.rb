@@ -11,10 +11,20 @@ class Couple < ActiveRecord::Base
   has_many :progresses
 
   before_save :set_initial_values
-  before_create :deactivate_other_couples
+  after_create :deactivate_other_couples
   after_create :build_progresses
 
-  #initialize
+  validate :consistsOfCurrentUser
+
+  #Validation
+  def consistsOfCurrentUser
+    unless current_user.id == self.man_id || current_user.id == self.woman_id
+      errors.add_to_base('You are neither the man or the woman of this couple')
+    end
+  end
+
+
+  #Initialize
 
   def set_initial_values
     self.active = true if self.active.nil?
