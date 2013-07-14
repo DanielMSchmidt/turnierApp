@@ -8,4 +8,4 @@
         %p Es gibt keine Mitglieder außer dir.
       - else
         - @verified_users.reject{|x| x == current_user}.each do |user|
-          %li= link_to "Zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @club.id), class: "btn"
+          %li= link_to "Zu #{user.name} wechseln", transfer_ownership_to_path(user_id: user.id, club_id: @active_club.id), class: "btn"

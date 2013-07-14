@@ -1,7 +1,7 @@
 .row-fluid
-  %ul.nav.nav-tabs.span12
+  %ul.nav.nav-tabs.span12.tabwiseNavigation
     - @user_clubs.each do |club|
-      %li{:class => "#{'active' if club.id == @active_club.id}" }
+      %li{:id => "club-#{club.id}"}
         = link_to club.name, admin_dashboard_path(club_id: club.id)
 
   .span12
@@ -53,6 +53,12 @@
       %img{:src => "http://placehold.it/350x550&text=Auflistung der Paare"}
       %img{:src => "http://placehold.it/650x750&text=Stats des aktiven Paars"}
 
+%input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
 
+:javascript
+  $(function() {
+    $(".tabwiseNavigation li").removeClass("active");
+    $("#club-" + $("#activeTab").val()).addClass("active");
+  });
 
 = render 'shared/admin_modals'
