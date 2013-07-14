@@ -61,7 +61,7 @@ class ClubsController < ApplicationController
 
 
     if @club.save
-      @club.memberships.create!(user_id: current_user)
+      @club.memberships.create!(couple_id: current_user.activeCouple.id, verified: true)
       redirect_to @club, notice: t('club create')
     else
       render :new
