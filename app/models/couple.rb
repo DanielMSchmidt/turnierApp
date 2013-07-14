@@ -73,7 +73,7 @@ class Couple < ActiveRecord::Base
   end
 
   def users
-    [self.getMan, self.getWoman]
+    [self.getMan, self.getWoman].reject{|user| user.id.nil?}
   end
 
   def tournaments
