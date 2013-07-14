@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   default_scope :order => 'name ASC'
-  after_create :notify_about_new_user
-  after_create :build_empty_couple
+  after_create :notifyAboutNewUser
+  after_create :buildEmptyCouple
 
   has_many :tournaments
   has_many :couples
@@ -21,12 +21,12 @@ class User < ActiveRecord::Base
     logger.info "ended sending usercount notification"
   end
 
-  def notify_about_new_user
+  def notifyAboutNewUser
     logger.debug "notifying about new user #{self.name}"
     User.send_user_notification(self.name)
   end
 
-  def build_empty_couple
+  def buildEmptyCouple
     Couple.create(man_id: self.id)
   end
 
