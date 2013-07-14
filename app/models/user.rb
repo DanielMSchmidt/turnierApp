@@ -7,9 +7,12 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   default_scope :order => 'name ASC'
   after_create :notify_about_new_user
+  after_create :build_empty_couple
 
   has_many :tournaments
   has_many :couples
+
+  # Hooks
 
   def self.send_user_notification(newUser)
     user = User.all
@@ -21,6 +24,10 @@ class User < ActiveRecord::Base
   def notify_about_new_user
     logger.debug "notifying about new user #{self.name}"
     User.send_user_notification(self.name)
+  end
+
+  def build_empty_couple
+    Couple.create(man_id: self.id)
   end
 
   # Accessors
