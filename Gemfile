@@ -15,6 +15,10 @@ gem 'libv8', '~> 3.11.8'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 
+#PDF generation
+gem 'wicked_pdf'
+gem "wkhtmltopdf-heroku"
+
 group :production do
   gem "newrelic_rpm", "~> 3.5.5.38"
   gem 'pg'
