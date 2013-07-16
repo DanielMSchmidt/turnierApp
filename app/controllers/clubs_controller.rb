@@ -92,6 +92,21 @@ class ClubsController < ApplicationController
     end
   end
 
+  def printTournaments
+    @club = Club.find(params[:club_id].to_i)
+    @from = params[:from].to_date
+    @to = params[:to].to_date
+
+    @tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongs_to_club(@club.id)}
+
+    if params[:upcoming]
+      @tournaments.select!{|t| t.upcoming?}
+    end
+
+    render :pdf => "Turniere des #{@club.name}, #{@from} - #{@to}",
+           :show_as_html => false
+  end
+
   def transfer_ownership
     @club = Club.find(params[:club_id])
     new_user = User.find(params[:user_id])

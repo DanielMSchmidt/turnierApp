@@ -45,6 +45,10 @@ class Tournament < ActiveRecord::Base
     self.progress_id = id
   end
 
+  def belongs_to_club(id)
+    self.progress.couple.clubs.map{|c| c.id}.include?(id)
+  end
+
   def incomplete?
     return self.participants.nil? && self.place.nil?
   end
