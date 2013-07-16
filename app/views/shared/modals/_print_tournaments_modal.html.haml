@@ -1,6 +1,27 @@
 #print_tournaments_modal.modal.hide.fade
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-    %h3 Wähle aus was du drucken möchtest
+    %h3 Bitte wähle einen Zeitraum
   .modal-body
-    %img{:src => "http://placehold.it/350x150"}
+    = form_tag print_tournaments_path(club_id: @active_club.id), :html => {:class => 'form-horizontal'} do
+      .control-group
+        .controls
+          %label.checkbox
+            nur zukünftige Turniere
+            %input{:type=> "checkbox", :name => "upcoming"}
+
+      .control-group
+        %label.control-label Von
+        .controls
+          %input{"data-behaviour" => "datepicker", :type => "text", :name => "from"}
+
+      .control-group
+        %label.control-label Bis
+        .controls
+          %input{"data-behaviour" => "datepicker", :type => "text", :name => "to"}
+      = submit_tag "Drucken", :class => "btn btn-primary"
+
+:javascript
+  $('[data-behaviour~=datepicker]').datepicker({
+      format: 'dd.mm.yyyy'
+  });
