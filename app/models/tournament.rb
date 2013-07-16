@@ -134,7 +134,7 @@ class Tournament < ActiveRecord::Base
   def send_mail_if_enrolled_tournament_is_deleted
     logger.debug "send_mail_if_enrolled_tournament_is_deleted for #{tournament.to_s}"
     if tournament.is_enrolled_and_not_danced?
-      club_owners_mailaddresses = tournament.user.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
+      club_owners_mailaddresses = tournament.users.first.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
       logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
       NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament).deliver
     end
