@@ -51,17 +51,27 @@
             %th
           = render @unenrolled_tournaments, enrollable: true
 
-    .row-fluid
+    #master-detail.row-fluid
       %h4 Deine Paare
-      %img{:src => "http://placehold.it/350x550&text=Auflistung der Paare"}
-      %img{:src => "http://placehold.it/650x750&text=Stats des aktiven Paars"}
+      .span3.btn-group.btn-group-vertical
+        - @verified_couples.each do |couple|
+          %a.btn{data: {master: couple.id}}
+            = couple.to_s
+      .span8
+        - @verified_couples.each do |couple|
+          .hidden{id: "couple-stats-#{couple.id}", data: {detail: couple.id}}
+            = "Testinhalt für #{couple.to_s}"
 
 %input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
 
 :javascript
   $(function() {
+    //FIXME: refactor as jQuery extension
     $(".tabwiseNavigation li").removeClass("active");
     $("#club-" + $("#activeTab").val()).addClass("active");
+
+    var TA = window.TA || (window.TA = {});
+    new TA.MasterDetail("#master-detail");
   });
 
 = render 'shared/admin_modals'
