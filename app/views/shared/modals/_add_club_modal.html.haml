@@ -4,7 +4,7 @@
     %h3 Füge einen Verein hinzu
   .modal-body
     %ul
-      - @clubs.reject{|club| club.is_unverified_member(current_user) }.each do |club|
+      - @clubs.reject{|club| club.is_unverified_user(current_user) }.each do |club|
         %li
           = link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
 

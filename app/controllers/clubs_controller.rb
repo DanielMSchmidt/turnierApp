@@ -17,10 +17,10 @@ class ClubsController < ApplicationController
   def show
     @club = Club.find(params[:id])
 
-    return redirect_to(clubs_path) if !@club.is_verified_member(current_user)
+    return redirect_to(clubs_path) if !@club.is_verified_user(current_user)
 
-    @verified_users = @club.verified_members
-    @unverified_members = @club.unverified_members
+    @verified_users = @club.verified_users
+    @unverified_users = @club.unverified_users
 
     @unenrolled_tournaments = @verified_users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
 

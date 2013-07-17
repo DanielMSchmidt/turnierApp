@@ -6,14 +6,17 @@ class HomeController < ApplicationController
 
   def admin
     setClubs
-
     if @user_clubs.empty?
       redirect_to root_path
     else
-      @verified_users = @active_club.verified_members
-      @unverified_members = @active_club.unverified_members
-      @unenrolled_tournaments = @verified_users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+      @verified_couples = @active_club.verifiedCouples
+      @unverified_couples = @active_club.unverifiedCouples
+      @unenrolled_tournaments = @unverified_couples.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
     end
+
+    @verified_users = @verified_couples.collect{|c| c.users}.flatten
+    @unverified_users = @verified_couples.collect{|c| c.users}.flatten
+
   end
 
   def impressum
