@@ -49,9 +49,6 @@
             %th Turniernr.
             %th
             %th
-            - if current_user.tournaments.collect{|x| @unenrolled_tournaments.include? x }.include? true
-              %th
-              %th
           = render @unenrolled_tournaments, enrollable: true
 
     .row-fluid
