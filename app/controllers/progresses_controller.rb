@@ -1,42 +1,5 @@
 # -*- encoding : utf-8 -*-
 class ProgressesController < ApplicationController
-  # GET /progresses
-  # GET /progresses.json
-  def index
-    @progresses = Progress.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @progresses }
-    end
-  end
-
-  # GET /progresses/1
-  # GET /progresses/1.json
-  def show
-    @progress = Progress.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @progress }
-    end
-  end
-
-  # GET /progresses/new
-  # GET /progresses/new.json
-  def new
-    @progress = Progress.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @progress }
-    end
-  end
-
-  # GET /progresses/1/edit
-  def edit
-    @progress = Progress.find(params[:id])
-  end
 
   # POST /progresses
   # POST /progresses.json
