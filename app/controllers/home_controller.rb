@@ -16,7 +16,6 @@ class HomeController < ApplicationController
 
     @verified_users = @verified_couples.collect{|c| c.users}.flatten
     @unverified_users = @verified_couples.collect{|c| c.users}.flatten
-
   end
 
   def impressum

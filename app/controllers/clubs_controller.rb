@@ -1,41 +1,5 @@
 # -*- encoding : utf-8 -*-
 class ClubsController < ApplicationController
-  # GET /clubs
-  # GET /clubs.json
-  before_filter :setClubsAsActive
-
-  def index
-    @clubs = Club.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @clubs }
-    end
-  end
-
-  # GET /clubs/1
-  # GET /clubs/1.json
-  def show
-    @club = Club.find(params[:id])
-
-    return redirect_to(clubs_path) if !@club.is_verified_user(current_user)
-
-    @verified_users = @club.verified_users
-    @unverified_users = @club.unverified_users
-
-    @unenrolled_tournaments = @verified_users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
-
-
-    if @club.user_id == current_user.id
-      @organisingTournaments = @unenrolled_tournaments
-    else
-      @organisingTournaments = []
-    end
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @club }
-    end
-  end
 
   # GET /clubs/new
   # GET /clubs/new.json
@@ -113,9 +77,5 @@ class ClubsController < ApplicationController
     @club.transfer_to(new_user)
     logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
     redirect_to @club
-  end
-
-  def setClubsAsActive
-    @active_page = 'clubs'
   end
 end

@@ -20,9 +20,6 @@
     - classes ||= 'icons-ok'
     %td#status
       %div{:class => classes}
-    - enrollable ||= 'false'
-    - if @unenrolled_tournaments.include?(tournament)
-      - if enrollable && !tournament.enrolled?
-        %td= link_to 'Als gemeldet markieren', just_enrolled_path(tournament.id), class: "btn"
-      - else
-        %td
+    - if admin && !tournament.enrolled?
+      %td
+        = link_to 'Als gemeldet markieren', just_enrolled_path(tournament.id), class: "btn"

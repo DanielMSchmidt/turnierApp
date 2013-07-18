@@ -22,8 +22,6 @@
           .nav-collapse.collapse.navbar-responsive-collapse
             %ul.nav
               - if user_signed_in?
-                %li.add_result
-                  = link_to 'Turnier hinzufügen', '#add_tournament_modal', role: 'button', data: {toggle: 'modal'}
                 %li.clubs
                   = link_to 'Verein hinzufügen', '#add_club_modal', role: 'button', data: {toggle: 'modal'}
                 %li

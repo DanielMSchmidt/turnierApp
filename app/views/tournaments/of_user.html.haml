@@ -18,7 +18,7 @@
     %th
     %th
     %th
-  = render @tournaments
+  = render @tournaments, admin: false
 %br/
 - if current_user == @user
   = link_to 'Neues Turnier hinzufügen', new_tournament_path, class: "btn btn-primary"
