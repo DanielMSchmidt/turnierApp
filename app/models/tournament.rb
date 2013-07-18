@@ -28,9 +28,12 @@ class Tournament < ActiveRecord::Base
     self.users.include?(user)
   end
 
+  def couple
+    self.progress.couple
+  end
+
   def users
-    couple = self.progress.couple
-    [couple.man, couple.woman]
+    [self.couple.man, self.couple.woman]
   end
 
   def assign_to_user(user_id)
