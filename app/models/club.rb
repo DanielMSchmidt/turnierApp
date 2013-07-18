@@ -51,20 +51,28 @@ class Club < ActiveRecord::Base
     self.tournaments.collect{|x| x.should_send_a_notification_mail?}.include?(true)
   end
 
-  def verified_members
-    self.memberships.is_verified.collect{|x| x.user}.flatten.compact
+  def verifiedCouples(active=true)
+    self.memberships.is_verified.collect{|m| m.couple}.select{|c| c.active == active}
   end
 
-  def unverified_members
-    self.memberships.is_unverified.collect{|x| x.user}.flatten.compact
+  def unverifiedCouples(active=true)
+    self.memberships.is_unverified.collect{|m| m.couple}.select{|c| c.active == active}
   end
 
-  def is_verified_member(user)
-    self.verified_members.include?(user)
+  def verified_users
+    self.verifiedCouples.collect{|u| u.users}.flatten
   end
 
-  def is_unverified_member(user)
-    self.unverified_members.include?(user)
+  def unverified_users
+    self.unverifiedCouples.collect{|u| u.users}.flatten
+  end
+
+  def is_verified_user(user)
+    self.verified_users.include?(user)
+  end
+
+  def is_unverified_user(user)
+    self.unverified_users.include?(user)
   end
 
   def to_s

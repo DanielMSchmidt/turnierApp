@@ -79,4 +79,8 @@ class Couple < ActiveRecord::Base
   def tournaments
     self.latin.tournaments + self.standard.tournaments
   end
+
+  def to_s
+    "#{self.getWoman.name} / #{self.getMan.name}"
+  end
 end

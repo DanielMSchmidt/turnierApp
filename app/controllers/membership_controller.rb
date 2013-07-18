@@ -7,7 +7,7 @@ class MembershipController < ApplicationController
   end
 
   def verify
-    membership = Membership.where(couple_id: getCoupleFromUser, club_id: params[:club_id]).first
+    membership = Membership.where(couple_id: params[:couple_id], club_id: params[:club_id]).first
     if membership
       membership.verified = true
       membership.save!
@@ -18,8 +18,8 @@ class MembershipController < ApplicationController
   end
 
   def destroy
-    @membership = Membership.destroy_all(club_id: params[:club_id], couple_id: getCoupleFromUser)
-    redirect_to edit_user_registration_path(current_user), notice: t('membership destroy')
+    @membership = Membership.destroy_all(couple_id: params[:couple_id], club_id: params[:club_id])
+    redirect_to root_path, notice: t('membership destroy')
   end
 
   def getCoupleFromUser

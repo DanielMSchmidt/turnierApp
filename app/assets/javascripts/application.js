@@ -16,3 +16,4 @@
 //= require_tree .
 //= require turbolinks
 //= require jquery.turbolinks
+//= require bootstrap-datepicker

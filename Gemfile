@@ -14,15 +14,23 @@ gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
+gem 'bootstrap-datepicker-rails'
+
+#PDF generation
+gem 'wicked_pdf'
+
 
 group :production do
   gem "newrelic_rpm", "~> 3.5.5.38"
   gem 'pg'
+  gem "wkhtmltopdf-heroku"
 end
 
 group :development do
   gem "rails_best_practices"
   gem 'i18n-tasks', '~> 0.0.6'
+
+  gem "wkhtmltopdf", "~> 0.1.2"
 
   #improving errorhandling
   gem 'better_errors'

@@ -17,10 +17,10 @@ class ClubsController < ApplicationController
   def show
     @club = Club.find(params[:id])
 
-    return redirect_to(clubs_path) if !@club.is_verified_member(current_user)
+    return redirect_to(clubs_path) if !@club.is_verified_user(current_user)
 
-    @verified_users = @club.verified_members
-    @unverified_members = @club.unverified_members
+    @verified_users = @club.verified_users
+    @unverified_users = @club.unverified_users
 
     @unenrolled_tournaments = @verified_users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
 
@@ -90,6 +90,21 @@ class ClubsController < ApplicationController
       format.html { redirect_to root_url }
       format.json { head :no_content }
     end
+  end
+
+  def printTournaments
+    @club = Club.find(params[:club_id].to_i)
+    @from = params[:from].to_date
+    @to = params[:to].to_date
+
+    @tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongs_to_club(@club.id)}
+
+    if params[:upcoming]
+      @tournaments.select!{|t| t.upcoming?}
+    end
+
+    render :pdf => "Turniere des #{@club.name}, #{@from} - #{@to}",
+           :show_as_html => false
   end
 
   def transfer_ownership

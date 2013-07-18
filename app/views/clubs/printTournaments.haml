@@ -1,0 +1,21 @@
+!!!
+%html{:lang => "de", "xml:lang" => "de", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    = wicked_pdf_stylesheet_link_tag "pdf"
+    = wicked_pdf_stylesheet_link_tag "bootstrap_and_overrides"
+  %body
+    #header
+      %h1= "Turniere des #{@club.name}: #{@from.strftime("%d.%m.%Y")} - #{@to.strftime("%d.%m.%Y")}"
+
+    #content
+      %table.table.table-striped.outerbordered
+        %tr
+          %th Paar
+          %th Datum
+          %th Zeit
+          %th Art
+          %th Platz
+          %th Adresse
+          %th Turniernr.
+        = render @tournaments, pdf: true
