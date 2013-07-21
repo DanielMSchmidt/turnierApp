@@ -3,8 +3,9 @@
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Neues Turnier hinzufügen
   .modal-body.row-fluid.btn-group
-    = link_to 'zukünftiges Turnier', '#add_future_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn span4 offset2"
-    = link_to 'vergangenes Turnier', '#add_past_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn span4 offset2"
+    .well.span11
+      = link_to 'zukünftiges Turnier', '#add_future_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn btn-block"
+      = link_to 'vergangenes Turnier', '#add_past_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn btn-block"
   .modal-footer
     %a.btn{:href => "#"} Schließen
 
