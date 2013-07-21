@@ -88,11 +88,13 @@ describe Club do
 
   describe "#is_verified_user" do
     it "should be false if the user is not verified" do
-      club.should_receive(:verified_members).and_return([])
+      club.should_receive(:verifiedCouples).and_return([])
       club.is_verified_user(user).should be_false
     end
+
     it "should be true if the user is verified" do
-      club.should_receive(:verified_members).and_return([user])
+      couple = double('couple', users: [user], active: true)
+      club.should_receive(:verifiedCouples).and_return([couple])
       club.is_verified_user(user).should be_true
     end
   end
