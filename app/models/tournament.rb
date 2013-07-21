@@ -2,6 +2,7 @@
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
   attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
+
   belongs_to :progress
 
   validates :number, presence: true, numericality: true

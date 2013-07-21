@@ -5,8 +5,6 @@ class Membership < ActiveRecord::Base
   belongs_to :couple
   belongs_to :club
 
-  default_scope includes(:couple)
-
   scope :is_verified, where(verified: true)
   scope :is_unverified, where(verified: false)
 

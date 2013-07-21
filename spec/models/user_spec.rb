@@ -49,6 +49,7 @@ describe User do
     describe "#get_couples" do
       it "should return an emtpy array if there is no couple with the right id" do
         Couple.stub(:all).and_return([double('not_your_couple', man_id: 100, woman_id: 101)])
+
         user.get_couples.should be_empty
       end
 

@@ -5,11 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
-  default_scope :order => 'name ASC'
+  default_scope order('name ASC')
   after_create :notifyAboutNewUser
   after_create :buildEmptyCouple
 
-  has_many :tournaments
   has_many :couples
 
   # Hooks
