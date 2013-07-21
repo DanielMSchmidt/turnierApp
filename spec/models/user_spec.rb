@@ -9,6 +9,25 @@ describe User do
     user.should be_valid
   end
 
+  describe "hooks" do
+    it "should create a couple after creation" do
+      expect{User.create(email: "tester12@test.de", name: "tester", password: "123456789")}.to change{Couple.count}.by(1)
+    end
+
+    it "should have an acticeCouple after creation" do
+      a = User.create(email: "tester123@test.de", name: "tester12", password: "123456789012")
+
+      a.activeCouple.should_not be_nil
+    end
+
+    it "should create progresses for the active couple" do
+      a = User.create(email: "tester12345@test.de", name: "tester124", password: "123456789012345")
+
+      a.activeCouple.latin.should_not be_nil
+      a.activeCouple.standard.should_not be_nil
+    end
+  end
+
   describe "structure" do
     it { should respond_to(:couples) }
     it "shouldnt have more then one active couple per time" do
