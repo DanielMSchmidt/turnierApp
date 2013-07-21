@@ -24,7 +24,7 @@ class Tournament < ActiveRecord::Base
     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
   end
 
-  def is_from_user(user)
+  def belongsToUser(user)
     self.users.include?(user)
   end
 

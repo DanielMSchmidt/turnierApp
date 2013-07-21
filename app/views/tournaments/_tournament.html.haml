@@ -23,3 +23,8 @@
     - if admin && !tournament.enrolled?
       %td
         = link_to 'Als gemeldet markieren', just_enrolled_path(tournament.id), class: "btn"
+    - if tournament.belongsToUser(current_user)
+      %td
+        = link_to 'Ergebnis eintragen', edit_tournament_path(tournament), class: "btn"
+      %td
+        = link_to 'Löschen', tournament, method: :delete, data: { confirm: 'Bist du dir sicher?' }, class: "btn btn-danger"
