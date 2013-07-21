@@ -3,7 +3,7 @@ class MembershipController < ApplicationController
 
   def create
     Membership.create!(couple_id: getCoupleFromUser, club_id: params[:club_id], verified: false)
-    redirect_to clubs_path, notice: t('membership create')
+    redirect_to root_path, notice: t('membership create')
   end
 
   def verify
@@ -11,9 +11,9 @@ class MembershipController < ApplicationController
     if membership
       membership.verified = true
       membership.save!
-      redirect_to  club_path(params[:club_id]), notice: t('membership verfify success')
+      redirect_to  root_path, notice: t('membership verfify success')
     else
-      redirect_to  club_path(params[:club_id]), notice: t('membership verfify fail')
+      redirect_to  root_path, notice: t('membership verfify fail')
     end
   end
 
