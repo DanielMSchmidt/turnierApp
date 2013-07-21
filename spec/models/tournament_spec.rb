@@ -84,4 +84,33 @@ describe "Tournament" do
       tournament.enrolled.should be_true
     end
   end
+
+  describe "#statusClasses" do
+    it "should have the behind time class if its behind time" do
+      tournament.stub(:behind_time?).and_return(true)
+
+      tournament.statusClasses.should eq('icons-missing_information')
+    end
+
+    it "should have the behind time class if its behind time, although its not enrolled" do
+      tournament.stub(:behind_time?).and_return(true)
+      tournament.stub(:enrolled?).and_return(false)
+
+      tournament.statusClasses.should eq('icons-missing_information')
+    end
+
+    it "should have the not enrolled class if its not enrolled" do
+      tournament.stub(:behind_time?).and_return(false)
+      tournament.stub(:enrolled?).and_return(false)
+
+      tournament.statusClasses.should eq('icons-not_enrolled')
+    end
+
+    it "should be have the ok class if everything is ok" do
+      tournament.stub(:behind_time?).and_return(false)
+      tournament.stub(:enrolled?).and_return(true)
+
+      tournament.statusClasses.should eq('icons-ok')
+    end
+  end
 end

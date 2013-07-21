@@ -54,7 +54,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def incomplete?
-    return self.participants.nil? && self.place.nil?
+    return (self.participants.nil? || self.participants == 0)  && (self.place.nil? || self.place == 0)
   end
 
   def get_date
@@ -172,4 +172,15 @@ class Tournament < ActiveRecord::Base
   def to_s
     "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
   end
+
+  def statusClasses
+    if self.behind_time? && self.incomplete?
+      classes = 'icons-missing_information'
+    else
+      classes ='icons-not_enrolled' unless self.enrolled?
+    end
+    classes ||= 'icons-ok'
+    classes
+  end
+
 end

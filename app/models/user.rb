@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   # access couples
 
   def get_couples
-    Couple.all.select{|couple| couple.man_id == self.id || couple.woman_id == self.id}.uniq
+    Couple.includes(:clubs).all.select{|couple| couple.man_id == self.id || couple.woman_id == self.id}.uniq
   end
 
   def activeCouple

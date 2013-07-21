@@ -9,17 +9,16 @@
   %td= tournament.kind
   - unless pdf && tournament.place.nil?
     %td
-      = tournament.place || '?'
-      von #{tournament.participants || '??'}
+      - if tournament.incomplete?
+        ? von ??
+      - else
+        = "#{tournament.place } von #{tournament.participants || '??'}"
   %td= tournament_adress(tournament)
   %td= tournament.number
 
   - unless pdf
-    - classes = 'icons-not_enrolled' unless tournament.enrolled? && !tournament.behind_time?
-    - classes = 'icons-missing_information' if tournament.behind_time?
-    - classes ||= 'icons-ok'
     %td#status
-      %div{:class => classes}
+      %div{:class => tournament.statusClasses}
     - if admin && !tournament.enrolled?
       %td
         = link_to 'Als gemeldet markieren', just_enrolled_path(tournament.id), class: "btn"
