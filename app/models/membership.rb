@@ -13,4 +13,13 @@ class Membership < ActiveRecord::Base
   def user
     self.couple.users if self.couple
   end
+
+  def self.verified?(club, couple)
+    m = Membership.where(club_id: club, couple_id: couple).first
+    if m.nil? || !m.verified
+      false
+    else
+      true
+    end
+  end
 end

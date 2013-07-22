@@ -16,6 +16,8 @@ class Couple < ActiveRecord::Base
 
   #Initialize
   def set_initial_values
+    clubs = self.users.map{|u| u.clubs }.flatten
+    self.setClubs(clubs)
     self.active = true if self.active.nil?
   end
 
@@ -38,6 +40,13 @@ class Couple < ActiveRecord::Base
   # Validation
   def consistsOfCurrentUser(user)
     user.id == self.man_id || user.id == self.woman_id
+  end
+
+  # Getter
+  def setClubs(clubs)
+    clubs.each do |club|
+      Membership.create(couple_id: self.id, club_id: club.id, verified: Membership.verified?(club, self))
+    end
   end
 
   # Progresses
