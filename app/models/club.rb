@@ -51,6 +51,8 @@ class Club < ActiveRecord::Base
     self.tournaments.collect{|x| x.should_send_a_notification_mail?}.include?(true)
   end
 
+  # Verified couples & users
+
   def verifiedCouples(active=true)
     self.memberships.is_verified.collect{|m| m.couple}.select{|c| c.active == active}
   end

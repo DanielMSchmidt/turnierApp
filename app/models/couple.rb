@@ -35,7 +35,7 @@ class Couple < ActiveRecord::Base
     self.save
   end
 
-  #Validation
+  # Validation
   def consistsOfCurrentUser(user)
     user.id == self.man_id || user.id == self.woman_id
   end
