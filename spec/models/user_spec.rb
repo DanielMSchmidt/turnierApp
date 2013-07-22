@@ -10,6 +10,13 @@ describe User do
   end
 
   describe "hooks" do
+    it "should call a build the couple function" do
+      a = User.new(email: "tester1@test.de", name: "tester1", password: "123456789012")
+      a.should_receive(:buildEmptyCouple)
+
+      a.save!
+    end
+
     it "should create a couple after creation" do
       expect{User.create(email: "tester12@test.de", name: "tester", password: "123456789")}.to change{Couple.count}.by(1)
     end
