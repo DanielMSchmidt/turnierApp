@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def buildEmptyCouple
-    Couple.create(man_id: self.id)
+    Couple.create(man_id: self.id, active: true)
   end
 
   # Accessors
