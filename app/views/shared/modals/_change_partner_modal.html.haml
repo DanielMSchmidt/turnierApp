@@ -20,7 +20,7 @@
       %hr
 
       .control-group
-        = f.label 'Startklasse', :class => 'control-label'
+        = f.label 'Startklasse (Lat / Std)', :class => 'control-label'
         .controls
           = f.text_field :latin_kind, placeholder: 'Latein', :class => 'input-small', value: active_couple.latin.start_class
           = f.text_field :standard_kind, placeholder: 'Standard', :class => 'input-small', value: active_couple.latin.start_class
