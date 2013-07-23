@@ -14,17 +14,24 @@ class Couple < ActiveRecord::Base
   after_create :deactivate_other_couples
   after_create :build_progresses
 
-  #Initialize
+  # Finder
+
+  def self.containingIds(ids)
+    (Couple.where(man_id: ids) + Couple.where(woman_id: ids)).uniq
+  end
+
+  # Initialize
   def set_initial_values
     clubs = self.users.map{|u| u.clubs }.flatten
     self.setClubs(clubs)
     self.active = true if self.active.nil?
   end
 
-  #Activation
+  # Activation
   def deactivate_other_couples
-    couples = Couple.where(man_id: self.man_id) + Couple.where(woman_id: self.woman_id)
-    couples.each{|couple| couple.deactivate unless couple == self}
+    Couple.containingIds(self.userIds).each do |couple|
+      couple.deactivate unless couple == self
+    end
   end
 
   def activate
@@ -42,7 +49,7 @@ class Couple < ActiveRecord::Base
     user.id == self.man_id || user.id == self.woman_id
   end
 
-  # Getter
+  # Setter
   def setClubs(clubs)
     clubs.each do |club|
       Membership.create(couple_id: self.id, club_id: club.id, verified: Membership.verified?(club, self))
@@ -83,6 +90,10 @@ class Couple < ActiveRecord::Base
 
   def users
     [self.getMan, self.getWoman].reject{|user| user.id.nil?}
+  end
+
+  def userIds
+    self.users.collect{|u| u.id}
   end
 
   def tournaments
