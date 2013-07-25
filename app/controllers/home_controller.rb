@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     else
       @verified_couples = @active_club.verifiedCouples
       @unverified_couples = @active_club.unverifiedCouples
-      @unenrolled_tournaments = @unverified_couples.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+      @unenrolled_tournaments = @verified_couples.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
     end
 
     @verified_users = @verified_couples.collect{|c| c.users}.flatten
