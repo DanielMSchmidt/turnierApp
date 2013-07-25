@@ -10,16 +10,18 @@ class Membership < ActiveRecord::Base
 
   validates :couple_id, :club_id,  numericality: true, presence: true
 
+  after_create :deleteOtherMembershipsForSameClub
+
   def user
     self.couple.users if self.couple
   end
 
   def self.verified?(club, couple)
     m = Membership.where(club_id: club, couple_id: couple).first
-    if m.nil? || !m.verified
-      false
-    else
-      true
-    end
+    !(m.nil? || !m.verified)
+  end
+
+  def deleteOtherMembershipsForSameClub
+    Membership.where(club_id: self.club_id, couple_id: self.couple_id).reject{|x| x.id == self.id}.each{|m| m.delete}
   end
 end
