@@ -25,7 +25,7 @@
             = link_to 'Zurück', root_path
 
     .row-fluid
-      .span6
+      .span4
         %h4 Aktuelle Anfragen
         %hr
         %ul
@@ -35,7 +35,7 @@
               = link_to "", verify_couple_path(club_id: @active_club, couple_id: couple.id), :class => "icon-ok"
               = link_to "",delete_couple_path(club_id: @active_club, couple_id: couple.id), :class => "icon-remove"
 
-      .span6
+      .span8
         %h4 ungemeldete Turniere
         %hr
         %table.tournament-list.table.table-striped
