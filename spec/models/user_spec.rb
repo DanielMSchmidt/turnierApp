@@ -10,6 +10,11 @@ describe User do
   end
 
   describe "hooks" do
+    before(:each) do
+      #clear all users
+      User.all.each{|u| u.delete}
+    end
+
     it "should call a build the couple function" do
       a = User.new(email: "tester1@test.de", name: "tester1", password: "123456789012")
       a.should_receive(:buildEmptyCouple)
@@ -69,24 +74,6 @@ describe User do
         Club.stub(:where).and_return([club1, club2])
 
         user.getOrganisedTournaments.length.should eq(3)
-      end
-    end
-
-    describe "#get_couples" do
-      it "should return an emtpy array if there is no couple with the right id" do
-        Couple.stub(:all).and_return([double('not_your_couple', man_id: 100, woman_id: 101)])
-
-        user.get_couples.should be_empty
-      end
-
-      it "should return an array if there is a couple with the right man_id" do
-        Couple.stub(:all).and_return([double('your_male_couple', man_id: user.id, woman_id: 101)])
-        user.get_couples.should_not be_empty
-      end
-
-      it "should return an array if there is a couple with the right woman_id" do
-        Couple.stub(:all).and_return([double('your_female_couple', man_id: 100, woman_id: user.id)])
-        user.get_couples.should_not be_empty
       end
     end
 
