@@ -55,8 +55,9 @@
       %h4 Deine Paare
       .span3.btn-group.btn-group-vertical
         - @verified_couples.each do |couple|
-          %a.btn{data: {master: couple.id}}
-            = couple.to_s
+          %a.btn.pull-left{data: {master: couple.id}}
+            = raw(couple.to_s_two_lines)
+
       .span8
         - @verified_couples.each do |couple|
           .hidden{id: "couple-stats-#{couple.id}", data: {detail: couple.id}}
