@@ -45,11 +45,11 @@
             %th Zeit
             %th Art
             %th Platz
-            %th Adresse
             %th Turniernr.
             %th
             %th
-          = render @unenrolled_tournaments, admin: true
+            %th
+          = render @unenrolled_tournaments, admin: true, withoutUserControl:true
 
     #master-detail.row-fluid
       %h4 Deine Paare
@@ -78,18 +78,15 @@
                   .accordion-inner
                     %table.tournament-list.table.table-striped
                       %tr
-                        %th Paar
                         %th Datum
                         %th Zeit
                         %th Art
                         %th Platz
-                        %th Adresse
                         %th Turniernr.
                         %th Status
                         %th
                         %th
-                        %th
-                      = render couple.tournaments
+                      = render couple.tournaments, admin: true, withoutCouple: true, withoutUserControl:true
 
 %input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
 
