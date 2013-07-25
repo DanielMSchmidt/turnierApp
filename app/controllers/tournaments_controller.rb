@@ -17,7 +17,7 @@ class TournamentsController < ApplicationController
     if @tournament.save
       redirect_to root_path, notice: t('tournament create')
     else
-      render :new
+      redirect_to root_path, notice: t('tournament error')
     end
   end
 
@@ -29,7 +29,7 @@ class TournamentsController < ApplicationController
     if @tournament.update_attributes(params[:tournament])
       redirect_to root_path, notice: t('club update')
     else
-      render :edit
+      redirect_to root_path, notice: t('tournament error')
     end
   end
 
