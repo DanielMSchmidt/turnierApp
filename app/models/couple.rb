@@ -101,6 +101,10 @@ class Couple < ActiveRecord::Base
   end
 
   def to_s
-    "#{self.getWoman.name} / #{self.getMan.name}"
+    "#{self.getWoman.name} & #{self.getMan.name}"
+  end
+
+  def to_s_two_lines
+    "#{self.getWoman.name} <br> #{self.getMan.name}"
   end
 end
