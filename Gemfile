@@ -28,7 +28,7 @@ end
 
 group :development do
   gem "rails_best_practices"
-  gem 'i18n-tasks', '~> 0.0.6'
+  gem 'i18n-tasks', '~> 0.0.8'
 
   gem "wkhtmltopdf", "~> 0.1.2"
 

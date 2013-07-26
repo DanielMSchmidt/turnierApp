@@ -1,0 +1,20 @@
+---
+en:
+  club:
+    create: The tournament was successfully created.
+    update: The tournament was successfully updated.
+    ownership:
+      transfer: You successfully transfered the ownership.
+  membership:
+    create: You added this club successfully to your clubs. Please wait for your confirmation.
+    verfify:
+      success: The user was verified successfully.
+      fail: You coundn't verify that user.
+    destroy: You are no longer part of this club.
+  couple:
+    create:
+      success: Du hast erfolgreich dein Tanzsportgerät ausgetauscht
+      fail: Leider konntest du dein Tanzsportgerät nicht wechseln
+    update:
+      success: Du hast erfolgreich dein Tanzsportgerät ausgetauscht
+      fail: Leider konntest du dein Tanzsportgerät nicht wechseln

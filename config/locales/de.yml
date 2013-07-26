@@ -1,13 +1,20 @@
+---
 de:
   club:
-    create: "Der Verein wurde erfolgreich erstellt."
-    update: "Der Verein wurde erfolgreich aktualisiert."
+    create: Das Turnier wurde erfolgreich erstellt.
+    update: Das Turnier wurde erfolgreich aktualisiert.
+    ownership:
+      transfer: Der Verein gehört dir nun nicht mehr.
   membership:
-    create: "Der Verein wurde erfolgreich zu deinen Vereinen hinzugefügt. Du musst jetzt noch bestätigt werden."
+    create: Der Verein wurde erfolgreich zu deinen Vereinen hinzugefügt. Du musst jetzt noch bestätigt werden.
     verfify:
-      success: "Der Nutzer wurde bestaetigt."
-      fail: "Der Nutzer konnte nicht bestaetigt werden."
-    destroy: "Du bist jetzt nicht mehr in diesem Verein angemeldet."
-  club:
-    create: "Das Turnier wurde erfolgreich erstellt."
-    update: "Das Turnier wurde erfolgreich aktualisiert."
+      success: Der Nutzer wurde bestätigt.
+      fail: Der Nutzer konnte nicht bestätigt werden.
+    destroy: Du bist jetzt nicht mehr in diesem Verein angemeldet.
+  couple:
+    create:
+      success: Du hast erfolgreich dein Tanzsportgerät ausgetauscht
+      fail: Leider konntest du dein Tanzsportgerät nicht wechseln
+    update:
+      success: Du hast erfolgreich dein Tanzsportgerät ausgetauscht
+      fail: Leider konntest du dein Tanzsportgerät nicht wechseln

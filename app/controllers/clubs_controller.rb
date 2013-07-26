@@ -76,6 +76,6 @@ class ClubsController < ApplicationController
     new_user = User.find(params[:user_id])
     @club.transfer_to(new_user)
     logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
-    redirect_to @club
+    redirect_to @club, notice: t("club ownership transfer")
   end
 end
