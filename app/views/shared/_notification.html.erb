@@ -1,0 +1,13 @@
+<script>
+  $(function() {
+    <% if flash[:notice] %>
+      toastr.success("<%= flash[:notice] %>");
+    <% end %>
+    <% if flash[:alert] %>
+      toastr.warning("<%= flash[:alert] %>");
+    <% end %>
+    <% if flash[:error] %>
+      toastr.error("<%= flash[:error] %>");
+    <% end %>
+  });
+</script>

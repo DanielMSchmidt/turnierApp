@@ -44,6 +44,7 @@
           = yield
 
     .assets
+      = render "shared/notification"
       - if user_signed_in?
         = render "shared/user_modals"
         = render "shared/modals/add_tournament_modal"
