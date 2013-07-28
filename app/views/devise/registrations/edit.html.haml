@@ -6,7 +6,7 @@
   - @clubs = Club.all
 
 .row-fluid
-  .span5
+  .span10.offset1
     %h2 Benutzer bearbeiten
     = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
       = f.error_notification
@@ -26,26 +26,6 @@
     %br/
     %br/
     = link_to "zurück", :back
-  .span4.offset1
-    %h2 Vereine ändern
-    .form-inputs
-      - if @clubs.nil?
-        %p
-          %strong Es gibt leider noch keine Vereine, bitte trage einen ein.
-      - else
-        %br/
-        %h4 Entfernen
-        %ul
-          - @own_clubs.each do |club|
-            %li= link_to club.name, delete_club_path(:club_id => club.id, :couple_id => current_user.activeCouple.id)
-        %hr/
-        %h4 Hinzufügen
-        %ul
-          - @clubs.each do |club|
-            %li= link_to club.name, add_club_path(:club_id => club.id, :coulpe_id => current_user.activeCouple.id)
-      %br/
-      %br/
-      = link_to 'Neuen Verein hinzufügen', new_club_path, class: "btn btn-primary"
 :javascript
   $("li").removeClass("active");
   $(".profil").addClass("active");
