@@ -23,7 +23,7 @@ class HomeController < ApplicationController
   end
 
   def checkIfUserIsReadyToStart(user)
-    @has_couple = user.activeCouple.present?
+    @has_couple = user.activeCouple.present? && user.activeCouple.isComplete?
     @has_a_club = user.clubs.first.present?
     tournaments_with_missing_data = user.tournaments.collect{|tournament| tournament.behind_time?}
     if tournaments_with_missing_data.nil? || tournaments_with_missing_data.empty?

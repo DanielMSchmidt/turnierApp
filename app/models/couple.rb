@@ -72,6 +72,10 @@ class Couple < ActiveRecord::Base
 
   # Accessors
 
+  def isComplete?
+    self.users.count == 2
+  end
+
   def getMan
     if self.man.nil?
       User.new(name: 'Noch nicht eingetragen')
