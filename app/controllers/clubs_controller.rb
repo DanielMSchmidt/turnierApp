@@ -61,11 +61,14 @@ class ClubsController < ApplicationController
     @from = params[:from].to_date
     @to = params[:to].to_date
 
-    @tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongs_to_club(@club.id)}
+    all_tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongs_to_club(@club.id)}
 
-    if params[:upcoming]
-      @tournaments.select!{|t| t.upcoming?}
+    if params[:tournament_type] == "upcoming"
+      @tournaments = all_tournaments.select{|t| t.upcoming?}
+    else
+      @tournaments = all_tournaments.reject{|t| t.upcoming?}
     end
+
 
     render :pdf => "Turniere des #{@club.name}, #{@from} - #{@to}",
            :show_as_html => false

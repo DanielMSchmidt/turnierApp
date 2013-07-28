@@ -6,9 +6,12 @@
     = form_tag print_tournaments_path(club_id: @active_club.id), :html => {:class => 'form-horizontal'} do
       .control-group
         .controls
-          %label.checkbox
-            nur zukünftige Turniere
-            %input{:type=> "checkbox", :name => "upcoming"}
+          %label.radio.inline
+            %input#tournamentType{:checked => "", :name => "tournament_type", :type => "radio", :value => "upcoming"}/
+            zukünftige Turniere
+          %label.radio.inline
+            %input#tournamentType{:name => "tournament_type", :type => "radio", :value => "danced"}/
+            getanzte Turniere
 
       .control-group
         %label.control-label Von

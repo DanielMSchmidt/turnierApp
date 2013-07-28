@@ -84,7 +84,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def upcoming?
-    self.get_date.future?
+    self.get_date.future? && self.incomplete?
   end
 
   def behind_time?
