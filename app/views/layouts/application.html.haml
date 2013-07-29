@@ -1,9 +1,15 @@
 !!!
-%html
+/[if IE 7] <html lang="en" class="ie7">
+/[if IE 8] <html lang="en" class="ie8">
+/[if IE 9] <html lang="en" class="ie9">
+/ [if !IE]><!
+%html{:lang => "en"}
+  / <![endif]
   %head
     %title TurnierApp | Organisiere deine Turniere
-    %meta{:content => "Turnier App hilft Turniertänzern und Vereinen dabei, den Überblick ueber bereits getanzte Turniere und die Erfolge ueber das Jahr hinweg zu behalten", :name => "description"}
-    %meta{:content => "Tanzen, Turniertanzen, Sport, Turniersport, Latein, Standard, Turniere, organisieren", :name => "keywords"}
+    %meta{:content => "Turnier App hilft Turniertänzern und Vereinen dabei, den Überblick über bereits getanzte und zuküntige Turniere zu behalten", :name => "description"}
+    %meta{:content => "Tanzen, Turniertanzen, Sport, Turniersport, Latein, Standard, Turniere, organisieren, TurnierApp, turnierapp, turnier, turnierApp, TurnierApp", :name => "keywords"}
+
     %link{:href => "/favicon.ico", :rel => "shortcut icon"}
     %link{:href => "http://cdn.oesmith.co.uk/morris-0.4.1.min.css", :rel => "stylesheet"}
     = stylesheet_link_tag    "application", :media => "all"
@@ -15,30 +21,31 @@
     :javascript
       $("li").removeClass("active");
       $('.#{@active_page || 'Start'}').addClass('active');
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          = link_to 'TurnierApp', root_path, class: 'brand'
-          .nav-collapse.collapse.navbar-responsive-collapse
-            %ul.nav
-              - if user_signed_in?
-                %li.clubs
-                  = link_to 'Verein hinzufügen', '#add_club_modal', role: 'button', data: {toggle: 'modal'}
-                %li
-                  = link_to 'Ausstehende Anmeldungen', '#pending_club_modal', role: 'button', data: {toggle: 'modal'}
-                %li.profil
-                  = link_to "Profil bearbeiten", edit_user_registration_path
-                %li.signout
-                  = link_to "Abmelden", destroy_user_session_path, method: :delete
-              - else
-                %li.signup
-                  = link_to "Registrieren", new_user_registration_path
-                %li.signin
-                  = link_to "Anmelden", new_user_session_path
-              %li.faq
-                = link_to 'FAQ', faq_path
-              %li.impressum
-                = link_to 'Impressum', impressum_path
+    .header
+      .container
+        .navbar.navbar-fixed-top
+          .navbar-inner
+            = link_to 'TurnierApp', root_path, class: 'brand'
+            .nav-collapse.collapse.navbar-responsive-collapse
+              %ul.nav
+                - if user_signed_in?
+                  %li.clubs
+                    = link_to 'Verein hinzufügen', '#add_club_modal', role: 'button', data: {toggle: 'modal'}
+                  %li
+                    = link_to 'Ausstehende Anmeldungen', '#pending_club_modal', role: 'button', data: {toggle: 'modal'}
+                  %li.profil
+                    = link_to "Profil bearbeiten", edit_user_registration_path
+                  %li.signout
+                    = link_to "Abmelden", destroy_user_session_path, method: :delete
+                - else
+                  %li.signup
+                    = link_to "Registrieren", new_user_registration_path
+                  %li.signin
+                    = link_to "Anmelden", new_user_session_path
+                %li.faq
+                  = link_to 'FAQ', faq_path
+                %li.impressum
+                  = link_to 'Impressum', impressum_path
 
     .content
       .row-fluid
