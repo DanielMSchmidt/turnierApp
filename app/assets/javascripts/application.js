@@ -17,4 +17,3 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require bootstrap-datepicker
-//= require_tree ./unify
