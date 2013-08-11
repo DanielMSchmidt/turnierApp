@@ -15,7 +15,7 @@
     %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet"}/
     %link{:href => "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", :rel => "stylesheet"}/
 
-    = stylesheet_link_tag    "application", :media => "all"
+    = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
 
@@ -28,6 +28,11 @@
           = yield
 
     .assets
+      :javascript
+        $(function() {
+          window.DS.scrolltotop.init("#{asset_path('up.png')}");
+        });
+
       - if user_signed_in?
         = render "shared/user_modals"
         = render "shared/modals/add_tournament_modal"

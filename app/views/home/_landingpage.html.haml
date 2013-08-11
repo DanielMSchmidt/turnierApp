@@ -8,7 +8,8 @@
 
 :javascript
   jQuery(document).ready(function() {
-      App.init();
-      App.initSliders();
-      Index.initParallaxSlider();
+      // Init Parallax Slider
+      $(function() {
+        $('#da-slider').cslider();
+      });
   });

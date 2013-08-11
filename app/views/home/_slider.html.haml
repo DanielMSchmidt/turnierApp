@@ -1,4 +1,33 @@
-.fullwidthbanner-container
-  .fullwidthbanner
-    %ul
-      %li TEST
+.slider-inner
+  #da-slider.da-slider{:style => "background-position: 250% 0%;"}
+    .da-slide.da-slide-toleft
+      %h2
+        %i für Tänzer
+      %p
+        %i Alles in einem: Deine Turniermeldungen und Ergebnisse
+        %br/
+        %br/
+        %i Sieh auf einem Blick für welches Turnier Du gemeldet bist und für welches nicht
+      .da-img{:style => "overflow: hidden;"}
+        =image_tag('slider/screenshots/paare.png')
+    .da-slide.da-slide-toleft
+      %h2
+        %i für Vereine
+      %p
+        %i Euer Verein im Überblick:
+        %br/
+        %i Alle Paare, Turniere und Ergebnisse auf einem Blick
+      .da-img{:style => "overflow: hidden;"}
+        =image_tag('slider/screenshots/vereine.png')
+    .da-slide.da-slide-fromright.da-slide-current
+      %h2
+        %i für Trainer
+      %p
+        %i Behalte die Aktivitäten und Erfolge
+        %br/
+        %i deiner Paare im Blick.
+      .da-img{:style => "overflow: hidden;"}
+        =image_tag('slider/screenshots/trainer.png')
+    %nav.da-arrows
+      %span.da-arrows-prev
+      %span.da-arrows-next
