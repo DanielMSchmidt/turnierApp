@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require bootstrap-datepicker
+ *= require_tree ./unify
  *= require_tree .
  */
 
@@ -18,65 +19,81 @@
 
 @import "icons/*.png"
 @include all-icons-sprites
+@import "compass"
+
+$highlight-green: #76B834
 
 .icons-ok
-	background-repeat: no-repeat
-	height: 18px
-	width: 22px
+  background-repeat: no-repeat
+  height: 18px
+  width: 22px
 
 .icons-not_enrolled
-	background-repeat: no-repeat
-	height: 18px
-	width: 18px
+  background-repeat: no-repeat
+  height: 18px
+  width: 18px
 
 .icons-missing_information
-	background-repeat: no-repeat
-	height: 17px
-	width: 18px
+  background-repeat: no-repeat
+  height: 17px
+  width: 18px
 
 body
-	p
-		margin-top: 20px
-		font-size:  125%
-		line-height: 30px
-	.content
-		margin-top: 80px
-		margin-bottom: 80px
-	a
-		&:hover
-			background-color: transparent
-			background: transparent
-			color: black
+  p
+    margin-top: 20px
+    font-size:  125%
+    line-height: 30px
+  .content
+    margin-top: 80px
+    margin-bottom: 80px
+  a
+    &:hover
+      background-color: transparent
+      background: transparent
+      color: black
 
-	.bar-graph
-		float: left
+  .bar-graph
+    float: left
 
-	footer
-		background-color: white
-		border-top: solid 1px black
-		padding-right: 30px
-		overflow:hidden
-		padding-top: 20px
-		text-decoration: none
-		a
-			float: right
-			&:hover
-				text-decoration: none
-				background-color: transparent
-			&:visited
-				color: white
-		form
-			float: left
+  footer
+    background-color: white
+    border-top: solid 1px black
+    padding-right: 30px
+    overflow:hidden
+    padding-top: 20px
+    text-decoration: none
+    a
+      float: right
+      &:hover
+        text-decoration: none
+        background-color: transparent
+      &:visited
+        color: white
+    form
+      float: left
 
 .hidden
-	display: none
+  display: none
 
 .high
-	margin-top: 0px !important
+  margin-top: 0px !important
 
 table
-	#status
-		div
-			margin: 10px 0 0 10px
+  #status
+    div
+      margin: 10px 0 0 10px
 a:hover
-	text-decoration: none !important
+  text-decoration: none !important
+
+.logo-image-wide
+  height: 51px
+  width: 139px
+
+.no-border-and-box
+  border: none !important
+  box-shadow: none !important
+  -moz-box-shadow: none !important
+  -webkit-box-shadow: none !important
+
+.highlight-side-shining
+  // TODO: Add some shining to side or s.th. like it
