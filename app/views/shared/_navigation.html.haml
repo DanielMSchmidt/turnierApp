@@ -10,8 +10,7 @@
         .nav-collapse.collapse
           %ul.nav.top-2
             %li
-              %a
-                Startseite
+              =link_to "Startseite", root_path
             - if user_signed_in?
               %li.clubs
                 = link_to 'Verein hinzufügen', '#add_club_modal', role: 'button', data: {toggle: 'modal'}
