@@ -3,9 +3,10 @@ require 'bundler/capistrano'
 
 set :application, "turnierapp"
 
-set :deploy_to, "/home/www/cms"
+set :deploy_to, "/home/www/dschmidt/turnierapp"
 set :deploy_via, :remote_cache
 set :repository,  "git@github.com:DanielMSchmidt/turnierApp.git"
+set :default_shell, "/bin/bash -l"
 
 set :rvm_ruby_string, 'ruby-1.9.3'
 set :rvm_type, :user
@@ -16,10 +17,10 @@ set :branch, "master"
 set :rails_env, "production"
 
 set :user, "dschmidt"
-
-role :web, "turnierapp.de"                          # Your HTTP server, Apache/etc
-role :app, "turnierapp.de"                          # This may be the same as your `Web` server
-role :db, "turnierapp.de", :primary => true         # This is where Rails migrations will run
+set :use_sudo, false
+role :web, "hosting.bnck.de"                          # Your HTTP server, Apache/etc
+role :app, "hosting.bnck.de"                          # This may be the same as your `Web` server
+role :db, "hosting.bnck.de", :primary => true         # This is where Rails migrations will run
 
 
 namespace :deploy do
@@ -42,6 +43,7 @@ namespace :deploy do
     run "cp #{shared_path}/env #{release_path}/.env"
   end
 end
+
 before "deploy:assets:precompile", "deploy:copy_database_yml"
 before "deploy:assets:precompile", "deploy:link_uploads"
 before "foreman:export", "deploy:copy_env"

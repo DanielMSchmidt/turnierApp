@@ -85,3 +85,6 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano
 gem 'capistrano'
+gem 'capistrano_colors'
+gem 'capistrano-ext'
+gem 'rvm-capistrano'
