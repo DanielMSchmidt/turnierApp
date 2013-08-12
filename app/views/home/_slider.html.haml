@@ -1,6 +1,6 @@
 .slider-inner
-  #da-slider.da-slider{:style => "background-position: 250% 0%;"}
-    .da-slide.da-slide-toleft
+  #da-slider.da-slider
+    .da-slide
       %h2
         %i für Tänzer
       %p
@@ -10,7 +10,7 @@
         %i Sieh auf einem Blick für welches Turnier Du gemeldet bist und für welches nicht
       .da-img{:style => "overflow: hidden;"}
         =image_tag('slider/screenshots/paare.png')
-    .da-slide.da-slide-toleft
+    .da-slide
       %h2
         %i für Vereine
       %p
@@ -19,7 +19,7 @@
         %i Alle Paare, Turniere und Ergebnisse auf einem Blick
       .da-img{:style => "overflow: hidden;"}
         =image_tag('slider/screenshots/vereine.png')
-    .da-slide.da-slide-fromright.da-slide-current
+    .da-slide
       %h2
         %i für Trainer
       %p
