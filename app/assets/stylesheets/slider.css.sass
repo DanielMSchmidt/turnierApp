@@ -1,0 +1,27 @@
+.da-slide
+	.slide-inner
+		height: 100%
+		position: relative
+		width: 100%
+
+	.left-half, .right-half
+		height: 100%
+		position: absolute
+		width: 50%
+
+	.left-half
+		left: 0
+
+	.right-half
+		left: 50%
+		&.full-height-img
+			left: auto
+			right: 0
+
+	// add disappear media queries
+	.full-height-img
+		height: 427px
+		top: 0
+		width: 570px
+		&.wider-img
+			width: 640px
