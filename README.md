@@ -1,4 +1,4 @@
-Turnierapp
+TurnierApp
 ====================
 
 This app is build for Dancesport Couples to manage their results at competitions and to see all results of their club

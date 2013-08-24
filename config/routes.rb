@@ -20,6 +20,7 @@ TurnierList::Application.routes.draw do
 
   match "/dashboard/(:club_id)" => "home#admin", as: :admin_dashboard
 
+  match "/faq" => "home#faq"
   match "/impressum" => "home#impressum"
 
 

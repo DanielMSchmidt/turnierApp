@@ -18,9 +18,7 @@ class HomeController < ApplicationController
     @unverified_users = @verified_couples.collect{|c| c.users}.flatten
   end
 
-  def impressum
-    @active_page = 'impressum'
-  end
+
 
   def checkIfUserIsReadyToStart(user)
     @has_couple = user.activeCouple.present? && user.activeCouple.isComplete?
@@ -42,4 +40,16 @@ class HomeController < ApplicationController
       @active_club = @user_clubs.select{|x| x.id == params[:club_id].to_i}.first
     end
   end
+
+
+  # Static pages
+
+  def faq
+    @active_page = 'faq'
+  end
+
+  def impressum
+    @active_page = 'impressum'
+  end
+
 end
