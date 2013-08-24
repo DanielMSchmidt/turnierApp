@@ -20,6 +20,6 @@
   = f.hidden_field :user_id, :value => current_user.id
 
   .form-actions
-    = f.submit "Erstellen", class: "btn btn-primary"
+    = f.submit "Erstellen", class: "btn btn-primary", onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Added']);"
 
 = render "tournaments/has_clubs_popover"

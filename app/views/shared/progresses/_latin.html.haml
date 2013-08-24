@@ -16,9 +16,9 @@
           = f.number_field :start_placings
 
       .form-actions
-        = f.submit 'Speichern', :class => "btn btn-primary", remote: true
+        = f.submit 'Speichern', :class => "btn btn-primary", remote: true, onClick: "_gaq.push(['_trackEvent', 'Progress', 'Change']);"
 
   .span4
     .btn-group
-      = link_to 'Aufgestiegen!', couple_level_up_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
-      = link_to 'Nochmal!', couple_reset_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true
+      = link_to 'Aufgestiegen!', couple_level_up_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true, onClick: "_gaq.push(['_trackEvent', 'Progress', 'Levelup']);"
+      = link_to 'Nochmal!', couple_reset_path(kind: 'latin'), :class => "btn btn-primary", data: {dismiss: 'modal'}, remote: true, onClick: "_gaq.push(['_trackEvent', 'Progress', 'Again']);"
