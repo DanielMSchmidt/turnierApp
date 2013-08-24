@@ -96,7 +96,23 @@ a:hover
   -webkit-box-shadow: none !important
 
 .highlight-side-shining
-  // TODO: Add some shining to side or s.th. like it
+  background-color: #ffffff
+  @include filter-gradient(#ffffff, #ffffff, horizontal)
+  @include background-image(linear-gradient(left,  #ffffff 0%,#76B834 15%,#76B834 85%,#ffffff 100%))
+
+
+.logo-container
+  float: left
+  height: 47px
+  margin-left: -29px
+  width: 200px
+
+.header
+  height: 46px
+
+.desc
+  h4
+    word-wrap: break-word
 
 //Overwrite icons of Bootstrap (because new ones used)
 .no-bootstrap-icon
