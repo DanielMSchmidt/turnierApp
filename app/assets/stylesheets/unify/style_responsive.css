@@ -102,7 +102,7 @@
 
 	/*Slider Parallax*/
 	.da-slide p {
-		display:none;
+		/* display:none; */
 	}
 }
 
