@@ -1,0 +1,33 @@
+.header
+  .container
+    .logo-container.highlight-side-shining
+      .logo
+        %a{:href => "#{root_path}"}
+          .logo-image-wide
+
+    .navbar
+      .navbar-inner.no-border-and-box
+        %a.btn.btn-navbar.collapsed{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        .nav-collapse.collapse
+          %ul.nav.top-2
+            - if user_signed_in?
+              %li.clubs
+                = link_to 'Verein ändern', '#change_club_modal', role: 'button', data: {toggle: 'modal'}
+              %li
+                = link_to 'Ausstehende Anmeldungen', '#pending_club_modal', role: 'button', data: {toggle: 'modal'}
+              %li.profil
+                = link_to "Profil bearbeiten", edit_user_registration_path
+              %li.signout
+                = link_to "Abmelden", destroy_user_session_path, method: :delete
+            - else
+              %li.signup
+                = link_to "Registrieren", new_user_registration_path
+              %li.signin
+                = link_to "Anmelden", new_user_session_path
+              %li.faq
+                = link_to 'FAQ', faq_path
+              %li.impressum
+                = link_to 'Impressum', impressum_path

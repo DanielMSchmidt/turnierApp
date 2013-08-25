@@ -1,34 +1,5 @@
+# -*- encoding : utf-8 -*-
 class ClubsController < ApplicationController
-  # GET /clubs
-  # GET /clubs.json
-  before_filter :setClubsAsActive
-
-  def index
-    @clubs = Club.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @clubs }
-    end
-  end
-
-  # GET /clubs/1
-  # GET /clubs/1.json
-  def show
-    @club = Club.find(params[:id])
-    @users = @club.users.includes(:tournaments)
-    @unenrolled_tournaments = @users.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
-
-    if @club.user_id == current_user.id
-      @organisingTournaments = @unenrolled_tournaments
-    else
-      @organisingTournaments = []
-    end
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @club }
-    end
-  end
 
   # GET /clubs/new
   # GET /clubs/new.json
@@ -54,7 +25,8 @@ class ClubsController < ApplicationController
 
 
     if @club.save
-      redirect_to @club, notice: 'Club was successfully created.'
+      @club.memberships.create!(couple_id: current_user.activeCouple.id, verified: true)
+      redirect_to root_path, notice: t('club.create')
     else
       render :new
     end
@@ -66,7 +38,7 @@ class ClubsController < ApplicationController
     @club = Club.find(params[:id])
 
     if @club.update_attributes(params[:club])
-      redirect_to @club, notice: 'Club was successfully updated.'
+      redirect_to root_path, notice: t('club.update')
     else
       render :edit
     end
@@ -79,9 +51,27 @@ class ClubsController < ApplicationController
     @club.destroy
 
     respond_to do |format|
-      format.html { redirect_to clubs_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
+  end
+
+  def printTournaments
+    @club = Club.find(params[:club_id].to_i)
+    @from = params[:from].to_date
+    @to = params[:to].to_date
+
+    all_tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongs_to_club(@club.id)}
+
+    if params[:tournament_type] == "upcoming"
+      @tournaments = all_tournaments.select{|t| t.upcoming?}
+    else
+      @tournaments = all_tournaments.reject{|t| t.upcoming?}
+    end
+
+
+    render :pdf => "Turniere des #{@club.name}, #{@from} - #{@to}",
+           :show_as_html => false
   end
 
   def transfer_ownership
@@ -89,10 +79,6 @@ class ClubsController < ApplicationController
     new_user = User.find(params[:user_id])
     @club.transfer_to(new_user)
     logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
-    redirect_to root_path
-  end
-
-  def setClubsAsActive
-    @active_page = 'clubs'
+    redirect_to @club, notice: t("club ownership transfer")
   end
 end

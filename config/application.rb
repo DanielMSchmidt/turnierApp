@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -8,6 +9,8 @@ if defined?(Bundler)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
+
+
 
 module TurnierList
   class Application < Rails::Application
@@ -61,5 +64,12 @@ module TurnierList
 
     # Device deployment to Heroku
     config.assets.initialize_on_precompile = false
+
+    #For spork with autotest
+    if Rails.env.test?
+      initializer :after => :initialize_dependency_mechanism do
+        ActiveSupport::Dependencies.mechanism = :load
+      end
+    end
   end
 end

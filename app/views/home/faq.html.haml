@@ -1,0 +1,57 @@
+%h1 FAQ
+
+%dl.dl-horizontaly
+  %dt
+    TurnierApp? Was soll das?
+  %dd
+    Diese App wurde gebaut um Turniertänzern und Vereinen dabei zu helfen, den Überblick über bereits getanzte Turniere und die Erfolge über das Jahr übersichtlich darzustellen. Im Falle von Fehlern oder Wünschen melde dich bitte bei
+    = succeed "." do
+      %u= mail_to "daniel.maximilian@gmx.net", "mir", :subject => "Fehler/Anmerkungen bei der TurnierApp"
+
+%dl.dl-horizontaly
+  %dt
+    Benutzung
+  %dd
+    Pro Paar wird ein Account angelegt, der Name sollte am besten beide Partner beinhalten. Zudem sollte der Übersicht halber ein Verein hinzugefügt werden (auf der Bearbeiten-Seite). Unter 'Turnier hinzufügen' kann man ein Turnierergebnis hinzufügen, dazu muss die korrekte Turniernummer angegeben werden. Viel Spaß mit der App!
+
+%dl.dl-horizontaly
+  %dt
+    Datenschutz
+  %dd
+    Alle Daten, die Du hier online stellst, sind für jeden von deinem Verein angemeldeten Nutzer einsehbar, nicht nur für Dich. Passwörter und Ähnliches werden verschlüsselt gespeichert.
+
+%dl.dl-horizontaly
+  %dt
+    Informationen für Sportwarte
+  %dd
+    Ihr seid Sportwart eines Vereins, wenn Ihr diesen als Erster erstellt. Falls jemand schon vor Euch euren Verein erstellt hat, sprecht ihn bitte an, er kann in der Ansicht des Vereins einen neuen Sportwart unter den Vereinsmitgliedern auswählen.
+    %br
+    Als Sportwart habt Ihr die Option (auf der Verwaltungsseite eures Vereins) einzelne Turniere als gemeldet zu markieren, dies wird dann auch den Paaren angezeigt.
+    %br
+    Ihr bekommt zudem eine E-Mail circa eine Woche vor Turnierbeginn, falls für das entsprechende Wochenende noch ungemeldete Turniere eingetragen sind. So vergesst Ihr auf keinen Fall Meldungen rechtzeitig rauszuschicken.
+
+%dl.dl-horizontaly
+  %dt
+    Informationen für Tänzer
+  %dd
+    Über die TurnierApp könnt Ihr einerseits Eure Turniermeldungen eintragen. Diese werden dann von euerm Sportwart weiter bearbeitet. Nach erfolgreicher Meldung erscheint in Eurer Übersicht ein. Nach absolviertem Turnier könnt Ihr Eure Ergebnisse (Platzierung, gestartete Paare) beim jeweiligen Turnier eintragen. Somit habt Ihr eine bessere Übersicht über Eure Leistungen und Euer Sportwart kann beispielsweise Quartals- oder Jahresstatistiken erstellen.
+
+%dl.dl-horizontaly
+  %dt
+    generelle Informationen
+  %dd
+    %b Legende
+    %br/
+    %img.icons-ok/
+    <= Ihr seid gemeldet für dieses Turnier.
+    %br/
+    %img.icons-not_enrolled/
+    <= Ihr seid noch nicht gemeldet für dieses Turnier.
+    %br/
+    %img.icons-missing_information/
+    <= Ihr habt vergessen euer Ergebnis nachzutragen.
+    %br/
+    %br/
+    %b Mehrere Vereine
+    %br
+    Es können mehrere Vereine ausgewählt werden, damit beispielsweise auch Statistiken über Standard oder Lateinkader gepflegt und angezeigt werden können.

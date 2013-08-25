@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 TurnierList::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -43,12 +44,11 @@ TurnierList::Application.configure do
 
 
   #Bullet gem configurations
-    config.after_initialize do
+  config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true
     Bullet.bullet_logger = true
     Bullet.console = true
     Bullet.rails_logger = true
-    Bullet.disable_browser_cache = true
   end
 end

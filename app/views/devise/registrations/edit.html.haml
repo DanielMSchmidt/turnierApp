@@ -1,0 +1,31 @@
+- if user_signed_in?
+  - @own_clubs = current_user.clubs
+  - @clubs = Club.all.delete_if {|club| @own_clubs.include?(club) }
+- else
+  - @own_clubs = nil
+  - @clubs = Club.all
+
+.row-fluid
+  .span10.offset1
+    %h2 Benutzer bearbeiten
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :name, :required => true, :autofocus => true
+        = f.input :email, :required => true
+        %br/
+        %span.help-block Bitte frei lassen, falls du es nicht ändern möchtest.
+        = f.input :password, :autocomplete => "off", :required => false
+        = f.input :password_confirmation, :required => false
+        %br/
+        %span.help-block Bitte gib dein aktuelles Passwort an.
+        = f.input :current_password, :required => true
+      = f.button :submit, "Aktualisieren", class: "btn btn-primary"
+    %h3 Account löschen
+    = link_to "Jetzt löschen", registration_path(resource_name), :data => { :confirm => "Bist du dir sicher?" }, :method => :delete, class: "btn btn-danger"
+    %br/
+    %br/
+    = link_to "zurück", :back
+:javascript
+  $("li").removeClass("active");
+  $(".profil").addClass("active");

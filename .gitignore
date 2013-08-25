@@ -15,3 +15,6 @@
 /tmp
 .env
 .DS_Store
+dump.rdb
+coverage/
+public/assets/

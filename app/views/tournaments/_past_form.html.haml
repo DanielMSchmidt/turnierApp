@@ -1,0 +1,25 @@
+= form_for(Tournament.new, :html => {:class => "form-horizontal"}) do |f|
+
+  .control-group
+    = f.label :number, "Turniernummer", :class =>"control-label"
+    .controls
+      = f.number_field :number
+      .help-block
+        Bitte niedrigsten Platz bei geteilten Plätzen nehmen
+
+  .control-group
+    = f.label :place, "Platz", :class =>"control-label"
+    .controls
+      = f.number_field :place
+
+  .control-group
+    = f.label :participants, "Teilnehmerzahl", :class =>"control-label"
+    .controls
+      = f.number_field :participants
+
+  = f.hidden_field :user_id, :value => current_user.id
+
+  .form-actions
+    = f.submit "Erstellen", class: "btn btn-primary", onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Added']);"
+
+= render "tournaments/has_clubs_popover"

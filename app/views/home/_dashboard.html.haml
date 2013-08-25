@@ -1,0 +1,11 @@
+- activeCouple = current_user.activeCouple
+
+%h1 Dashboard
+= render "action_required_alert"
+= render "shared/user_controlls"
+%br
+.row-fluid
+  .span6
+    = render "progress_panel", :active_couple => activeCouple
+  .span6
+    = render "statistics", :active_couple => activeCouple

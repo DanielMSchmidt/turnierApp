@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 gem 'rails'
 
 gem 'will_paginate', '~> 3.0'
-gem 'thin' #more solid webserver
+gem 'puma' #faster webserver
+gem 'foreman'
 gem 'haml'
 gem 'simple_form'
 gem 'devise'
@@ -13,23 +14,58 @@ gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'celluloid'
+gem 'bootstrap-datepicker-rails'
+
+#PDF generation
+gem 'wicked_pdf'
 
 
 group :production do
   gem "newrelic_rpm", "~> 3.5.5.38"
-	gem 'pg'
+  gem 'pg'
+  gem "wkhtmltopdf-heroku"
+end
+
+group :development do
+  gem "rails_best_practices"
+  gem 'i18n-tasks', '~> 0.0.8'
+
+  gem "wkhtmltopdf", "~> 0.1.2"
+
+  #improving errorhandling
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+
+  #html.erb to haml
+  gem 'haml-rails'
+  gem 'hpricot'
+  gem 'ruby_parser'
 end
 
 group :development, :test do
   gem 'sqlite3'
   gem 'bullet'
   gem 'brakeman'
-  gem "rails_best_practices"
+
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  gem 'guard-cucumber'
+end
+
+group :test do
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
+
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
   gem "capybara"
-  gem 'rack-mini-profiler'
+  gem 'shoulda-matchers'
+  gem 'shoulda-context'
+  gem 'factory_girl_rails'
+  gem "nyan-cat-formatter"
+  gem 'simplecov', :require => false
 end
 
 # Gems used only for assets and not required

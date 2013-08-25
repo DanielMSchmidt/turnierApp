@@ -1,34 +1,67 @@
+# -*- encoding : utf-8 -*-
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
-  default_scope includes(:user)
-  attr_accessible :number, :participants, :place, :user_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
-  belongs_to :user
+  attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
+
+  belongs_to :progress
 
   validates :number, presence: true, numericality: true
   validate :no_double_tournaments_are_allowed, on: :create
 
-  before_create :fillup_missing_data
   before_destroy :send_mail_if_enrolled_tournament_is_deleted
 
-  delegate :name, to: :user, prefix: true
-
-  def to_s
-    "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
+  def self.new_for_user(params)
+    tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
+    tournament = Tournament.new(tournament_fetcher.get_tournament_data)
+    tournament.assign_to_user(params[:tournament][:user_id])
+    tournament.participants = params[:tournament][:participants]
+    tournament.place        = params[:tournament][:place]
+    tournament.fillup_missing_data
+    tournament
   end
 
-   def no_double_tournaments_are_allowed
-     Tournament.where(number: number, user_id: user_id).size == 0
-     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :user_id => user_id).size == 0
-   end
+  def no_double_tournaments_are_allowed
+    Tournament.where(number: number, progress_id: progress_id).size == 0
+    errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
+  end
+
+  def belongsToUser(user)
+    self.users.include?(user)
+  end
+
+  def couple
+    self.progress.couple
+  end
+
+  def users
+    [self.couple.man, self.couple.woman]
+  end
+
+  def assign_to_user(user_id)
+    user = User.find(user_id)
+
+    if self.latin?
+      id = user.activeCouple.latin.id
+    else
+      id = user.activeCouple.standard.id
+    end
+
+    self.progress_id = id
+  end
+
+  def belongs_to_club(id)
+    self.progress.couple.clubs.map{|c| c.id}.include?(id)
+  end
 
   def incomplete?
-    return self.participants.nil? && self.place.nil?
+    return (self.participants.nil? || self.participants == 0)  && (self.place.nil? || self.place == 0)
   end
 
   def get_date
     self.date.to_datetime
   end
 
+  #TODO: Refactor to service object
   def fillup_missing_data
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
     #set enrolled to false if it is upcoming
@@ -51,7 +84,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def upcoming?
-    self.get_date.future?
+    self.get_date.future? && self.incomplete?
   end
 
   def behind_time?
@@ -72,11 +105,15 @@ class Tournament < ActiveRecord::Base
   def points
     participants = self.participants ||= 0
     place = self.place ||= 0
-    [(participants - place), 20].min
+    [(participants - place) , 20].min
   end
 
   def start_class
-    return self.kind.split(" ")[1]
+    return self.kind[0..-4].chop
+  end
+
+  def latin?
+    return self.kind[-3..-1] == "LAT"
   end
 
   def should_send_a_notification_mail?
@@ -99,45 +136,52 @@ class Tournament < ActiveRecord::Base
   end
 
   def send_mail_if_enrolled_tournament_is_deleted
-    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted started"
-
-    if self.is_enrolled_and_not_danced?
-      club_owners_mailaddresses = self.user.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
+    # FIXME: NameError at /tournaments/5 undefined local variable or method `tournament' for #<Tournament:0x007fcfd0d0cbe8>
+    logger.debug "send_mail_if_enrolled_tournament_is_deleted for #{tournament.to_s}"
+    if tournament.is_enrolled_and_not_danced?
+      club_owners_mailaddresses = tournament.users.first.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
       logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
-      NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, self).deliver
+      NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament).deliver
     end
-    logger.debug "deleted tournament #{self.to_s}"
-    logger.debug "Tournament#send_mail_if_enrolled_tournament_is_deleted ended"
+    logger.debug "deleted tournament #{tournament.to_s}"
   end
 
-  def self.find_by_number(number)
-    return nil if number.nil? || number == ""
-
-    agent = Mechanize.new
-    agent.get("http://appsrv.tanzsport.de/td/db/turnier/einzel/suche")
-    form = agent.page.forms.last
-    form.nr = number
-    form.submit
-
-    out = {}
-
-    agent.page.search(".veranstaltung").each do |event|
-      event.search(".ort a").each do |link|
-        url = link.attributes["href"].value
-        out[:address] = url.slice(30..url.length)
-      end
-      @date = event.search(".kategorie").first.text.slice(0..9)
-
+  def placing
+    if self.got_placing?
+      1
+    else
+      0
     end
-    agent.page.search(".markierung").each do |item|
-      out[:kind] = item.search(".turnier").first.text
-      @time = item.search(".uhrzeit").first.text
-      out[:notes] = item.search(".bemerkung").first.text
+  end
+
+  def latin_placing
+    self.placing if self.latin?
+  end
+
+  def standard_placing
+    self.placing unless self.latin?
+  end
+
+  def latin_points
+    self.points if self.latin?
+  end
+
+  def standard_points
+    self.points unless self.latin?
+  end
+
+  def to_s
+    "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
+  end
+
+  def statusClasses
+    if self.behind_time? && self.incomplete?
+      classes = 'icons-missing_information'
+    else
+      classes ='icons-not_enrolled' unless self.enrolled?
     end
-
-    out[:date] = DateTime.parse "#{@time} #{@date}"
-
-    return out
+    classes ||= 'icons-ok'
+    classes
   end
 
 end

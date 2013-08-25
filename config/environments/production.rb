@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 TurnierList::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -50,12 +51,12 @@ TurnierList::Application.configure do
 
   # Mailer
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { :address => "smtp.mandrillapp.com", :port => 587, :authentication => :plain , :user_name => "daniel.maximilian@gmx.net", :password => "2c03c4b7-d2c0-496d-916c-45b96f8255e2" }
-  config.action_mailer.default_url_options = { :host => 'dance-competitions.herokuapp.com' }
+  config.action_mailer.smtp_settings = { :address => "smtp.mandrillapp.com", :port => 587, :authentication => :plain , :user_name => ENV['MAILER_NAME'], :password => ENV['MAILER_PWD'] }
+  config.action_mailer.default_url_options = { :host => ENV['MAILER_URL'] }
   config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode
-  # config.threadsafe!
+  config.threadsafe!
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

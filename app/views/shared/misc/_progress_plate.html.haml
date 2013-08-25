@@ -1,0 +1,10 @@
+.well
+  %h4
+    = "#{caption} in der #{start_class} Klasse"
+  %hr
+  %span
+    = "Platzierungen "
+  = render 'shared/misc/progress_bar', progress: placings
+  %span
+    Punkte
+  = render 'shared/misc/progress_bar', progress: points

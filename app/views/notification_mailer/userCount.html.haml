@@ -1,0 +1,7 @@
+%h3
+  Es gibt zur Zeit #{@count} Paare in der TurnierApp:
+%b
+  Neu dabei ist #{@newUser}
+%ul
+  - @user.each do |u|
+    %li= u.name

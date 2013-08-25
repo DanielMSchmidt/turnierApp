@@ -1,58 +1,56 @@
 !!!
-%html
+/[if IE 7] <html lang="en" class="ie7">
+/[if IE 8] <html lang="en" class="ie8">
+/[if IE 9] <html lang="en" class="ie9">
+/ [if !IE]><!
+%html{:lang => "en"}
+  / <![endif]
   %head
     %title TurnierApp | Organisiere deine Turniere
-    %meta{:content => "Turnier App hilft Turniertänzern und Vereinen dabei, den Überblick über bereits getanzte Turniere und die Erfolge über das Jahr hinweg zu behalten", :name => "description"}
-    %meta{:content => "Tanzen, Turniertanzen, Sport, Turniersport, Latein, Standard, Turniere, organisieren", :name => "keywords"}
+    %meta{:content => "Turnier App hilft Turniertänzern und Vereinen dabei, den Überblick über bereits getanzte und zuküntige Turniere zu behalten", :name => "description"}
+    %meta{:content => "Tanzen, Turniertanzen, Sport, Turniersport, Latein, Standard, Turniere, organisieren, TurnierApp, turnierapp, turnier, turnierApp, TurnierApp", :name => "keywords"}
+
     %link{:href => "/favicon.ico", :rel => "shortcut icon"}
-    = stylesheet_link_tag    "application", :media => "all"
+    %link{:href => "#{asset_path('apple-touch-icon.png')}", :rel => "apple-touch-icon"}
+
+    %link{:href => "http://cdn.oesmith.co.uk/morris-0.4.1.min.css", :rel => "stylesheet"}
+    %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet"}/
+    %link{:href => "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", :rel => "stylesheet"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+
+    = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
 
   %body
-    = hidden_field('Navigation', 'active', value: @active_page || 'Start')
-    :javascript
-      $("li").removeClass("active");
-      $('.#{@active_page || 'Start'}').addClass('active');
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          = link_to 'TurnierApp', root_path, class: 'brand'
-          .nav-collapse.collapse.navbar-responsive-collapse
-            %ul.nav
-              %li
-              %li.clubs= link_to 'Vereine', clubs_path
-
-              - if user_signed_in?
-                %li.add_result= link_to 'Turnier hinzufügen', new_tournament_path
-                %li.results= link_to 'Meine Turnierergebnisse', user_tournaments_path(current_user)
-                %li.profil= link_to "Profil bearbeiten", edit_user_registration_path
-                %li.signout= link_to "Abmelden", destroy_user_session_path, method: :delete
-              - else
-                %li.signup= link_to "Registrieren", new_user_registration_path
-                %li.signin= link_to "Anmelden", new_user_session_path
-              %li.impressum= link_to 'Impressum', impressum_path
+    = render 'shared/navigation'
 
     .content
       .row-fluid
         .offset1.span10
           = yield
-    %footer.navbar.navbar-fixed-bottom
-      =mail_to "daniel.maximilian@gmx.net", "Copyright: Daniel Schmidt", :subject => "Kontakt TurnierApp", class: "btn btn-info high"
-      %form{:action => "https://www.paypal.com/cgi-bin/webscr", :method => "post"}
-        %input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
-          %input{:name => "hosted_button_id", :type => "hidden", :value => "4XFV2JU839HXL"}
-            %input{:alt => "Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.", :border => "0", :name => "submit", :src => "https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_SM.gif", :type => "image"}
-              %img{:alt => "", :border => "0", :height => "1", :src => "https://www.paypalobjects.com/de_DE/i/scr/pixel.gif", :width => "1"}
-    - if Rails.env.production?
-      :javascript
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-37020620-1']);
-        _gaq.push(['_setDomainName', 'herokuapp.com']);
-        _gaq.push(['_trackPageview']);
 
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+    .assets
+      = render "shared/notification"
+
+      :javascript
+        $(function() {
+          window.DS.scrolltotop.init("#{asset_path('up.png')}");
+        });
+
+      - if user_signed_in?
+        = render "shared/user_modals"
+        = render "shared/modals/add_tournament_modal"
+      - if Rails.env.production?
+        :javascript
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', "#{ENV['GA_ACCOUNT']}"]);
+          _gaq.push(['_setDomainName', "#{ENV['GA_DOMAIN_NAME']}"]);
+          _gaq.push(['_setSiteSpeedSampleRate', 100]);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();

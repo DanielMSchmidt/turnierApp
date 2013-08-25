@@ -1,0 +1,21 @@
+%h1
+  Alle Turniere von
+  %br/
+  = @user.name.gsub(/[\/]/, "und")
+%h4 Statistiken:
+= raw(print_stats @tournaments)
+%br/
+%table.tournament-list.table.table-striped
+  %tr
+    %th Paar
+    %th Datum
+    %th Zeit
+    %th Art
+    %th Platz
+    %th Adresse
+    %th Turniernr.
+    %th Status
+    %th
+    %th
+    %th
+  = render @tournaments, admin: false

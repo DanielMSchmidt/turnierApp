@@ -1,0 +1,12 @@
+#pending_club_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Ausstehende Anmeldungen
+  .modal-body
+    %ul
+      - @clubs.select{|club| club.is_unverified_user(current_user) }.each do |club|
+        %li
+          = club.name
+
+  .modal-footer
+    %a.btn{:href => "#"} Schließen

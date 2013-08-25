@@ -1,0 +1,22 @@
+.btn-toolbar
+  - unless Club.owned_by(current_user.id).empty?
+    .btn-group
+      .btn
+        = link_to 'Verwaltung', admin_dashboard_path
+
+  .btn-group
+    .btn
+      = link_to 'neues Turnier', '#add_tournament_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Add']);"
+
+  .btn-group
+    .btn
+      = link_to 'Punkte | Platzierungen | Klasse ändern', '#change_progress_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Progress', 'Change']);"
+
+  .btn-group
+    .btn
+      = link_to 'Tanzpartner wechseln', '#change_partner_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Couple', 'Change']);"
+
+  .btn-group
+    .btn
+      = link_to 'Turniere bearbeiten | anschauen', user_tournaments_path(current_user), onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Show/Edit']);"
+

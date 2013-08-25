@@ -1,0 +1,28 @@
+= form_for(@tournament, :html => {:class => "form-horizontal"}) do |f|
+  - if @tournament.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@tournament.errors.count, "Fehler")
+        verhindern, dass dieses Turnier gespeichert wird:
+      %ul
+        - @tournament.errors.full_messages.each do |msg|
+          %li= msg
+
+
+
+  .control-group
+    = f.label :place, "Platz", :class =>"control-label"
+    .controls
+      = f.number_field :place
+      .help-block
+        Bitte niedrigsten Platz bei geteilten Plätzen nehmen
+
+  .control-group
+    = f.label :participants, "Teilnehmerzahl", :class =>"control-label"
+    .controls
+      = f.number_field :participants
+
+  .form-actions
+    = f.submit "erstellen", class: "btn btn-primary"
+
+=render "has_clubs_popover"

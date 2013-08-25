@@ -1,0 +1,15 @@
+- if current_user.clubs.empty?
+  :javascript
+    $("form#new_tournament input[type=submit]:eq(0)").on("click", function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    $("form#new_tournament input[type=submit]:eq(0)").popover({
+      title: 'Du hast noch keinen Verein angegeben',
+      content: 'Du brauchst einen Verein, damit deine Turniere in einer Statistik auftauchen. Bitte melde dich <a href="/clubs">hier</a> einen Verein an',
+      placement: 'top',
+      trigger: 'hover',
+      delay: { show: 10, hide: 8000 },
+      html: true
+    });
