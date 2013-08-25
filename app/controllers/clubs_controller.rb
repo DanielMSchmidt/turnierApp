@@ -26,7 +26,7 @@ class ClubsController < ApplicationController
 
     if @club.save
       @club.memberships.create!(couple_id: current_user.activeCouple.id, verified: true)
-      redirect_to root_path, notice: t('club create')
+      redirect_to root_path, notice: t('club.create')
     else
       render :new
     end
@@ -38,7 +38,7 @@ class ClubsController < ApplicationController
     @club = Club.find(params[:id])
 
     if @club.update_attributes(params[:club])
-      redirect_to root_path, notice: t('club update')
+      redirect_to root_path, notice: t('club.update')
     else
       render :edit
     end

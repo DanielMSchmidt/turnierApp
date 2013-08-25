@@ -13,10 +13,10 @@ class CouplesController < ApplicationController
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
-        redirect_to root_path, notice: t('couple create success')
+        redirect_to root_path, notice: t('couple.create.success')
       end
     else
-      redirect_to root_path, error: t('couple create fail')
+      redirect_to root_path, error: t('couple.create.fail')
     end
   end
 
@@ -30,10 +30,10 @@ class CouplesController < ApplicationController
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
-        redirect_to root_path, notice: t('couple update success')
+        redirect_to root_path, notice: t('couple.update.success')
       end
     else
-      redirect_to root_path, error: t('couple create fail')
+      redirect_to root_path, error: t('couple.create.fail')
     end
   end
 

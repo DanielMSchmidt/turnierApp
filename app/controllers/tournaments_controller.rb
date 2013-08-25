@@ -15,9 +15,9 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.new_for_user(params)
 
     if @tournament.save
-      redirect_to root_path, notice: t('tournament create')
+      redirect_to root_path, notice: t('tournament.create')
     else
-      redirect_to root_path, notice: t('tournament error')
+      redirect_to root_path, notice: t('tournament.error')
     end
   end
 
@@ -27,9 +27,9 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
 
     if @tournament.update_attributes(params[:tournament])
-      redirect_to root_path, notice: t('club update')
+      redirect_to root_path, notice: t('club.update')
     else
-      redirect_to root_path, notice: t('tournament error')
+      redirect_to root_path, notice: t('tournament.error')
     end
   end
 

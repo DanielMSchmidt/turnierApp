@@ -3,7 +3,7 @@ class MembershipController < ApplicationController
 
   def create
     Membership.create!(couple_id: getCoupleFromUser, club_id: params[:club_id], verified: false)
-    redirect_to root_path, notice: t('membership create')
+    redirect_to root_path, notice: t('membership.create')
   end
 
   def verify
@@ -11,15 +11,15 @@ class MembershipController < ApplicationController
     if membership
       membership.verified = true
       membership.save!
-      redirect_to  root_path, notice: t('membership verfify success')
+      redirect_to  root_path, notice: t('membership.verfify.success')
     else
-      redirect_to  root_path, notice: t('membership verfify fail')
+      redirect_to  root_path, notice: t('membership.verfify.fail')
     end
   end
 
   def destroy
     @membership = Membership.destroy_all(couple_id: params[:couple_id], club_id: params[:club_id])
-    redirect_to root_path, notice: t('membership destroy')
+    redirect_to root_path, notice: t('membership.destroy')
   end
 
   def getCoupleFromUser
