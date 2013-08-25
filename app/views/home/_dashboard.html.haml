@@ -1,7 +1,7 @@
 - activeCouple = current_user.activeCouple
 
 %h1 Dashboard
-= render "action_required_alert"
+= render "action_required_alert", has_couple: has_couple, has_a_club: has_a_club, has_missing_data: has_missing_data
 = render "shared/user_controlls"
 %br
 .row-fluid

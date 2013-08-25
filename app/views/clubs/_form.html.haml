@@ -1,11 +1,11 @@
-= form_for(@club, :html => {:class => "form-horizontal"}) do |f|
-  - if @club.errors.any?
+= form_for(club, :html => {:class => "form-horizontal"}) do |f|
+  - if club.errors.any?
     #error_explanation
       %h2
-        = pluralize(@club.errors.count, "error")
+        = pluralize(club.errors.count, "error")
         prohibited this club from being saved:
       %ul
-        - @club.errors.full_messages.each do |msg|
+        - club.errors.full_messages.each do |msg|
           %li= msg
   .control-group
     = f.label :club, "Bitte den Namen des Vereins eingeben", :class => "control-label"

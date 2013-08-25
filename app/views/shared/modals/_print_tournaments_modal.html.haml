@@ -3,7 +3,7 @@
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Bitte wähle einen Zeitraum
   .modal-body
-    = form_tag print_tournaments_path(club_id: @active_club.id), :html => {:class => 'form-horizontal'} do
+    = form_tag print_tournaments_path(club_id: active_club.id), :html => {:class => 'form-horizontal'} do
       .control-group
         .controls
           %label.radio.inline
