@@ -41,12 +41,11 @@
       - if user_signed_in?
         = render "shared/user_modals"
         = render "shared/modals/add_tournament_modal"
-
       - if Rails.env.production?
         :javascript
           var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-37020620-1']);
-          _gaq.push(['_setDomainName', 'herokuapp.com']);
+          _gaq.push(['_setAccount', "#{ENV['GA_ACCOUNT']}"]);
+          _gaq.push(['_setDomainName', "#{ENV['GA_DOMAIN_NAME']}"]);
           _gaq.push(['_setSiteSpeedSampleRate', 100]);
           _gaq.push(['_trackPageview']);
 
