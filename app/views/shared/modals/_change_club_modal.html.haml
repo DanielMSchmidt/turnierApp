@@ -1,0 +1,37 @@
+#change_club_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Ändere deinen Verein
+  .modal-body
+    = link_to 'Verein hinzufügen', '#add_club_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn btn-block", onClick: "_gaq.push(['_trackEvent', 'Club', 'Add']);"
+    = link_to 'Verein verlassen', '#remove_club_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn btn-block", onClick: "_gaq.push(['_trackEvent', 'Club', 'Remove']);"
+
+  .modal-footer
+    %a.btn{:href => "#"} Schließen
+
+#remove_club_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Trete aus deinem Verein aus
+  .modal-body
+    %ul
+    - @own_clubs.each do |club|
+      %li
+        = link_to club.name, delete_couple_path(club_id: club.id, couple_id: current_user.activeCouple)
+
+  .modal-footer
+    %a.btn{:href => "#"} Schließen
+
+#add_club_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Trete in deinen Verein ein
+  .modal-body
+    %ul
+      - @clubs.reject{|club| club.is_unverified_user(current_user) }.each do |club|
+        %li
+          = link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
+
+  .modal-footer
+    = link_to 'Neuen Verein erstellen', new_club_path, class: "btn btn-primary", onClick: "_gaq.push(['_trackEvent', 'Clubs', 'Added']);"
+    %a.btn{:href => "#"} Schließen

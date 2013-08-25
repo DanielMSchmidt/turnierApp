@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
 
   def setUserModalData
     @clubs = Club.all
+    @own_clubs = current_user.clubs
     @couple = Couple.new
     @tournament = Tournament.new
   end
