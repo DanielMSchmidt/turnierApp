@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class NotificationMailer < ActionMailer::Base
-  default from: "turnierlist@psv-kiel.de"
+  default from: ENV['MAILER_ADDRESS']
 
   def enrollCouples(user, club)
     @club = club
