@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
   after_create :notifyAboutNewUser
   after_create :buildEmptyCouple
 
-  has_many :couples
-
   # Hooks
 
   def self.send_user_notification(newUser)
