@@ -22,3 +22,4 @@ Versions
   - v0.5.4    - improved speed and fixed some small bugs
   - v0.5.5    - fixed bug with not logged in user on clubs page
   - v0.6      - improved usabillity and put mailing stuff to sidekiq
+  - v0.8      - complete renewal of fundamental parts and UI
