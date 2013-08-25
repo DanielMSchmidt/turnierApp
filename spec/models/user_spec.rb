@@ -41,7 +41,6 @@ describe User do
   end
 
   describe "structure" do
-    it { should respond_to(:couples) }
     it "shouldnt have more then one active couple per time" do
       user.get_couples.each{|couple| couple.delete}
       user.get_couples.count.should eq(0)
