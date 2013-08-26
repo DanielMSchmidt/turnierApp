@@ -48,32 +48,6 @@ describe Club do
       couple.latin.should_not be_nil
       couple.standard.should_not be_nil
     end
-
-    it "should be the right club" do
-      club.name.should eq('Example Club')
-      club.owner.id.should eq(user.id)
-    end
-
-    it "should be the right membership" do
-      #FIXME: Fails to no reason
-      user.clubs.first.id.should eq(club.id)
-    end
-  end
-
-  describe "#is_owner?" do
-    it "should be true if user is owner" do
-      club.user_id = user.id
-      club.is_owner?(user).should be_true
-    end
-
-    it "should be false if user isn't owner" do
-      club.user_id = 10
-      club.is_owner?(user).should be_false
-    end
-
-    it "should be false if user is nil" do
-      club.is_owner?(nil).should be_false
-    end
   end
 
   describe "#transfer_to" do

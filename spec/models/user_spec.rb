@@ -18,7 +18,7 @@ describe User do
     it "should call a build the couple function" do
       a = User.new(email: "tester1@test.de", name: "tester1", password: "123456789012")
       a.should_receive(:buildEmptyCouple)
-
+      a.should_receive(:notifyAboutNewUser).and_return(true)
       a.save!
     end
 
@@ -61,21 +61,6 @@ describe User do
   end
 
   describe "functions" do
-    describe "#getOrganisedTournaments" do
-      it "should return an empty array if the user hasnt got any clubs" do
-        Club.stub(:where).and_return([])
-        user.getOrganisedTournaments.should eq([])
-      end
-      it "should return all tournaments of the clubs associated with this user" do
-
-        club1 = double('club1', name: 'club1' ,tournaments: [double('tournament1'), double('tournament2')])
-        club2 = double('club2', name: 'club2' ,tournaments: [double('tournament3')])
-        Club.stub(:where).and_return([club1, club2])
-
-        user.getOrganisedTournaments.length.should eq(3)
-      end
-    end
-
     describe "#activeCouple" do
       it "should return nil if no couple is assigned" do
         user.stub(:get_couples).and_return([])

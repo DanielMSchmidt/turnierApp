@@ -29,19 +29,6 @@ class User < ActiveRecord::Base
 
   # Accessors
 
-  def getOrganisedTournaments
-    logger.debug "setting organised tournaments for user #{self.id}"
-    clubs = Club.where(user_id: self.id)
-
-    unless clubs.empty?
-      logger.debug "found clubs: #{clubs.collect{|x| x.name}.join(", ")}"
-      return clubs.collect{|x| x.tournaments}.flatten
-    else
-      logger.debug "no club found"
-      return []
-    end
-  end
-
   def tournaments
     unless self.activeCouple.nil?
       self.activeCouple.latin.tournaments + self.activeCouple.standard.tournaments
@@ -62,16 +49,6 @@ class User < ActiveRecord::Base
 
   def activeCouple
     self.get_couples.select{|couple| couple.active}.first
-  end
-
-  # access clubs
-
-  def verified_clubs
-    self.activeCouple.memberships.is_verified.collect{|x| x.club}.compact.uniq
-  end
-
-  def unverified_clubs
-    self.activeCouple.memberships.includes(:club).is_unverified.collect{|x| x.club}.compact.uniq
   end
 
   # find users

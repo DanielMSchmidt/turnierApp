@@ -103,6 +103,8 @@ GEM
     domain_name (0.5.12)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (0.8.0)
+    dotenv-rails (0.8.0)
+      dotenv (= 0.8.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -344,6 +346,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise
+  dotenv-rails
   factory_girl_rails
   foreman
   guard

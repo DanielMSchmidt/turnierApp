@@ -20,11 +20,6 @@ class Club < ActiveRecord::Base
     end
   end
 
-  def is_owner?(user)
-    return false if user.nil?
-    self.user_id == user.id
-  end
-
   def transfer_to(new_user)
     self.user_id = new_user.id
     self.save!
