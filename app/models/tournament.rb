@@ -137,13 +137,13 @@ class Tournament < ActiveRecord::Base
 
   def send_mail_if_enrolled_tournament_is_deleted
     # FIXME: NameError at /tournaments/5 undefined local variable or method `tournament' for #<Tournament:0x007fcfd0d0cbe8>
-    logger.debug "send_mail_if_enrolled_tournament_is_deleted for #{tournament.to_s}"
-    if tournament.is_enrolled_and_not_danced?
-      club_owners_mailaddresses = tournament.users.first.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
+    logger.debug "send_mail_if_enrolled_tournament_is_deleted for #{self.to_s}"
+    if self.is_enrolled_and_not_danced?
+      club_owners_mailaddresses = self.users.first.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
       logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
       NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament).deliver
     end
-    logger.debug "deleted tournament #{tournament.to_s}"
+    logger.debug "deleted tournament #{self.to_s}"
   end
 
   def placing
