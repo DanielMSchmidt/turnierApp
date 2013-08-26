@@ -4,10 +4,20 @@ class TournamentFetcher
   def initialize(number)
     @number = number
     @mechanize = Mechanize.new
-    @tournament_data = self.get_tournament_data
+    @tournament_data = get_cached_tournament_data
+  end
+
+  def get_cached_tournament_data
+    cache_string = "tf-#{@number}"
+    cached_hash = Rails.cache.read(cache_string)
+    return cached_hash if cached_hash
+
+    uncached_hash = self.get_tournament_data
+    Rails.cache.write(cache_string, uncached_hash)
   end
 
   def get_tournament_data
+    Rails.logger.debug "Tournament data is fetching for #{@number}"
     hash = extract_results(get_result_page(@number))
     hash[:number] = @number
     hash
