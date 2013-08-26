@@ -1,0 +1,8 @@
+%h4 Aktuelle Anfragen
+%hr
+%ul
+  - @unverified_couples.each do |couple|
+    %li
+      = couple.to_s
+      = link_to "", verify_couple_path(club_id: @active_club, couple_id: couple.id), :class => "icon-ok"
+      = link_to "",delete_couple_path(club_id: @active_club, couple_id: couple.id), :class => "icon-remove"

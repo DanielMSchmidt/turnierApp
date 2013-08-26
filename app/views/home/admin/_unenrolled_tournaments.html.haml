@@ -1,0 +1,14 @@
+%h4 ungemeldete Turniere
+%hr
+%table.tournament-list.table.table-striped
+  %tr
+    %th Paar
+    %th Datum
+    %th Zeit
+    %th Art
+    %th Platz
+    %th Turniernr.
+    %th
+    %th
+    %th
+  = render unenrolled_tournaments, admin: true, withoutUserControl: true
