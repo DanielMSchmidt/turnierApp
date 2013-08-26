@@ -18,3 +18,11 @@ de:
     update:
       success: Du hast erfolgreich dein Tanzsportgerät ausgetauscht
       fail: Leider konntest du dein Tanzsportgerät nicht wechseln
+  tournament:
+    create:
+      success: Das Turnier wurde erfolgreich angelegt
+      fail: Leider konnte das Turnier nicht angelegt werden
+    update:
+      success: Das Turnier wurde erfolgreich aktualisiert
+      fail: Leider konnte das Turnier nicht aktualisiert werden
+    destroy: Das Turnier wurde erfolgreich gelöscht
