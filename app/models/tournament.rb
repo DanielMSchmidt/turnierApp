@@ -154,22 +154,6 @@ class Tournament < ActiveRecord::Base
     end
   end
 
-  def latin_placing
-    self.placing if self.latin?
-  end
-
-  def standard_placing
-    self.placing unless self.latin?
-  end
-
-  def latin_points
-    self.points if self.latin?
-  end
-
-  def standard_points
-    self.points unless self.latin?
-  end
-
   def to_s
     "Tournament ##{self.id} - date: #{self.date} - enrolled: #{self.enrolled} - notificated_about: #{self.notificated_about}"
   end

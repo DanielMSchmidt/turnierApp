@@ -58,6 +58,8 @@ group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 
+  gem 'dotenv-rails'
+
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
   gem "capybara"

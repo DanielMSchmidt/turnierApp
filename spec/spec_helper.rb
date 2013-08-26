@@ -2,7 +2,11 @@
 require 'rubygems'
 require 'spork'
 
+require 'dotenv'
+Dotenv.load
+
 require 'simplecov'
+
 SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
