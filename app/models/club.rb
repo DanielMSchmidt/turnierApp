@@ -12,6 +12,10 @@ class Club < ActiveRecord::Base
     Club.where(user_id: current_user_id)
   end
 
+  def is_owner(user)
+    self.owner ? (self.owner.id == user.id) : false
+  end
+
   def owner
     if self.user_id.nil?
       nil
