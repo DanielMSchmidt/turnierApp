@@ -4,6 +4,14 @@
     %h3 Turnier absagen
   .modal-body.row-fluid.btn-group
     .well.span11
-      %h4 TODO: FILL
+      = form_tag(tournament_cancel_path(active_club), :html => {:class => "form-horizontal"}) do
+        .control-group
+          = label :number, "Turniernummer", :class =>"control-label"
+          .controls
+            = number_field_tag :number
+
+        .form-actions
+          = submit_tag "Turnier absagen", class: "btn btn-primary", onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Cancel']);"
+
   .modal-footer
     %a.btn{:href => "#"} Schließen

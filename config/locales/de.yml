@@ -5,6 +5,10 @@ de:
     update: Das Turnier wurde erfolgreich aktualisiert.
     ownership:
       transfer: Der Verein gehört dir nun nicht mehr.
+    cancel:
+      forbidden: Du hast nicht das Recht ein Turnier abzusagen.
+      success: Das Turnier wurde erfolgreich abgesagt. Alle betroffenen Paare wurden benachrichtigt.
+      fail: Es wurden keine Turniere für diesen Verein gefunden.
   membership:
     create: Der Verein wurde erfolgreich zu deinen Vereinen hinzugefügt. Du musst jetzt noch bestätigt werden.
     verfify:

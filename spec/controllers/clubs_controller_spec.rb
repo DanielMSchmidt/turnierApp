@@ -33,7 +33,7 @@ describe ClubsController do
     end
 
     after(:each) do
-      post tournament_cancel_path(club: 1, number: 28288)
+      post :cancel, :club_id => 1
     end
   end
 end
