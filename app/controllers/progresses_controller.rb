@@ -11,7 +11,7 @@ class ProgressesController < ApplicationController
         format.html { redirect_to @progress, notice: 'Progress was successfully created.' }
         format.json { render json: @progress, status: :created, location: @progress }
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @progress.errors, status: :unprocessable_entity }
       end
     end
@@ -26,7 +26,7 @@ class ProgressesController < ApplicationController
       if @progress.update_attributes(params[:progress])
         format.js
       else
-        format.html { render action: "edit" }
+        format.html { render "edit" }
         format.json { render json: @progress.errors, status: :unprocessable_entity }
       end
     end

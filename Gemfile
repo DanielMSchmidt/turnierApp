@@ -2,19 +2,27 @@ source 'https://rubygems.org'
 
 gem 'rails'
 
-gem 'will_paginate', '~> 3.0'
+
 gem 'puma' #faster webserver
 gem 'foreman'
 gem 'haml'
+
+# UI
 gem 'simple_form'
 gem 'devise'
+gem 'will_paginate', '~> 3.0'
 gem 'bootstrap-sass'
+gem 'jquery-turbolinks'
+gem 'bootstrap-datepicker-rails'
+gem 'turbolinks'
+
+#Data fetching
 gem 'mechanize'
 gem 'nokogiri'
 gem 'libv8', '~> 3.11.8'
-gem 'turbolinks'
-gem 'jquery-turbolinks'
-gem 'bootstrap-datepicker-rails'
+
+#Caching
+gem 'redis-rails'
 
 #PDF generation
 gem 'wicked_pdf'
@@ -57,6 +65,8 @@ end
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+
+  gem 'dotenv-rails'
 
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"

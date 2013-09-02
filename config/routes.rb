@@ -1,8 +1,8 @@
 # -*- encoding : utf-8 -*-
 TurnierList::Application.routes.draw do
 
-  resources :progresses
-  resources :couples
+  resources :progresses, only: [:create, :update, :destroy]
+  resources :couples, only: [:create, :update, :destroy]
 
   get "/couple/levelup/:kind" => "couples#levelup", as: :couple_level_up
   get "/couple/reset/:kind" => "couples#reset", as: :couple_reset
@@ -24,8 +24,8 @@ TurnierList::Application.routes.draw do
   match "/impressum" => "home#impressum"
 
 
-  resources :clubs
-  resources :tournaments
+  resources :clubs, except: [:show, :index]
+  resources :tournaments, except: [:show, :new, :index]
   devise_for :users
 
   root :to => "home#index"

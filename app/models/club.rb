@@ -20,11 +20,6 @@ class Club < ActiveRecord::Base
     end
   end
 
-  def is_owner?(user)
-    return false if user.nil?
-    self.user_id == user.id
-  end
-
   def transfer_to(new_user)
     self.user_id = new_user.id
     self.save!
@@ -54,11 +49,11 @@ class Club < ActiveRecord::Base
   # Verified couples & users
 
   def verifiedCouples(active=true)
-    self.memberships.is_verified.collect{|m| m.couple}.select{|c| c.active == active}.uniq
+    self.memberships.is_verified.includes(:couple).collect{|m| m.couple}.select{|c| c.active == active}.uniq
   end
 
   def unverifiedCouples(active=true)
-    self.memberships.is_unverified.collect{|m| m.couple}.select{|c| c.active == active}.uniq
+    self.memberships.is_unverified.includes(:couple).collect{|m| m.couple}.select{|c| c.active == active}.uniq
   end
 
   def verified_users
