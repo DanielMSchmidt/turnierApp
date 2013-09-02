@@ -35,7 +35,7 @@ namespace :deploy do
   end
 
   task :copy_database_yml do
-    run "cp #{shared_path}/database.yml #{release_path}/config"
+    run "cp #{shared_path}/database.yml #{release_path}/config/database.yml"
   end
 
   task :copy_env do
@@ -45,7 +45,6 @@ namespace :deploy do
 end
 
 before "deploy:assets:precompile", "deploy:copy_database_yml"
-before "deploy:assets:precompile", "deploy:link_uploads"
 before "foreman:export", "deploy:copy_env"
 
 namespace :foreman do
