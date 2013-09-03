@@ -33,7 +33,7 @@ module TournamentsHelper
 
   #               Line or Bar        Hash of keys
   #               |                  |
-  def print_graph(type, field, data, keys)
+  def printGraph(type, field, data, keys)
     key_names = keys.keys.collect{|key| "'"+key.to_s+"'"}.join(", ")
     key_values = keys.values.collect{|value| "'"+value.to_s+"'"}.join(", ")
 
@@ -46,15 +46,15 @@ module TournamentsHelper
   end
 
 
-  def tournament_date(tournament)
+  def tournamentDate(tournament)
     tournament.get_date.strftime("%d.%m.%Y") if tournament.date?
   end
 
-  def tournament_time(tournament)
+  def tournamentTime(tournament)
     tournament.get_date.strftime("%H:%M") if tournament.date?
   end
 
-  def tournament_adress(tournament)
+  def tournamentAddress(tournament)
     raw tournament.address.gsub(/\s(\s*)/, ' ').split(", ").join("<br />") if tournament.address?
   end
 
