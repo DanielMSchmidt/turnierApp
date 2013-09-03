@@ -1,62 +1,5 @@
 # -*- encoding : utf-8 -*-
 module TournamentsHelper
-  def print_stats(tournaments = [])
-    finished_tournaments = tournaments.select{|tournament| !tournament.upcoming?}
-
-    return "Ohne getanzte Turniere gibt es keine Statistik" if finished_tournaments.empty?
-    str = "<table class='stats'><tr><th>Jahr</th><th>Turniere</th><th>Platzierungen</th><th>Punkte</th><th>Latein (Platzierungen/Punkte)</th><th>Standard (Platzierungen/Punkte)</th>"
-
-    tournaments_by_year(finished_tournaments).each do |year|
-      str += print_year(year)
-    end
-
-    str += "</table>"
-    return str
-  end
-
-  def tournaments_by_year(tournaments)
-    out = []
-    tournaments.each do |tournament|
-      thisYear = tournament.get_date.year
-      out[thisYear] ||= []
-      out[thisYear].push(tournament)
-    end
-    return out.compact.reverse
-  end
-
-  def print_year(tournaments_of_year)
-    return "<tr>
-    <th>#{tournaments_of_year.first.get_date.year}</th>
-    <td>#{tournaments_of_year.count}</td>
-    <td>#{placings(tournaments_of_year)}</td>
-    <td>#{points(tournaments_of_year)}</td>
-    <td>#{placings(tournaments_of_year, :latin_placing)} / #{points(tournaments_of_year, :latin_points)}</td>
-    <td>#{placings(tournaments_of_year, :standard_placing)} / #{points(tournaments_of_year, :standard_points)}</td>
-    </tr>"
-  end
-
-  def placings(tournaments, filter = :placing)
-    tournaments.collect(&filter).compact.inject(:+) || 0
-  end
-
-  def points(tournaments, filter = :points)
-    tournaments.collect(&filter).compact.inject(:+) || 0
-  end
-
-  def tournament_date(tournament)
-    tournament.get_date.strftime("%d.%m.%Y") if tournament.date?
-  end
-
-  def tournament_time(tournament)
-    tournament.get_date.strftime("%H:%M") if tournament.date?
-  end
-
-  def tournament_adress(tournament)
-    raw tournament.address.split(", ").join("<br />") if tournament.address?
-  end
-
-  # TODO: refactor via decorator
-
   def getProgressOverTimeData(couple)
     getProgressOverTime(couple.latin, couple.standard).sort{ |a,b| a[:y] <=> b[:y] }
   end
@@ -100,6 +43,19 @@ module TournamentsHelper
     str += raw("xkey: 'y',")
     str += raw("ykeys: [#{key_names}],")
     str += raw("labels: [#{key_values}]});")
+  end
+
+
+  def tournament_date(tournament)
+    tournament.get_date.strftime("%d.%m.%Y") if tournament.date?
+  end
+
+  def tournament_time(tournament)
+    tournament.get_date.strftime("%H:%M") if tournament.date?
+  end
+
+  def tournament_adress(tournament)
+    raw tournament.address.gsub(/\s(\s*)/, ' ').split(", ").join("<br />") if tournament.address?
   end
 
 end

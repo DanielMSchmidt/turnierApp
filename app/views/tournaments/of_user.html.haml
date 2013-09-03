@@ -1,9 +1,12 @@
-%h1
-  Alle Turniere von
-  %br/
-  = @user.name.gsub(/[\/]/, "und")
-%h4 Statistiken:
-= raw(print_stats @tournaments)
+.row-fluid
+  .span11
+    %h1
+      Alle Turniere von
+      %br
+      = @user.activeCouple.to_s
+  .span1
+    =link_to 'Zurück', root_path, :class => "btn"
+
 %br/
 %table.tournament-list.table.table-striped
   %tr
