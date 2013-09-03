@@ -10,11 +10,11 @@ describe Club do
   let!(:tournament){ FactoryGirl.create(:tournament) }
   let(:stubbed_tournament){ double('stubbed tournament') }
 
-  describe "#mail_owner_unenrolled_tournaments" do
+  describe "#mailOwnerOfUnenrolledTournaments" do
     it "should send the unenrolled tournaments to the owner", slow: true do
       NotificationMailer.should_receive(:enrollCouples).and_return(double('mail', deliver: true))
-      club.should_receive(:unenrolled_and_enrollable_tournaments_left_which_should_be_notified).and_return(true)
-      club.mail_owner_unenrolled_tournaments
+      club.should_receive(:unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified).and_return(true)
+      club.mailOwnerOfUnenrolledTournaments
     end
   end
 
@@ -22,13 +22,13 @@ describe Club do
     describe "method unenrolled_and_enrollable_tournaments_left" do
       it "should be true if the tournament is in the near future and unenrolled" do
         club.should_receive(:tournaments).at_least(1).times.and_return([stubbed_tournament])
-        stubbed_tournament.stub(:should_send_a_notification_mail?).and_return(true)
-        club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified.should be_true
+        stubbed_tournament.stub(:shouldSendANotificationMail?).and_return(true)
+        club.unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified.should be_true
       end
 
       it "should be false if the tournament is in the wide future and unenrolled", slow: true do
         FactoryGirl.create(:tournament, date: (DateTime.now.beginning_of_day.to_date + 2.months).to_date)
-        club.unenrolled_and_enrollable_tournaments_left_which_should_be_notified.should be_false
+        club.unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified.should be_false
       end
     end
   end
@@ -50,26 +50,26 @@ describe Club do
     end
   end
 
-  describe "#transfer_to" do
+  describe "#transferTo" do
     it "it should change the owner" do
       club.user_id = 10
       club.owner.should be_nil
 
-      club.transfer_to(user)
+      club.transferTo(user)
       club.owner.id.should eq(user.id)
     end
   end
 
-  describe "#is_verified_user" do
+  describe "#isVerifiedUser" do
     it "should be false if the user is not verified" do
       club.should_receive(:verifiedCouples).and_return([])
-      club.is_verified_user(user).should be_false
+      club.isVerifiedUser(user).should be_false
     end
 
     it "should be true if the user is verified" do
       couple = double('couple', users: [user], active: true)
       club.should_receive(:verifiedCouples).and_return([couple])
-      club.is_verified_user(user).should be_true
+      club.isVerifiedUser(user).should be_true
     end
   end
 end

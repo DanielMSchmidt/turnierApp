@@ -9,10 +9,10 @@ module TournamentsHelper
       point_of_time = tournament.date
       hash = {
         y: point_of_time.strftime("%Y-%m-%d"),
-        latin_po: latin.points_at_time(point_of_time),
-        latin_pl: latin.placings_at_time(point_of_time),
-        standard_po: standard.points_at_time(point_of_time),
-        standard_pl: standard.placings_at_time(point_of_time)
+        latin_po: latin.pointsAtTime(point_of_time),
+        latin_pl: latin.placingsAtTime(point_of_time),
+        standard_po: standard.pointsAtTime(point_of_time),
+        standard_pl: standard.placingsAtTime(point_of_time)
        }
       hash
     end
@@ -20,7 +20,7 @@ module TournamentsHelper
   end
 
   def getTournamentsData(couple)
-    [{ y: "Turniere" ,l: couple.latin.danced_tournaments.count ,s: couple.standard.danced_tournaments.count }]
+    [{ y: "Turniere" ,l: couple.latin.dancedTournaments.count ,s: couple.standard.dancedTournaments.count }]
   end
 
   def getPlacingsData(couple)
@@ -47,11 +47,11 @@ module TournamentsHelper
 
 
   def tournamentDate(tournament)
-    tournament.get_date.strftime("%d.%m.%Y") if tournament.date?
+    tournament.getDate.strftime("%d.%m.%Y") if tournament.date?
   end
 
   def tournamentTime(tournament)
-    tournament.get_date.strftime("%H:%M") if tournament.date?
+    tournament.getDate.strftime("%H:%M") if tournament.date?
   end
 
   def tournamentAddress(tournament)

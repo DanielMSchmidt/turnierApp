@@ -4,8 +4,8 @@
     %h3 Jemand anders meldet die Paare
   .modal-body
     %ul
-      - if verified_users.reject{|x| x == current_user}.empty?
+      - if verifiedUsers.reject{|x| x == current_user}.empty?
         %p Es gibt keine Mitglieder außer dir.
       - else
-        - verified_users.reject{|x| x == current_user}.each do |user|
+        - verifiedUsers.reject{|x| x == current_user}.each do |user|
           %li= link_to "Zu #{user.name} wechseln", transferOwnership_to_path(user_id: user.id, club_id: active_club.id), class: "btn"

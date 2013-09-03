@@ -33,7 +33,7 @@ describe "Tournament" do
       tournament.place = nil
       tournament.save!
 
-      tournament.is_enrolled_and_not_danced?.should be_true
+      tournament.isEnrolledAndNotDanced?.should be_true
     end
   end
 
@@ -50,24 +50,24 @@ describe "Tournament" do
     end
   end
 
-  describe "#should_send_a_notification_mail?" do
+  describe "#shouldSendANotificationMail?" do
     it "should be false if the tournament is enrolled" do
       enrolled_tournament = Tournament.create(number: 28288, progress_id: 1, address: "testadress", date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: true)
-      enrolled_tournament.should_send_a_notification_mail?.should be_false
+      enrolled_tournament.shouldSendANotificationMail?.should be_false
     end
     it "should be false if the tournament is far away" do
       future_tournament = Tournament.create(number: 28288, progress_id: 1, address: "testadress", date: (DateTime.now.beginning_of_day.to_date + 8.weeks), kind: 'HGR C LAT', enrolled: false)
-      future_tournament.should_send_a_notification_mail?.should be_false
+      future_tournament.shouldSendANotificationMail?.should be_false
     end
     it "should be true if the tournament is near and unenrolled" do
       next_tournament = Tournament.create(number: 28288, progress_id: 1, address: "testadress", date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: false)
-      next_tournament.should_send_a_notification_mail?.should be_true
+      next_tournament.shouldSendANotificationMail?.should be_true
     end
   end
 
-  describe "#new_for_user" do
+  describe "#newForUser" do
     it "should be able to create a simple tournament", slow: true do
-      tournament = Tournament.new_for_user({tournament: {number: 31193, user_id: 1}})
+      tournament = Tournament.newForUser({tournament: {number: 31193, user_id: 1}})
       tournament.number.should eq(31193)
       tournament.date.should eq("2013-05-19 18:30:00")
       tournament.kind.should eq("HGR B ST")
@@ -76,7 +76,7 @@ describe "Tournament" do
     end
 
     it "should be able to create an advanced tournament", slow: true do
-      tournament = Tournament.new_for_user({tournament: {number: 28948, user_id: 1}})
+      tournament = Tournament.newForUser({tournament: {number: 28948, user_id: 1}})
       tournament.number.should eq(28948)
       tournament.date.should eq("Sun, 10 Mar 2013 11:00:00 UTC +00:00")
       tournament.kind.should eq("HGR C LAT")
@@ -87,27 +87,27 @@ describe "Tournament" do
 
   describe "#statusClasses" do
     it "should have the behind time class if its behind time" do
-      tournament.stub(:behind_time?).and_return(true)
+      tournament.stub(:behindTime?).and_return(true)
 
       tournament.statusClasses.should eq('icons-missing_information')
     end
 
     it "should have the behind time class if its behind time, although its not enrolled" do
-      tournament.stub(:behind_time?).and_return(true)
+      tournament.stub(:behindTime?).and_return(true)
       tournament.stub(:enrolled?).and_return(false)
 
       tournament.statusClasses.should eq('icons-missing_information')
     end
 
     it "should have the not enrolled class if its not enrolled" do
-      tournament.stub(:behind_time?).and_return(false)
+      tournament.stub(:behindTime?).and_return(false)
       tournament.stub(:enrolled?).and_return(false)
 
       tournament.statusClasses.should eq('icons-not_enrolled')
     end
 
     it "should be have the ok class if everything is ok" do
-      tournament.stub(:behind_time?).and_return(false)
+      tournament.stub(:behindTime?).and_return(false)
       tournament.stub(:enrolled?).and_return(true)
 
       tournament.statusClasses.should eq('icons-ok')

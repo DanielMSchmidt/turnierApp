@@ -1,5 +1,5 @@
 .btn-toolbar
-  - unless Club.owned_by(current_user.id).empty?
+  - unless Club.ownedBy(current_user.id).empty?
     .btn-group
       .btn
         = link_to 'Verwaltung', admin_dashboard_path

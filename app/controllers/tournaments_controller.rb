@@ -12,7 +12,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new_for_user(params)
+    @tournament = Tournament.newForUser(params)
 
     if @tournament.save
       redirect_to root_path, notice: t('tournament.create.success')

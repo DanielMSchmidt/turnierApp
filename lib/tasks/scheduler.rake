@@ -8,7 +8,7 @@ task :send_notifications => :environment do
 
   Club.all.each do |x|
     puts "Mailing to #{x.name} started"
-    x.mail_owner_unenrolled_tournaments
+    x.mailOwnerOfUnenrolledTournaments
     puts "Mailing to #{x.name} completed"
   end
 
@@ -23,7 +23,7 @@ task :send_friday_notifications => :environment do
 
     Club.all.each do |x|
       puts "Mailing to #{x.name} started"
-      x.mail_owner_unenrolled_tournaments
+      x.mailOwnerOfUnenrolledTournaments
       puts "Mailing to #{x.name} completed"
     end
 
@@ -33,6 +33,6 @@ task :send_friday_notifications => :environment do
   end
 end
 
-task :send_user_notification => :environment do
-  User.send_user_notification
+task :sendUserNotification => :environment do
+  User.sendUserNotification
 end

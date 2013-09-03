@@ -28,7 +28,7 @@
     %h3 Trete in deinen Verein ein
   .modal-body
     %ul
-      - clubs.reject{|club| club.is_unverified_user(current_user) }.each do |club|
+      - clubs.reject{|club| club.isUnverifiedUser(current_user) }.each do |club|
         %li
           = link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
 

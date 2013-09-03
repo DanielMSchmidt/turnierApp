@@ -11,11 +11,11 @@ class HomeController < ApplicationController
     else
       @verified_couples = @active_club.verifiedCouples
       @unverified_couples = @active_club.unverifiedCouples
-      @unenrolled_tournaments = @verified_couples.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.get_date}
+      @unenrolled_tournaments = @verified_couples.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.getDate}
     end
 
-    @verified_users = @verified_couples.collect{|c| c.users}.flatten
-    @unverified_users = @verified_couples.collect{|c| c.users}.flatten
+    @verifiedUsers = @verified_couples.collect{|c| c.users}.flatten
+    @unverifiedUsers = @verified_couples.collect{|c| c.users}.flatten
   end
 
 
@@ -23,7 +23,7 @@ class HomeController < ApplicationController
   def checkIfUserIsReadyToStart(user)
     @has_couple = user.activeCouple.present? && user.activeCouple.isComplete?
     @has_a_club = user.clubs.first.present?
-    tournaments_with_missing_data = user.tournaments.collect{|tournament| tournament.behind_time?}
+    tournaments_with_missing_data = user.tournaments.collect{|tournament| tournament.behindTime?}
     if tournaments_with_missing_data.nil? || tournaments_with_missing_data.empty?
       @has_missing_data = false
     else
@@ -32,7 +32,7 @@ class HomeController < ApplicationController
   end
 
   def setClubs
-    @user_clubs = Club.owned_by(current_user)
+    @user_clubs = Club.ownedBy(current_user)
     if params[:club_id].nil?
       @active_club = @user_clubs.first
       redirect_to admin_dashboard_path(club_id: @active_club.id)

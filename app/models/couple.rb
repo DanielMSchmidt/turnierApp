@@ -10,9 +10,9 @@ class Couple < ActiveRecord::Base
   has_many :clubs, :through => :memberships
   has_many :progresses
 
-  before_save :set_initial_values
-  after_create :deactivate_other_couples
-  after_create :build_progresses
+  before_save :setInitialValues
+  after_create :deactivateOtherCouples
+  after_create :buildProgresses
 
   # Finder
 
@@ -21,14 +21,14 @@ class Couple < ActiveRecord::Base
   end
 
   # Initialize
-  def set_initial_values
+  def setInitialValues
     clubs = self.users.map{|u| u.clubs }.flatten
     self.setClubs(clubs)
     self.active = true if self.active.nil?
   end
 
   # Activation
-  def deactivate_other_couples
+  def deactivateOtherCouples
     Couple.containingIds(self.userIds).each do |couple|
       couple.deactivate unless couple == self
     end
@@ -65,7 +65,7 @@ class Couple < ActiveRecord::Base
     self.progresses.active.latin.first
   end
 
-  def build_progresses
+  def buildProgresses
     self.progresses.create(kind: 'latin') if self.latin.nil?
     self.progresses.create(kind: 'standard') if self.standard.nil?
   end
