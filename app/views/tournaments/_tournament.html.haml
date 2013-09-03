@@ -9,9 +9,9 @@
       = tournament.couple.to_s
 
   %td
-    = tournament_date(tournament)
+    = tournamentDate(tournament)
   %td
-    = tournament_time(tournament)
+    = tournamentTime(tournament)
   %td
     = tournament.kind
   - unless pdf && tournament.place.nil?
@@ -22,7 +22,7 @@
         = "#{tournament.place } von #{tournament.participants || '??'}"
   - unless admin
     %td
-      = tournament_adress(tournament)
+      = tournamentAddress(tournament)
   %td
     = tournament.number
 

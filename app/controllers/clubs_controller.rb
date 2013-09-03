@@ -71,14 +71,11 @@ class ClubsController < ApplicationController
       @tournaments = all_tournaments.reject{|t| t.upcoming?}
     end
 
-
-
-
     render :pdf => "Turniere des #{@club.name}, #{@from} - #{@to}",
            :show_as_html => false
   end
 
-  def transfer_ownership
+  def transferOwnership
     @club = Club.find(params[:club_id])
     new_user = User.find(params[:user_id])
     @club.transfer_to(new_user)

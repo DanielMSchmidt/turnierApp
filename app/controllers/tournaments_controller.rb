@@ -33,7 +33,7 @@ class TournamentsController < ApplicationController
     end
   end
 
-  def set_as_enrolled
+  def setAsEnrolled
     tournament = Tournament.find(params[:id])
     if tournament.update_column(:enrolled, true)
       logger.debug "Tournament Number #{params[:id]} was set as enrolled."
@@ -55,7 +55,7 @@ class TournamentsController < ApplicationController
     end
   end
 
-  def of_user
+  def ofUser
     @user = User.find(params[:id])
     @tournaments = @user.tournaments
   end
