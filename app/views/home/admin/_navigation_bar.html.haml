@@ -1,10 +1,10 @@
 .btn-toolbar
   .btn-group
     .btn
-      = link_to 'Turnierübersicht drucken', '#print_tournaments_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Admin', 'Print']);"
+      = ga_button_link_to('Turnierübersicht drucken', '#print_tournaments_modal', {toggle: 'modal'}, 'Admin', 'Print')
   .btn-group
     .btn
-      = link_to 'Turnier absagen', '#cancel_tournament_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Admin', 'Cancel']);"
+      = ga_button_link_to('Turnier absagen', '#cancel_tournament_modal', {toggle: 'modal'}, 'Admin', 'Cancel')
   .btn-group
     .btn
       = link_to 'Jemand anders meldet', '#change_owner_modal', role: 'button', data: {toggle: 'modal'}
