@@ -1,0 +1,17 @@
+#cancel_tournament_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Turnier absagen
+  .modal-body.row-fluid.btn-group
+    .well.span11
+      = form_tag(tournament_cancel_path(activeClub), :html => {:class => "form-horizontal"}) do
+        .control-group
+          = label :number, "Turniernummer", :class =>"control-label"
+          .controls
+            = number_field_tag :number
+
+        .form-actions
+          = submit_tag "Turnier absagen", class: "btn btn-primary", onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Cancel']);"
+
+  .modal-footer
+    %a.btn{:href => "#"} Schließen

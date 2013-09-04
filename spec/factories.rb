@@ -15,6 +15,12 @@ FactoryGirl.define do
     initialize_with { Club.find_or_create_by_name('Example Club') }
   end
 
+  factory :other_club, class: Club do
+    name 'Second Example Club'
+    user_id 2
+    initialize_with { Club.find_or_create_by_name('Second Example Club') }
+  end
+
   factory :tournament do
     ignore do
       number 28288
@@ -25,7 +31,7 @@ FactoryGirl.define do
   end
 
 
-  factory :d_class_tournament do
+  factory :d_class_tournament, class: Tournament do
     number 27114
     user_id 1
     address 'testaddress'
@@ -33,7 +39,7 @@ FactoryGirl.define do
     enrolled false
   end
 
-  factory :c_class_tournament do
+  factory :c_class_tournament, class: Tournament do
     number 27115
     user_id 1
     address 'testaddress'
@@ -41,7 +47,7 @@ FactoryGirl.define do
     enrolled false
   end
 
-  factory :b_class_tournament do
+  factory :b_class_tournament, class: Tournament do
     number 28044
     user_id 1
     address 'testaddress'
@@ -49,7 +55,7 @@ FactoryGirl.define do
     enrolled false
   end
 
-  factory :future_tournament do
+  factory :future_tournament, class: Tournament do
     number 29239
     progress_id 1
     address 'testaddress'

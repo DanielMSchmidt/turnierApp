@@ -10,6 +10,7 @@ TurnierList::Application.routes.draw do
 
   match "/tournament/:id/enroll" => "tournaments#setAsEnrolled", as: :just_enrolled
   match "/user/:id/tournaments" => "tournaments#ofUser", as: :user_tournaments
+  post "/club/:club_id/cancel/tournament/" => "clubs#cancel", as: :tournament_cancel
 
   post "/club/:club_id/print" => "clubs#printTournaments", as: :print_tournaments
   match "/club/:club_id/transfer/:user_id" => "clubs#transferOwnership", as: :transferOwnership_to

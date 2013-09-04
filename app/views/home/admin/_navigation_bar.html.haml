@@ -1,0 +1,19 @@
+.btn-toolbar
+  .btn-group
+    .btn
+      = ga_button_link_to('Turnierübersicht drucken', '#print_tournaments_modal', {toggle: 'modal'}, 'Admin', 'Print')
+  .btn-group
+    .btn
+      = ga_button_link_to('Turnier absagen', '#cancel_tournament_modal', {toggle: 'modal'}, 'Admin', 'Cancel')
+  .btn-group
+    .btn
+      = link_to 'Jemand anders meldet', '#change_owner_modal', role: 'button', data: {toggle: 'modal'}
+  .btn-group
+    .btn
+      = link_to 'Verein umbenennen', edit_club_path(@active_club)
+  .btn-group
+    .btn
+      = link_to 'Verein löschen', @active_club, :method => :delete, :confirm => "Bist du dir sicher?"
+  .btn-group
+    .btn
+      = link_to 'Zurück', root_path

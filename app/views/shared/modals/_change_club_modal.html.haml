@@ -30,9 +30,24 @@
     %ul
       - clubs.reject{|club| club.isUnverifiedUser(current_user) }.each do |club|
         %li
-          = link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id)
+          = link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id, trainer: false)
 
   .modal-footer
     = ga_button_link_to('Neuen Verein erstellen', new_club_path, {toggle: 'modal', dismiss: 'modal'}, 'Club', 'Added', 'btn btn-primary')
+    = ga_button_link_to('Werde Trainer', '#add_club_as_trainer_modal', {toggle: 'modal', dismiss: 'modal'}, 'Club', 'BeTrainer', 'btn btn-primary')
+    %a.btn{:href => "#"} Schließen
 
+#add_club_as_trainer_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Ich bin Trainer dieses Vereins
+  .modal-body
+    %ul
+      - clubs.reject{|club| club.isUnverifiedUser(current_user) }.each do |club|
+        %li
+          = link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id, :trainer => true)
+
+  .modal-footer
+    = ga_button_link_to('Neuen Verein erstellen', new_club_path, {toggle: 'modal', dismiss: 'modal'}, 'Club', 'Added', 'btn btn-primary')
+    = ga_button_link_to('Ich bin kein Trainer', '#add_club_modal', {toggle: 'modal', dismiss: 'modal'}, 'Club', 'DontBeTrainer', 'btn btn-primary')
     %a.btn{:href => "#"} Schließen

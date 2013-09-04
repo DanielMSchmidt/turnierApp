@@ -20,4 +20,11 @@ class NotificationMailer < ActionMailer::Base
 
     mail to: club_owners_mailaddresses, subject: "#{@username} hat ein Turnier geloescht für das es schon gemeldet war"
   end
+
+  def cancelTournament(user, number)
+    @username = user.name
+    @number = number
+
+    mail to: user.email, subject: "Das Turnier mit der Nummer #{number} wurde abgesagt"
+  end
 end
