@@ -13,4 +13,8 @@ module ApplicationHelper
     end
   end
 
+  def ga_button_link_to(html, link, data, domain, action, classes="")
+    ga_event = "_gaq.push(['_trackEvent', '#{domain}', '#{action}']);"
+    link_to html, link, role: 'button', data: data, onClick: ga_event, :class => classes
+  end
 end

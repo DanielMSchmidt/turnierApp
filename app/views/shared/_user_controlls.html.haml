@@ -1,22 +1,21 @@
 .btn-toolbar
-  - unless Club.owned_by(current_user.id).empty?
+  - unless Club.ownedBy(current_user.id).empty?
     .btn-group
       .btn
         = link_to 'Verwaltung', admin_dashboard_path
 
   .btn-group
     .btn
-      = link_to 'neues Turnier', '#add_tournament_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Add']);"
+      = ga_button_link_to('neues Turnier', '#add_tournament_modal', {toggle: 'modal'}, 'Tournaments', 'Add')
 
   .btn-group
     .btn
-      = link_to 'Punkte | Platzierungen | Klasse ändern', '#change_progress_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Progress', 'Change']);"
+      = ga_button_link_to('Punkte | Platzierungen | Klasse ändern', '#change_progress_modal', {toggle: 'modal'}, 'Progress', 'Change')
 
   .btn-group
     .btn
-      = link_to 'Tanzpartner wechseln', '#change_partner_modal', role: 'button', data: {toggle: 'modal'}, onClick: "_gaq.push(['_trackEvent', 'Couple', 'Change']);"
+      = ga_button_link_to('Tanzpartner wechseln', '#change_partner_modal', {toggle: 'modal'}, 'Couple', 'Change')
 
   .btn-group
     .btn
-      = link_to 'Turniere bearbeiten | anschauen', user_tournaments_path(current_user), onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Show/Edit']);"
-
+      = ga_button_link_to('Turniere bearbeiten | anschauen', user_tournaments_path(current_user), {toggle: 'modal'}, 'Tournaments', 'Show/Edit')

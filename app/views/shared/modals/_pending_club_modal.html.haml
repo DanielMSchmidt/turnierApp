@@ -4,7 +4,7 @@
     %h3 Ausstehende Anmeldungen
   .modal-body
     %ul
-      - clubs.select{|club| club.is_unverified_user(current_user) }.each do |club|
+      - clubs.select{|club| club.isUnverifiedUser(current_user) }.each do |club|
         %li
           = club.name
 

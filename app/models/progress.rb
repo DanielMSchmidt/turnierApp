@@ -5,7 +5,7 @@ class Progress < ActiveRecord::Base
   scope :latin, lambda { where(kind: 'latin') }
   scope :standard, lambda { where(kind: 'standard') }
 
-  before_save :set_initial_values
+  before_save :setInitialValues
 
   belongs_to :couple
   has_many :tournaments
@@ -15,7 +15,7 @@ class Progress < ActiveRecord::Base
 
   #initialisation
 
-  def set_initial_values
+  def setInitialValues
     self.finished = false if self.finished.nil?
     self.start_class = 'D' if start_class.nil? || start_class == ''
     self.start_placings ||= 0
@@ -76,7 +76,7 @@ class Progress < ActiveRecord::Base
   end
 
   # Finders
-  def danced_tournaments
+  def dancedTournaments
     self.tournaments.reject{|tournament| tournament.upcoming?}
   end
 
@@ -89,24 +89,24 @@ class Progress < ActiveRecord::Base
     self.start_placings + (self.tournaments.collect{|tournament| tournament.placing}.inject(:+) || 0)
   end
 
-  def points_at_time(time)
-    get_tournaments_before(time).collect{|tournament| tournament.points}.inject(:+) || 0
+  def pointsAtTime(time)
+    getTournamentsBefore(time).collect{|tournament| tournament.points}.inject(:+) || 0
   end
 
-  def placings_at_time(time)
-    get_tournaments_before(time).collect{|tournament| tournament.placing}.inject(:+) || 0
+  def placingsAtTime(time)
+    getTournamentsBefore(time).collect{|tournament| tournament.placing}.inject(:+) || 0
   end
 
-  def get_tournaments_before(time)
+  def getTournamentsBefore(time)
     self.tournaments.select{|tournament| tournament.date <= time}
   end
 
-  def points_in_percentage
+  def pointsInPercentage
     percentage = (self.points * 100) / maxPointsOfClass.to_f
     (percentage > 100) ? 100 : percentage.round(2)
   end
 
-  def placings_in_percentage
+  def placingsInPercentage
     percentage = (self.placings * 100) / maxPlacingsOfClass.to_f
     (percentage > 100) ? 100 : percentage.round(2)
   end

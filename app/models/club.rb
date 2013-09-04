@@ -8,7 +8,7 @@ class Club < ActiveRecord::Base
   default_scope order: 'name ASC'
 
 
-  def self.owned_by(current_user_id)
+  def self.ownedBy(current_user_id)
     Club.where(user_id: current_user_id)
   end
 
@@ -24,7 +24,7 @@ class Club < ActiveRecord::Base
     end
   end
 
-  def transfer_to(new_user)
+  def transferTo(new_user)
     self.user_id = new_user.id
     self.save!
   end
@@ -34,20 +34,20 @@ class Club < ActiveRecord::Base
     self.couples.collect{|couple| couple.tournaments}.flatten
   end
 
-  def mail_owner_unenrolled_tournaments
+  def mailOwnerOfUnenrolledTournaments
     logger.debug "Moved mail owner unenrolled tournaments to Worker for #{self.name}"
-    if (self.unenrolled_and_enrollable_tournaments_left_which_should_be_notified)
+    if (self.unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified)
       NotificationMailer.enrollCouples(self.owner, self).deliver
-      self.tournaments.each{|x| x.notification_send}
+      self.tournaments.each{|x| x.notificationSend}
       logger.debug "send weekly mail to #{self.name} at mail #{self.owner.email}"
     else
       logger.debug "did not send weekly mail to #{self.name}"
     end
   end
 
-  def unenrolled_and_enrollable_tournaments_left_which_should_be_notified
+  def unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified
     return false if self.tournaments.nil?
-    self.tournaments.collect{|x| x.should_send_a_notification_mail?}.include?(true)
+    self.tournaments.collect{|x| x.shouldSendANotificationMail?}.include?(true)
   end
 
   # Verified couples & users
@@ -60,20 +60,20 @@ class Club < ActiveRecord::Base
     self.memberships.is_unverified.includes(:couple).collect{|m| m.couple}.select{|c| c.active == active}.uniq
   end
 
-  def verified_users
+  def verifiedUsers
     self.verifiedCouples.collect{|u| u.users}.flatten
   end
 
-  def unverified_users
+  def unverifiedUsers
     self.unverifiedCouples.collect{|u| u.users}.flatten
   end
 
-  def is_verified_user(user)
-    self.verified_users.include?(user)
+  def isVerifiedUser(user)
+    self.verifiedUsers.include?(user)
   end
 
-  def is_unverified_user(user)
-    self.unverified_users.include?(user)
+  def isUnverifiedUser(user)
+    self.unverifiedUsers.include?(user)
   end
 
   def to_s

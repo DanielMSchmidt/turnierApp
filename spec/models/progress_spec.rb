@@ -162,59 +162,59 @@ describe Progress do
       end
     end
 
-    describe "#points_in_percentage" do
+    describe "#pointsInPercentage" do
       it "should calculate 20% for 20 points in D class" do
         progress.stub(:start_class).and_return('D')
         progress.stub(:points).and_return(20)
-        progress.points_in_percentage.should eq(20)
+        progress.pointsInPercentage.should eq(20)
       end
 
       it "should calculate 20% for 30 points in C class" do
         progress.stub(:start_class).and_return('C')
         progress.stub(:points).and_return(30)
-        progress.points_in_percentage.should eq(20)
+        progress.pointsInPercentage.should eq(20)
       end
 
       it "should calculate 14% for 21 points in C class" do
         progress.stub(:start_class).and_return('C')
         progress.stub(:points).and_return(21)
-        progress.points_in_percentage.should eq(14)
+        progress.pointsInPercentage.should eq(14)
       end
 
       it "should calculate 100% for 121 points in C class" do
         progress.stub(:start_class).and_return('C')
         progress.stub(:points).and_return(171)
-        progress.points_in_percentage.should eq(100)
+        progress.pointsInPercentage.should eq(100)
       end
     end
 
-    describe "#placings_in_percentage" do
+    describe "#placingsInPercentage" do
       it "should calculate 42,85% for 3 placings in B class" do
         progress.stub(:start_class).and_return('B')
         progress.stub(:placings).and_return(3)
-        progress.placings_in_percentage.should eq(42.86)
+        progress.placingsInPercentage.should eq(42.86)
       end
 
       it "should calculate 30% for 3 placings in A class" do
         progress.stub(:start_class).and_return('A')
         progress.stub(:placings).and_return(3)
-        progress.placings_in_percentage.should eq(30)
+        progress.placingsInPercentage.should eq(30)
       end
 
       it "should calculate 50% for 5 placings in A class" do
         progress.stub(:start_class).and_return('A')
         progress.stub(:placings).and_return(5)
-        progress.placings_in_percentage.should eq(50)
+        progress.placingsInPercentage.should eq(50)
       end
 
       it "should calculate 100% for 12 placings in A class" do
         progress.stub(:start_class).and_return('A')
         progress.stub(:placings).and_return(12)
-        progress.placings_in_percentage.should eq(100)
+        progress.placingsInPercentage.should eq(100)
       end
     end
 
-    describe "#points_at_time" do
+    describe "#pointsAtTime" do
       before(:each) do
         @date = DateTime.now
         @tm1 = double("tournament1", date: @date, points: 4)
@@ -227,21 +227,21 @@ describe Progress do
         @tm1.should_receive(:points)
         @tm2.should_receive(:points)
 
-        progress.points_at_time(@date)
+        progress.pointsAtTime(@date)
       end
 
       it "should be all tournaments excluded after this point of time" do
         @tm3.should_not_receive(:points)
 
-        progress.points_at_time(@date)
+        progress.pointsAtTime(@date)
       end
 
       it "should add all points until this point of time" do
-        progress.points_at_time(@date).should eq(9)
+        progress.pointsAtTime(@date).should eq(9)
       end
     end
 
-    describe "#placings_at_time" do
+    describe "#placingsAtTime" do
       before(:each) do
         @date = DateTime.now
         @tm1 = double("tournament1", date: @date, placing: 1)
@@ -254,17 +254,17 @@ describe Progress do
         @tm1.should_receive(:placing)
         @tm2.should_receive(:placing)
 
-        progress.placings_at_time(@date)
+        progress.placingsAtTime(@date)
       end
 
       it "should be all tournaments excluded after this point of time" do
         @tm3.should_not_receive(:placing)
 
-        progress.placings_at_time(@date)
+        progress.placingsAtTime(@date)
       end
 
       it "should add all placings until this point of time" do
-        progress.placings_at_time(@date).should eq(1)
+        progress.placingsAtTime(@date).should eq(1)
       end
     end
   end

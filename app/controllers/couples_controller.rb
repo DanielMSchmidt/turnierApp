@@ -6,8 +6,8 @@ class CouplesController < ApplicationController
   # POST /couples
   # POST /couples.json
   def create
-    man_id = User.get_id_by_name(params[:couple][:man])
-    woman_id = User.get_id_by_name(params[:couple][:woman])
+    man_id = User.getIdByName(params[:couple][:man])
+    woman_id = User.getIdByName(params[:couple][:woman])
 
     @couple = createNewCouple(man_id, woman_id)
     if @couple.consistsOfCurrentUser(current_user)
@@ -23,8 +23,8 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    man_id = User.get_id_by_name(params[:couple][:man])
-    woman_id = User.get_id_by_name(params[:couple][:woman])
+    man_id = User.getIdByName(params[:couple][:man])
+    woman_id = User.getIdByName(params[:couple][:woman])
 
     @couple = createNewCouple(man_id, woman_id)
     if @couple.consistsOfCurrentUser(current_user)

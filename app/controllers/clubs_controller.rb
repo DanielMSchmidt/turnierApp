@@ -61,9 +61,11 @@ class ClubsController < ApplicationController
     @from = params[:from].to_date
     @to = params[:to].to_date
 
-    all_tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongs_to_club(@club.id)}
+    all_tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongsToClub(@club.id)}
+    @upcoming = (params[:tournament_type] == "upcoming")
 
-    if params[:tournament_type] == "upcoming"
+
+    if @upcoming
       @tournaments = all_tournaments.select{|t| t.upcoming?}
     else
       @tournaments = all_tournaments.reject{|t| t.upcoming?}
@@ -73,10 +75,10 @@ class ClubsController < ApplicationController
            :show_as_html => false
   end
 
-  def transfer_ownership
+  def transferOwnership
     @club = Club.find(params[:club_id])
     new_user = User.find(params[:user_id])
-    @club.transfer_to(new_user)
+    @club.transferTo(new_user)
     logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
     redirect_to root_path, notice: t("club.ownership.transfer")
   end

@@ -8,12 +8,12 @@ TurnierList::Application.routes.draw do
   get "/couple/reset/:kind" => "couples#reset", as: :couple_reset
   match "/couple/change" => "couples#change", as: :change_active_couple
 
-  match "/tournament/:id/enroll" => "tournaments#set_as_enrolled", as: :just_enrolled
-  match "/user/:id/tournaments" => "tournaments#of_user", as: :user_tournaments
+  match "/tournament/:id/enroll" => "tournaments#setAsEnrolled", as: :just_enrolled
+  match "/user/:id/tournaments" => "tournaments#ofUser", as: :user_tournaments
   post "/club/:club_id/cancel/tournament/" => "clubs#cancel", as: :tournament_cancel
 
   post "/club/:club_id/print" => "clubs#printTournaments", as: :print_tournaments
-  match "/club/:club_id/transfer/:user_id" => "clubs#transfer_ownership", as: :transfer_ownership_to
+  match "/club/:club_id/transfer/:user_id" => "clubs#transferOwnership", as: :transferOwnership_to
 
   match "/membership/new/:user_id/:club_id" => "membership#create", as: :add_club
   match "/membership/verify/:couple_id/:club_id" => "membership#verify", as: :verify_couple

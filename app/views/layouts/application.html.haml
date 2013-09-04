@@ -41,6 +41,7 @@
       - if user_signed_in?
         = render "shared/user_modals", own_clubs: @own_clubs, clubs: @clubs
         = render "shared/modals/add_tournament_modal"
+
       - if Rails.env.production?
         :javascript
           var _gaq = _gaq || [];
@@ -54,3 +55,6 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
+      - else
+        :javascript
+          var _gaq = _gaq || [];

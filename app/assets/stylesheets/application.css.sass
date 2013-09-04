@@ -30,7 +30,7 @@ $highlight-green: #76B834
 
 .icons-not_enrolled
   background-repeat: no-repeat
-  height: 18px
+  height: 20px
   width: 18px
 
 .icons-missing_information
@@ -38,39 +38,38 @@ $highlight-green: #76B834
   height: 17px
   width: 18px
 
-body
-  p
-    margin-top: 20px
-    font-size:  125%
-    line-height: 30px
-  .content
-    margin-top: 80px
-    margin-bottom: 80px
+p
+  margin-top: 20px
+  font-size:  125%
+  line-height: 30px
+.content
+  margin-top: 80px
+  margin-bottom: 80px
+a
+  &:hover
+    background-color: transparent
+    background: transparent
+    color: black
+
+.bar-graph
+  float: left
+
+footer
+  background-color: white
+  border-top: solid 1px black
+  padding-right: 30px
+  overflow:hidden
+  padding-top: 20px
+  text-decoration: none
   a
+    float: right
     &:hover
+      text-decoration: none
       background-color: transparent
-      background: transparent
-      color: black
-
-  .bar-graph
+    &:visited
+      color: white
+  form
     float: left
-
-  footer
-    background-color: white
-    border-top: solid 1px black
-    padding-right: 30px
-    overflow:hidden
-    padding-top: 20px
-    text-decoration: none
-    a
-      float: right
-      &:hover
-        text-decoration: none
-        background-color: transparent
-      &:visited
-        color: white
-    form
-      float: left
 
 .hidden
   display: none

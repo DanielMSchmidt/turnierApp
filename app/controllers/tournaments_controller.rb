@@ -12,7 +12,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
-    @tournament = Tournament.new_for_user(params)
+    @tournament = Tournament.newForUser(params)
 
     if @tournament.save
       redirect_to root_path, notice: t('tournament.create.success')
@@ -33,7 +33,7 @@ class TournamentsController < ApplicationController
     end
   end
 
-  def set_as_enrolled
+  def setAsEnrolled
     tournament = Tournament.find(params[:id])
     if tournament.update_column(:enrolled, true)
       logger.debug "Tournament Number #{params[:id]} was set as enrolled."
@@ -55,7 +55,7 @@ class TournamentsController < ApplicationController
     end
   end
 
-  def of_user
+  def ofUser
     @user = User.find(params[:id])
     @tournaments = @user.tournaments
   end
