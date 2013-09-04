@@ -90,8 +90,8 @@ class ClubsController < ApplicationController
     redirect_to root_path, error: t("club.cancel.forbidden") and return unless club.is_owner(current_user)
     redirect_to root_path, error: t("club.cancel.fail") and return if club.tournaments.nil?
 
-    number = params[:number]
-    canceledTournaments = club.tournaments.select{|tournament| tournament.number == number}
+    number = Integer(params[:number])
+    canceledTournaments = club.tournaments.select{|tournament| tournament.number === number}
     users = canceledTournaments.collect{|tournament| tournament.users}.flatten.uniq
 
     # Send a mail to each user
@@ -101,7 +101,7 @@ class ClubsController < ApplicationController
 
     # Delete each tournament
     canceledTournaments.each do |tournament|
-      tournament.delete!
+      tournament.destroy
     end
 
     redirect_to admin_dashboard_path(club_id: club.id), notice: t("club.cancel.success")
