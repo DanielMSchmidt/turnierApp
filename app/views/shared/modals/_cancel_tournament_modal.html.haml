@@ -4,7 +4,7 @@
     %h3 Turnier absagen
   .modal-body.row-fluid.btn-group
     .well.span11
-      = form_tag(tournament_cancel_path(active_club), :html => {:class => "form-horizontal"}) do
+      = form_tag(tournament_cancel_path(activeClub), :html => {:class => "form-horizontal"}) do
         .control-group
           = label :number, "Turniernummer", :class =>"control-label"
           .controls
