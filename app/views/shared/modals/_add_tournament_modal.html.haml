@@ -4,8 +4,10 @@
     %h3 Neues Turnier hinzufügen
   .modal-body.row-fluid.btn-group
     .well.span11
-      = link_to 'zukünftiges Turnier', '#add_future_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn btn-block", onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Future']);"
-      = link_to 'vergangenes Turnier', '#add_past_tournament_modal', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn btn-block", onClick: "_gaq.push(['_trackEvent', 'Tournaments', 'Past']);"
+      = ga_button_link_to('zukünftiges Turnier', '#add_future_tournament_modal', {toggle: 'modal', dismiss: 'modal'}, 'Tournaments', 'Future', 'btn btn-block')
+
+      = ga_button_link_to('vergangenes Turnier', '#add_past_tournament_modal', {toggle: 'modal', dismiss: 'modal'}, 'Tournaments', 'Past', 'btn btn-block')
+
   .modal-footer
     %a.btn{:href => "#"} Schließen
 
