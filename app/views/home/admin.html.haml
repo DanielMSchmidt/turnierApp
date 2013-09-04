@@ -11,7 +11,7 @@
 
     .row-fluid
       .span4
-        = render 'home/admin/requests'
+        = render 'home/admin/requests', club_id: @active_club.id
 
       .span8
         = render 'home/admin/unenrolled_tournaments', unenrolled_tournaments: @unenrolled_tournaments

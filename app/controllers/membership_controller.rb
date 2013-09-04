@@ -2,7 +2,7 @@
 class MembershipController < ApplicationController
 
   def create
-    Membership.create!(couple_id: getCoupleFromUser, club_id: params[:club_id], verified: false)
+    Membership.create!(couple_id: getCoupleFromUser, club_id: params[:club_id], verified: false, trainer: params[:trainer])
     redirect_to root_path, notice: t('membership.create')
   end
 

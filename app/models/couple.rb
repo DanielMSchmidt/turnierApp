@@ -72,6 +72,10 @@ class Couple < ActiveRecord::Base
 
   # Accessors
 
+  def trainer?(club_id)
+    Membership.coupleTrainsClub(club_id, self.id)
+  end
+
   def isComplete?
     self.users.count == 2
   end

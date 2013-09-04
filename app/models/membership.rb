@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Membership < ActiveRecord::Base
-  attr_accessible :club_id, :couple_id, :verified
+  attr_accessible :club_id, :couple_id, :verified, :trainer
 
   belongs_to :couple
   belongs_to :club
@@ -19,6 +19,10 @@ class Membership < ActiveRecord::Base
   def self.verified?(club, couple)
     m = Membership.where(club_id: club, couple_id: couple).first
     !(m.nil? || !m.verified)
+  end
+
+  def self.coupleTrainsClub(club, couple)
+    Membership.where(club_id: club, couple_id: couple, trainer: true).any?
   end
 
   def deleteOtherMembershipsForSameClub
