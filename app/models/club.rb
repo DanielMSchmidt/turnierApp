@@ -12,6 +12,11 @@ class Club < ActiveRecord::Base
     Club.where(user_id: current_user_id)
   end
 
+  def self.trainedBy(current_user_id)
+    coupleId = User.find(current_user_id).activeCouple.id
+    Club.all.select{|c| Membership.coupleTrainsClub(c.id, coupleId)}
+  end
+
   def is_owner(user)
     self.owner ? (self.owner.id == user.id) : false
   end

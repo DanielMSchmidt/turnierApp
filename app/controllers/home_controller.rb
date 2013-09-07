@@ -33,6 +33,12 @@ class HomeController < ApplicationController
 
   def setClubs
     @user_clubs = Club.ownedBy(current_user)
+    if @user_clubs.nil?
+      @user_clubs = Club.trainedBy(current_user)
+      @trainer = true
+    else
+      @trainer = false
+    end
     if params[:club_id].nil?
       @active_club = @user_clubs.first
       redirect_to admin_dashboard_path(club_id: @active_club.id)

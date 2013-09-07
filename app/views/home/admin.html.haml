@@ -7,14 +7,15 @@
   .span12
     %h2="Dashboard von #{@active_club.name}"
     .row-fluid
-      = render 'home/admin/navigation_bar'
+      = render 'home/admin/navigation_bar', trainer: @trainer
 
-    .row-fluid
-      .span4
-        = render 'home/admin/requests', club_id: @active_club.id
+    - unless @trainer
+      .row-fluid
+        .span4
+          = render 'home/admin/requests', club_id: @active_club.id
 
-      .span8
-        = render 'home/admin/unenrolled_tournaments', unenrolled_tournaments: @unenrolled_tournaments
+        .span8
+          = render 'home/admin/unenrolled_tournaments', unenrolled_tournaments: @unenrolled_tournaments
 
     = render 'home/admin/couples_master_detail', verified_couples: @verified_couples
 
