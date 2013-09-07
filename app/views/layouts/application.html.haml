@@ -13,13 +13,12 @@
     %link{:href => "/favicon.ico", :rel => "shortcut icon"}
     %link{:href => "#{asset_path('apple-touch-icon.png')}", :rel => "apple-touch-icon"}
 
-    %link{:href => "http://cdn.oesmith.co.uk/morris-0.4.1.min.css", :rel => "stylesheet"}
     %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet"}/
     %link{:href => "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", :rel => "stylesheet"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
 
     = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag "application"
+    = javascript_include_tag :modernizr
     = csrf_meta_tags
 
   %body
@@ -31,6 +30,7 @@
           = yield
 
     .assets
+      = javascript_include_tag "application"
       = render "shared/notification"
 
       :javascript
