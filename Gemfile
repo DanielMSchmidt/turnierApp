@@ -12,9 +12,7 @@ gem 'simple_form'
 gem 'devise'
 gem 'will_paginate', '~> 3.0'
 gem 'bootstrap-sass'
-gem 'jquery-turbolinks'
 gem 'bootstrap-datepicker-rails'
-gem 'turbolinks'
 
 #Data fetching
 gem 'mechanize'
