@@ -1,0 +1,35 @@
+:coffeescript
+  document.addEventListener( "DOMContentLoaded", () ->
+    paths = #{paths}
+    calls = for path in paths
+      $.ajax(
+        url: path
+        success: (data) =>
+          page = $(data).find("[data-effeckt-page]")
+          page.insertAfter($("[data-effeckt-page]").last())
+
+        error: (data) ->
+          console.log("Failed to load content, result was:")
+          console.log(data)
+      )
+
+    exchangeLinks = (callback, path) ->
+      callback.done((data) ->
+        pageName = $(data).find("[data-effeckt-page]").attr("data-effeckt-page")
+        links = $("a[href='" + path+ "']")
+
+        console.log("PageName: " + pageName)
+
+        for link in links
+          $(link).attr("data-effeckt-transition-in", "scale-up-from-behind")
+          $(link).attr("data-effeckt-transition-out", "scale-up-to-front")
+          $(link).attr("data-effeckt-needs-perspective", "true")
+          $(link).attr("data-effeckt-transition-page", pageName)
+          $(link).addClass("effeckt-page-transition-button")
+          link.href = ""
+
+        window.TA.PageTransitions.init()
+      )
+
+    exchangeLinks(calls[i], paths[i]) for i in [0,1]
+  )

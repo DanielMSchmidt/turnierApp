@@ -1,24 +1,25 @@
-.row-fluid
-  .span11
-    %h1
-      Alle Turniere von
-      %br
-      = @user.activeCouple.to_s
-  .span1
-    =link_to 'Zurück', root_path, :class => "btn"
+%div{data: {effeckt: {page: "tournaments"}}}
+  .row-fluid
+    .span11
+      %h1
+        Alle Turniere von
+        %br
+        = @user.activeCouple.to_s
+    .span1
+      =link_to 'Zurück', root_path, :class => "btn"
 
-%br/
-%table.tournament-list.table.table-striped
-  %tr
-    %th Paar
-    %th Datum
-    %th Zeit
-    %th Art
-    %th Platz
-    %th Adresse
-    %th Turniernr.
-    %th Status
-    %th
-    %th
-    %th
-  = render @tournaments, admin: false
+  %br/
+  %table.tournament-list.table.table-striped
+    %tr
+      %th Paar
+      %th Datum
+      %th Zeit
+      %th Art
+      %th Platz
+      %th Adresse
+      %th Turniernr.
+      %th Status
+      %th
+      %th
+      %th
+    = render @tournaments, admin: false

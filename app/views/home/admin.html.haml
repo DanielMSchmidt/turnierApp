@@ -1,23 +1,24 @@
-.row-fluid
-  %ul.nav.nav-tabs.span12.tabwiseNavigation
-    - @user_clubs.each do |club|
-      %li{:id => "club-#{club.id}"}
-        = link_to club.name, admin_dashboard_path(club_id: club.id)
+%div{data: {effeckt: {page: "admin"}}}
+  .row-fluid
+    %ul.nav.nav-tabs.span12.tabwiseNavigation
+      - @user_clubs.each do |club|
+        %li{:id => "club-#{club.id}"}
+          = link_to club.name, admin_dashboard_path(club_id: club.id)
 
-  .span12
-    %h2="Dashboard von #{@active_club.name}"
-    .row-fluid
-      = render 'home/admin/navigation_bar', trainer: @trainer
-
-    - unless @trainer
+    .span12
+      %h2="Dashboard von #{@active_club.name}"
       .row-fluid
-        .span4
-          = render 'home/admin/requests', club_id: @active_club.id
+        = render 'home/admin/navigation_bar', trainer: @trainer
 
-        .span8
-          = render 'home/admin/unenrolled_tournaments', unenrolled_tournaments: @unenrolled_tournaments
+      - unless @trainer
+        .row-fluid
+          .span4
+            = render 'home/admin/requests', club_id: @active_club.id
 
-    = render 'home/admin/couples_master_detail', verified_couples: @verified_couples
+          .span8
+            = render 'home/admin/unenrolled_tournaments', unenrolled_tournaments: @unenrolled_tournaments
 
-%input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
-= render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club
+      = render 'home/admin/couples_master_detail', verified_couples: @verified_couples
+
+  %input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
+  = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club
