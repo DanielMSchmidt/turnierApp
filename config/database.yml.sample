@@ -21,10 +21,10 @@ test: &test
 production:
   adapter: mysql2
   encoding: utf8
-  database: dschmidt_1
+  database: XXX
   pool: 5
-  username: ENV["DB_USER"]
-  password: ENV["DB_PWD"]
+  username: XXX
+  password: XXX
 
 cucumber:
   <<: *test

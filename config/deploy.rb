@@ -1,7 +1,6 @@
 require "rvm/capistrano"
 require 'bundler/capistrano'
 
-set :application, "turnierapp"
 
 set :deploy_to, "/home/www/dschmidt/turnierapp"
 set :deploy_via, :remote_cache
@@ -15,6 +14,7 @@ set :scm, :git
 set :ssh_options, {:forward_agent => true}
 set :branch, "master"
 set :rails_env, "production"
+set :application, "dschmidt-turnierapp"
 
 set :user, "dschmidt"
 set :use_sudo, false
@@ -25,14 +25,14 @@ role :db, "hosting.bnck.de", :primary => true         # This is where Rails migr
 
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "sudo supervisorctl start #{application}:*"
+    run "sudo supervisorctl start #{application}"
   end
   task :stop, :roles => :app, :except => { :no_release => true } do
-    run "sudo supervisorctl stop #{application}:*"
+    run "sudo supervisorctl stop #{application}"
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "sudo supervisorctl restart #{application}:*"
-  end
+    run "sudo supervisorctl restart #{application}"
+  endt
 
   task :copy_database_yml do
     run "cp #{shared_path}/database.yml #{release_path}/config/database.yml"
@@ -45,14 +45,3 @@ namespace :deploy do
 end
 
 before "deploy:assets:precompile", "deploy:copy_database_yml"
-before "foreman:export", "deploy:copy_env"
-
-namespace :foreman do
-  desc "Export the Procfile to supervisord scripts"
-  task :export, :roles => :app do
-    run [
-      "cd #{current_path}",
-      "bundle exec foreman export supervisord #{shared_path} -a #{application} -u #{user} -l #{shared_path}/log  -f #{current_path}/Procfile -c app=1",
-    ].join(' && ')
-  end
-end
