@@ -47,7 +47,6 @@ module TurnierList
     config.active_support.escape_html_entities_in_json = true
 
     # Cache Store
-    # TODO: Make port of redis changeable
     config.cache_store = :redis_store, "redis://localhost:6379/3/cache"
 
     # Enforce whitelist mode for mass assignment.
