@@ -32,7 +32,7 @@ namespace :deploy do
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "sudo supervisorctl restart #{application}"
-  endt
+  end
 
   task :copy_database_yml do
     run "cp #{shared_path}/database.yml #{release_path}/config/database.yml"
