@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails'
 
-
 gem 'puma' #faster webserver
 gem 'foreman'
 gem 'haml'
