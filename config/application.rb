@@ -48,7 +48,7 @@ module TurnierList
 
     # Cache Store
     # TODO: Make port of redis changeable
-    config.cache_store = :redis_store, "redis://localhost:6379/0/cache"
+    config.cache_store = :redis_store, "redis://localhost:6379/3/cache"
 
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
