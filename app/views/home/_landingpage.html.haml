@@ -40,10 +40,11 @@
             %h4 E-Mail benachrichtigungen
             %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus etiam sem...
 
-:javascript
-  jQuery(document).ready(function() {
-      // Init Parallax Slider
-      $(function() {
-        $('#da-slider').cslider();
-      });
-  });
+- content_for :assets do
+  :javascript
+    jQuery(document).ready(function() {
+        // Init Parallax Slider
+        $(function() {
+          $('#da-slider').cslider();
+        });
+    });
