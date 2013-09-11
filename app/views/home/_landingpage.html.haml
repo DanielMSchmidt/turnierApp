@@ -1,13 +1,24 @@
 = render "slider"
+- launched = false
 .row-fluid.purchase.margin-bottom-30
   .container
     .span12
       %h1 TurnierApp | Deine Turniere auf einem Blick
     .span9
       %p
-        %b
-          Coming Soon...
-- if false
+        - unless launched
+          %b
+            Coming Soon...
+        - else
+          Niemand weiß, dass du letzte Woche ein Turnier getanzt hast?
+          %br
+          Du bist dir jedes mal unsicher, ob du für dein Turnier gemeldet wurdest?
+          %br
+          Du möchtest wissen wie sich die Leistungen deiner Paare entwickeln?
+          %br
+          %br
+          Dann braucht dein Verein die TurnierApp.
+- if launched
   .content-boxes
     .row-fluid
       .span4
