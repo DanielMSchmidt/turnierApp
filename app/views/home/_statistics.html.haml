@@ -1,17 +1,24 @@
-#progress-over-time{style: "height: 250px"}
+- progressOverTimeData = getProgressOverTimeData(active_couple)
+
+- unless progressOverTimeData.empty?
+  #progress-over-time{style: "height: 250px"}
+- else
+  %img#line-placeholder{src: "http://www.placehold.it/500x250&text=Tanze+Turniere+für+einen+Verlauf"}
+
 #latin-standard-balance-tournaments.bar-graph{style: "height: 250px; width: 33%;"}
 #latin-standard-balance-points.bar-graph{style: "height: 250px; width: 33%;"}
 #latin-standard-balance-placings.bar-graph{style: "height: 250px; width: 33%;"}
 
 
-- progressOverTimeData = getProgressOverTimeData(active_couple)
-- unless progressOverTimeData.empty?
-  %script
-    = printGraph('line', 'progress-over-time', progressOverTimeData, {latin_po: "Punkte in Latein", latin_pl: "Platzierungen in Latein", standard_po: "Punkte in Standard", standard_pl: "Platzierungen in Standard"} )
-- else
-  %img#line-placeholder{src: "http://www.placehold.it/500x250&text=Tanze+Turniere+für+einen+Verlauf", style: "margin-top: -768px;"}
 
-%script
-  = printGraph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
-  = printGraph('bar', 'latin-standard-balance-placings', getPlacingsData(active_couple), {l: "Latein", s: "Standard"} )
-  = printGraph('bar', 'latin-standard-balance-points', getPointsData(active_couple), {l: "Latein", s: "Standard"} )
+
+- content_for :assets do
+  - unless progressOverTimeData.empty?
+    %script
+      = printGraph('line', 'progress-over-time', progressOverTimeData, {latin_po: "Punkte in Latein", latin_pl: "Platzierungen in Latein", standard_po: "Punkte in Standard", standard_pl: "Platzierungen in Standard"} )
+
+
+  %script
+    = printGraph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
+    = printGraph('bar', 'latin-standard-balance-placings', getPlacingsData(active_couple), {l: "Latein", s: "Standard"} )
+    = printGraph('bar', 'latin-standard-balance-points', getPointsData(active_couple), {l: "Latein", s: "Standard"} )

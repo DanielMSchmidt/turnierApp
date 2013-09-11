@@ -1,4 +1,4 @@
 - if user_signed_in?
-  = render "dashboard", has_couple: @has_couple, has_a_club: @has_a_club, has_missing_data: @has_missing_data
+  = render "dashboard", has_couple: @has_couple, has_a_club: @has_a_club, has_missing_data: @has_missing_data, paths: @paths
 - else
   = render "landingpage"

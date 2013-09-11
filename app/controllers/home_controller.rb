@@ -1,7 +1,11 @@
 # -*- encoding : utf-8 -*-
 class HomeController < ApplicationController
   def index
-    checkIfUserIsReadyToStart(current_user) if user_signed_in?
+    if user_signed_in?
+      checkIfUserIsReadyToStart(current_user)
+      @paths = [user_tournaments_path(current_user)]
+      @paths << admin_dashboard_path if Club.ownedBy(current_user).any?
+    end
   end
 
   def admin
