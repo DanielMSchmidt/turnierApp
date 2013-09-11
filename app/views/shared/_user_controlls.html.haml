@@ -6,8 +6,11 @@
 
   .btn-group
     .btn
-      = ga_button_link_to('neues Turnier', '#add_tournament_modal', {toggle: 'modal'}, 'Tournaments', 'Add')
-
+      - if has_couple
+        = ga_button_link_to('neues Turnier', '#add_tournament_modal', {toggle: 'modal'}, 'Tournaments', 'Add')
+      - else
+        %a.disabled{onClick: "alert('Bitte füge erst deinen Tanzpartner hinzu und lade dann die Seite neu!');"}
+          neues Turnier
   .btn-group
     .btn
       = ga_button_link_to('Punkte | Platzierungen | Klasse ändern', '#change_progress_modal', {toggle: 'modal'}, 'Progress', 'Change')

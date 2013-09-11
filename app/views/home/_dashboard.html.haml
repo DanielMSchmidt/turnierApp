@@ -3,7 +3,7 @@
 %div{data: {effeckt: {page: "dashboard"}}}
   %h1 Dashboard
   = render "action_required_alert", has_couple: has_couple, has_a_club: has_a_club, has_missing_data: has_missing_data
-  = render "shared/user_controlls"
+  = render "shared/user_controlls", has_couple: has_couple
   %br
   .row-fluid
     .span6
