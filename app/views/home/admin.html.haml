@@ -21,4 +21,8 @@
       = render 'home/admin/couples_master_detail', verified_couples: @verified_couples
 
   %input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
+
+
+- content_for :assets do
+  = render "shared/eagerloadPages", paths: [admin_dashboard_path, user_tournaments_path(current_user)]
   = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club

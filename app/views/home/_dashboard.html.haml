@@ -11,4 +11,6 @@
     .span6
       = render "statistics", :active_couple => activeCouple
 
-  = render "shared/eagerloadPages", paths: [admin_dashboard_path, user_tournaments_path(current_user)]
+  - content_for :assets do
+    = render "shared/eagerloadPages", paths: [admin_dashboard_path, user_tournaments_path(current_user)]
+

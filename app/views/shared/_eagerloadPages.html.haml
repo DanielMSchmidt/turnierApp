@@ -1,9 +1,12 @@
 :coffeescript
   document.addEventListener( "DOMContentLoaded", () ->
     paths = #{paths}
+    numberOfCalls = 0
     calls = for path in paths
       $.ajax(
         url: path
+        beforeSend: () =>
+          $("[data-effeckt-page]").addClass("active")
         success: (data) =>
           page = $(data).find("[data-effeckt-page]")
           page.insertAfter($("[data-effeckt-page]").last())
@@ -11,6 +14,16 @@
         error: (data) ->
           console.log("Failed to load content, result was:")
           console.log(data)
+        complete: () ->
+          $("[data-effeckt-page]:not(.active)").addClass("hidden")
+          numberOfCalls++
+          if numberOfCalls == #{paths.length}
+            $("[data-effeckt-transition-page]").click( (e) ->
+              e.preventDefault()
+              navToPage = $(this).data("effecktTransitionPage")
+              $("[data-effeckt-page].active").addClass("hidden").removeClass("active")
+              $("[data-effeckt-page='" + navToPage + "']").addClass("active").removeClass("hidden")
+            )
       )
 
     exchangeLinks = (callback, path) ->
@@ -21,15 +34,8 @@
         console.log("PageName: " + pageName)
 
         for link in links
-          $(link).attr("data-effeckt-transition-in", "scale-up-from-behind")
-          $(link).attr("data-effeckt-transition-out", "scale-up-to-front")
-          $(link).attr("data-effeckt-needs-perspective", "true")
           $(link).attr("data-effeckt-transition-page", pageName)
-          $(link).addClass("effeckt-page-transition-button")
           link.href = ""
-
-        window.TA.PageTransitions.init()
       )
-
-    exchangeLinks(calls[i], paths[i]) for i in [0,1]
+    exchangeLinks(calls[i], paths[i]) for i in #{(0..paths.length).to_a}
   )
