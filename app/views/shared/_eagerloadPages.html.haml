@@ -2,11 +2,13 @@
   document.addEventListener( "DOMContentLoaded", () ->
     paths = #{paths}
     numberOfCalls = 0
+    activeClass = "page-active"
+    inactiveClass = "page-hidden"
     calls = for path in paths
       $.ajax(
         url: path
         beforeSend: () =>
-          $("[data-effeckt-page]").addClass("active")
+          $("[data-effeckt-page]").addClass(activeClass)
         success: (data) =>
           page = $(data).find("[data-effeckt-page]")
           page.insertAfter($("[data-effeckt-page]").last())
@@ -15,14 +17,14 @@
           console.log("Failed to load content, result was:")
           console.log(data)
         complete: () ->
-          $("[data-effeckt-page]:not(.active)").addClass("hidden")
+          $("[data-effeckt-page]:not(." + activeClass + ")").addClass(inactiveClass)
           numberOfCalls++
           if numberOfCalls == #{paths.length}
             $("[data-effeckt-transition-page]").click( (e) ->
               e.preventDefault()
               navToPage = $(this).data("effecktTransitionPage")
-              $("[data-effeckt-page].active").addClass("hidden").removeClass("active")
-              $("[data-effeckt-page='" + navToPage + "']").addClass("active").removeClass("hidden")
+              $("[data-effeckt-page]." + activeClass).addClass(inactiveClass).removeClass(activeClass)
+              $("[data-effeckt-page='" + navToPage + "']").addClass(activeClass).removeClass(inactiveClass)
             )
       )
 

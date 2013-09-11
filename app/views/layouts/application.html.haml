@@ -3,7 +3,7 @@
 /[if IE 8] <html lang="en" class="ie8">
 /[if IE 9] <html lang="en" class="ie9">
 / [if !IE]><!
-%html{:lang => "en"}
+%html.full-height{:lang => "en"}
   / <![endif]
   %head
     %title TurnierApp | Organisiere deine Turniere
@@ -21,12 +21,12 @@
     = javascript_include_tag :modernizr
     = csrf_meta_tags
 
-  %body
+  %body.full-height
     = render 'shared/navigation'
 
-    .content
-      .row-fluid
-        .offset1.span10
+    .content.full-height
+      .row-fluid.full-height
+        #page-container.offset1.span10.full-height
           = yield
 
     .assets
