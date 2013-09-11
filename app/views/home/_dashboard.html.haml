@@ -12,5 +12,5 @@
       = render "statistics", :active_couple => activeCouple
 
   - content_for :assets do
-    = render "shared/eagerloadPages", paths: [admin_dashboard_path, user_tournaments_path(current_user)]
+    = render "shared/eagerloadPages", paths: paths
 
