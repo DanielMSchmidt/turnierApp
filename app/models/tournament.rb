@@ -6,21 +6,21 @@ class Tournament < ActiveRecord::Base
   belongs_to :progress
 
   validates :number, presence: true, numericality: true
-  validate :no_double_tournaments_are_allowed, on: :create
+  validate :noDoubleTournamentsAreAllowed, on: :create
 
-  before_destroy :send_mail_if_enrolled_tournament_is_deleted
+  before_destroy :sendMailIfEnrolledTournamentIsDeleted
 
-  def self.new_for_user(params)
+  def self.newForUser(params)
     tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
     tournament = Tournament.new(tournament_fetcher.get_tournament_data)
-    tournament.assign_to_user(params[:tournament][:user_id])
+    tournament.assignToUser(params[:tournament][:user_id])
     tournament.participants = params[:tournament][:participants]
     tournament.place        = params[:tournament][:place]
-    tournament.fillup_missing_data
+    tournament.fillupMissingData
     tournament
   end
 
-  def no_double_tournaments_are_allowed
+  def noDoubleTournamentsAreAllowed
     Tournament.where(number: number, progress_id: progress_id).size == 0
     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
   end
@@ -37,7 +37,7 @@ class Tournament < ActiveRecord::Base
     [self.couple.man, self.couple.woman]
   end
 
-  def assign_to_user(user_id)
+  def assignToUser(user_id)
     user = User.find(user_id)
 
     if self.latin?
@@ -49,7 +49,7 @@ class Tournament < ActiveRecord::Base
     self.progress_id = id
   end
 
-  def belongs_to_club(id)
+  def belongsToClub(id)
     self.progress.couple.clubs.map{|c| c.id}.include?(id)
   end
 
@@ -57,12 +57,12 @@ class Tournament < ActiveRecord::Base
     return (self.participants.nil? || self.participants == 0)  && (self.place.nil? || self.place == 0)
   end
 
-  def get_date
+  def getDate
     self.date.to_datetime
   end
 
   #TODO: Refactor to service object
-  def fillup_missing_data
+  def fillupMissingData
     #if particiants or place is given and it's not upcoming, set place or particiants to default value
     #set enrolled to false if it is upcoming
     logger.debug "test if I can fill up any data"
@@ -75,31 +75,31 @@ class Tournament < ActiveRecord::Base
       self.place ||= self.participants
       logger.debug "filled up as #{self.to_s}"
     end
-    self.set_enrollement
+    self.setEnrollement
     self #for chaining
   end
 
-  def set_enrollement
+  def setEnrollement
     self.enrolled = !self.upcoming?
   end
 
   def upcoming?
-    self.get_date.future? && self.incomplete?
+    self.getDate.future? && self.incomplete?
   end
 
-  def behind_time?
+  def behindTime?
     #true if its upcoming and it has been danced jet
     self.incomplete? && !self.upcoming?
   end
 
-  def got_placing?
+  def gotPlacing?
     return false if self.incomplete?
 
-    place_for_placing = 3
-    place_for_placing = 5 if self.start_class == 'C'
-    place_for_placing = 6 if self.start_class == 'D'
+    placeForPlacing = 3
+    placeForPlacing = 5 if self.start_class == 'C'
+    placeForPlacing = 6 if self.start_class == 'D'
 
-    return (self.place <= place_for_placing) && (self.points >= 2)
+    return (self.place <= placeForPlacing) && (self.points >= 2)
   end
 
   def points
@@ -116,7 +116,7 @@ class Tournament < ActiveRecord::Base
     return self.kind[-3..-1] == "LAT"
   end
 
-  def should_send_a_notification_mail?
+  def shouldSendANotificationMail?
     logger.debug "test if a notification mail should be sended about #{self.to_s}"
     return false if self.enrolled? || !(Date.today..(Date.today + 5.weeks)).include?(self.date.to_date)
     if !(((Date.today - 6.days)..Date.today).include?(self.notificated_about.to_date) unless self.notificated_about.nil?)
@@ -125,20 +125,20 @@ class Tournament < ActiveRecord::Base
     end
   end
 
-  def notification_send
+  def notificationSend
     self.notificated_about = Date.today
     self.save
     logger.debug "the notification was send for #{self.to_s} and the time was updated"
   end
 
-  def is_enrolled_and_not_danced?
+  def isEnrolledAndNotDanced?
     self.enrolled? && self.upcoming?
   end
 
-  def send_mail_if_enrolled_tournament_is_deleted
+  def sendMailIfEnrolledTournamentIsDeleted
     # FIXME: NameError at /tournaments/5 undefined local variable or method `tournament' for #<Tournament:0x007fcfd0d0cbe8>
-    logger.debug "send_mail_if_enrolled_tournament_is_deleted for #{self.to_s}"
-    if self.is_enrolled_and_not_danced?
+    logger.debug "sendMailIfEnrolledTournamentIsDeleted for #{self.to_s}"
+    if self.isEnrolledAndNotDanced?
       club_owners_mailaddresses = self.users.first.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
       logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
       NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament).deliver
@@ -147,7 +147,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def placing
-    if self.got_placing?
+    if self.gotPlacing?
       1
     else
       0
@@ -159,7 +159,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def statusClasses
-    if self.behind_time? && self.incomplete?
+    if self.behindTime? && self.incomplete?
       classes = 'icons-missing_information'
     else
       classes ='icons-not_enrolled' unless self.enrolled?

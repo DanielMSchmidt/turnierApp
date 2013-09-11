@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726205516) do
+ActiveRecord::Schema.define(:version => 20130904210325) do
 
   create_table "clubs", :force => true do |t|
     t.string   "name"
@@ -36,9 +36,10 @@ ActiveRecord::Schema.define(:version => 20130726205516) do
   create_table "memberships", :force => true do |t|
     t.integer  "couple_id"
     t.integer  "club_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.boolean  "verified",   :default => true
+    t.boolean  "trainer",    :default => false
   end
 
   add_index "memberships", ["club_id"], :name => "index_memberships_on_club_id"

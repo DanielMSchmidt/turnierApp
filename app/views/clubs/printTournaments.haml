@@ -15,6 +15,8 @@
           %th Datum
           %th Zeit
           %th Art
+          - unless @upcoming
+            %th Ergebnis
           %th Adresse
           %th Turniernr.
         = render @tournaments, pdf: true

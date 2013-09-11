@@ -42,8 +42,8 @@ describe User do
 
   describe "structure" do
     it "shouldnt have more then one active couple per time" do
-      user.get_couples.each{|couple| couple.delete}
-      user.get_couples.count.should eq(0)
+      user.getCouples.each{|couple| couple.delete}
+      user.getCouples.count.should eq(0)
 
       first_couple = Couple.create({man_id: user.id, woman_id: 42, active: true})
 
@@ -51,45 +51,45 @@ describe User do
       #first_couple.should_receive(:deactivate)
 
       second_couple = Couple.new({man_id: user.id, woman_id: 43, active: true})
-      second_couple.should_receive(:deactivate_other_couples)
+      second_couple.should_receive(:deactivateOtherCouples)
       Couple.where(man_id: user.id).count.should eq(1)
 
       second_couple.save
       Couple.where(man_id: user.id).count.should eq(2)
-      user.get_couples.count.should eq(2)
+      user.getCouples.count.should eq(2)
     end
   end
 
   describe "functions" do
     describe "#activeCouple" do
       it "should return nil if no couple is assigned" do
-        user.stub(:get_couples).and_return([])
+        user.stub(:getCouples).and_return([])
         user.activeCouple.should be_nil
       end
 
       it "should return nil if no active couple is assigned" do
         couple = double('couple', active: false)
-        user.stub(:get_couples).and_return([couple])
+        user.stub(:getCouples).and_return([couple])
         user.activeCouple.should be_nil
       end
 
       it "should return a couple if an active couple is assigned" do
         couple = double('couple', active: true)
-        user.stub(:get_couples).and_return([couple])
+        user.stub(:getCouples).and_return([couple])
         user.activeCouple.should eq(couple)
       end
     end
 
-    describe "#get_id_by_name" do
+    describe "#getIdByName" do
       it "should return nil if no user was found" do
         User.stub(:where).and_return([])
-        User.get_id_by_name('test').should be_nil
+        User.getIdByName('test').should be_nil
       end
 
       it "should return the id if a user was found" do
         User.stub(:where).and_return([double('user', id:1)])
-        User.get_id_by_name('test').should_not be_nil
-        User.get_id_by_name('test').should eq(1)
+        User.getIdByName('test').should_not be_nil
+        User.getIdByName('test').should eq(1)
       end
     end
 
@@ -123,11 +123,11 @@ describe User do
       end
     end
 
-    describe "#send_user_notification" do
+    describe "#sendUserNotification" do
       it "should send a mail with the right params" do
         newUser = double('new user')
         NotificationMailer.should_receive(:userCount).with(User.all, newUser).and_return(double('mail', deliver: true))
-        User.send_user_notification(newUser)
+        User.sendUserNotification(newUser)
       end
     end
   end

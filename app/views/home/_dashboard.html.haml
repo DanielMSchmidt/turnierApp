@@ -1,11 +1,16 @@
 - activeCouple = current_user.activeCouple
 
-%h1 Dashboard
-= render "action_required_alert", has_couple: has_couple, has_a_club: has_a_club, has_missing_data: has_missing_data
-= render "shared/user_controlls"
-%br
-.row-fluid
-  .span6
-    = render "progress_panel", :active_couple => activeCouple
-  .span6
-    = render "statistics", :active_couple => activeCouple
+%div{data: {effeckt: {page: "dashboard"}}}
+  %h1 Dashboard
+  = render "action_required_alert", has_couple: has_couple, has_a_club: has_a_club, has_missing_data: has_missing_data
+  = render "shared/user_controlls", has_couple: has_couple
+  %br
+  .row-fluid
+    .span6
+      = render "progress_panel", :active_couple => activeCouple
+    .span6
+      = render "statistics", :active_couple => activeCouple
+
+  - content_for :assets do
+    = render "shared/eagerloadPages", paths: [admin_dashboard_path, user_tournaments_path(current_user)]
+

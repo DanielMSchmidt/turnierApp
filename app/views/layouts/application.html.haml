@@ -3,7 +3,7 @@
 /[if IE 8] <html lang="en" class="ie8">
 /[if IE 9] <html lang="en" class="ie9">
 / [if !IE]><!
-%html{:lang => "en"}
+%html.full-height{:lang => "en"}
   / <![endif]
   %head
     %title TurnierApp | Organisiere deine Turniere
@@ -13,24 +13,25 @@
     %link{:href => "/favicon.ico", :rel => "shortcut icon"}
     %link{:href => "#{asset_path('apple-touch-icon.png')}", :rel => "apple-touch-icon"}
 
-    %link{:href => "http://cdn.oesmith.co.uk/morris-0.4.1.min.css", :rel => "stylesheet"}
     %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet"}/
     %link{:href => "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", :rel => "stylesheet"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
 
     = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag "application"
+    = javascript_include_tag :modernizr
     = csrf_meta_tags
 
-  %body
+  %body.full-height
     = render 'shared/navigation'
 
-    .content
-      .row-fluid
-        .offset1.span10
+    .content.full-height
+      .row-fluid.full-height
+        #page-container.offset1.span10.full-height
           = yield
 
     .assets
+      = javascript_include_tag "application"
+      = yield :assets
       = render "shared/notification"
 
       :javascript
@@ -41,6 +42,7 @@
       - if user_signed_in?
         = render "shared/user_modals", own_clubs: @own_clubs, clubs: @clubs
         = render "shared/modals/add_tournament_modal"
+
       - if Rails.env.production?
         :javascript
           var _gaq = _gaq || [];
@@ -54,3 +56,6 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
+      - else
+        :javascript
+          var _gaq = _gaq || [];

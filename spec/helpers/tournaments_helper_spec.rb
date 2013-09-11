@@ -20,7 +20,7 @@ describe TournamentsHelper, :type => :helper do
 
   describe "#getProgressOverTime" do
     before(:each) do
-      @progress = double("progress", tournaments: [@tournament1, @tournament2], points_at_time: 42, placings_at_time: 23)
+      @progress = double("progress", tournaments: [@tournament1, @tournament2], pointsAtTime: 42, placingsAtTime: 23)
       @result = helper.getProgressOverTime(@progress, @progress)
     end
 
@@ -44,14 +44,14 @@ describe TournamentsHelper, :type => :helper do
 
     it "should filter upcoming tournaments" do
       tournament3 =  double("tournament1", upcoming?: true, date: @time_now + 3.weeks)
-      progress2 = double("progress", tournaments: [@tournament1, @tournament2, tournament3], points_at_time: 42, placings_at_time: 23)
+      progress2 = double("progress", tournaments: [@tournament1, @tournament2, tournament3], pointsAtTime: 42, placingsAtTime: 23)
 
       helper.getProgressOverTime(progress2, progress2).size.should eq(4)
     end
 
     it "should include all tournaments" do
       tournament3 =  double("tournament1", upcoming?: false, date: @time_now - 3.weeks)
-      progress2 = double("progress", tournaments: [tournament3], points_at_time: 42, placings_at_time: 23)
+      progress2 = double("progress", tournaments: [tournament3], pointsAtTime: 42, placingsAtTime: 23)
 
       helper.getProgressOverTime(@progress, progress2).size.should eq(3)
     end
@@ -59,8 +59,8 @@ describe TournamentsHelper, :type => :helper do
 
   describe "#getTournamentsData" do
     before(:each) do
-      latin_progress = double("LAT - progress", danced_tournaments: [@tournament1, @tournament2])
-      standard_progess = double("STD - progress", danced_tournaments: [@tournament1])
+      latin_progress = double("LAT - progress", dancedTournaments: [@tournament1, @tournament2])
+      standard_progess = double("STD - progress", dancedTournaments: [@tournament1])
       couple = double("couple", latin: latin_progress, standard: standard_progess)
       @result = helper.getTournamentsData(couple)
     end

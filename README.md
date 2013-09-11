@@ -24,3 +24,4 @@ Versions
   - v0.6      - improved usabillity and put mailing stuff to sidekiq
   - v0.8      - complete renewal of fundamental parts and UI
   - v0.81     - performance stuff
+  - v0.811    - improved UI and fixed bugs

@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   # Hooks
 
-  def self.send_user_notification(newUser)
+  def self.sendUserNotification(newUser)
     user = User.all
     logger.info "start sending usercount notification about #{user.count} couples"
     NotificationMailer.userCount(user, newUser).deliver
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   def notifyAboutNewUser
     logger.debug "notifying about new user #{self.name}"
-    User.send_user_notification(self.name)
+    User.sendUserNotification(self.name)
   end
 
   def buildEmptyCouple
@@ -38,22 +38,22 @@ class User < ActiveRecord::Base
   end
 
   def clubs
-    self.get_couples.map{|c| c.clubs}.flatten.uniq
+    self.getCouples.map{|c| c.clubs}.flatten.uniq
   end
 
   # access couples
 
-  def get_couples
+  def getCouples
     Couple.includes(:clubs).all.select{|couple| couple.man_id == self.id || couple.woman_id == self.id}.uniq
   end
 
   def activeCouple
-    self.get_couples.select{|couple| couple.active}.first
+    self.getCouples.select{|couple| couple.active}.first
   end
 
   # find users
 
-  def self.get_id_by_name(name)
+  def self.getIdByName(name)
     unless isntSet(name)
       user = User.where(name: name).first
       if user.nil?

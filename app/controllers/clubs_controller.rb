@@ -61,24 +61,49 @@ class ClubsController < ApplicationController
     @from = params[:from].to_date
     @to = params[:to].to_date
 
-    all_tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongs_to_club(@club.id)}
+    all_tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongsToClub(@club.id)}
+    @upcoming = (params[:tournament_type] == "upcoming")
 
-    if params[:tournament_type] == "upcoming"
+
+    if @upcoming
       @tournaments = all_tournaments.select{|t| t.upcoming?}
     else
       @tournaments = all_tournaments.reject{|t| t.upcoming?}
     end
 
-
     render :pdf => "Turniere des #{@club.name}, #{@from} - #{@to}",
            :show_as_html => false
   end
 
-  def transfer_ownership
+  def transferOwnership
     @club = Club.find(params[:club_id])
     new_user = User.find(params[:user_id])
-    @club.transfer_to(new_user)
+    @club.transferTo(new_user)
     logger.debug "User #{current_user.id} transfered ownership of #{@club.id} to #{new_user.id}"
-    redirect_to @club, notice: t("club ownership transfer")
+    redirect_to root_path, notice: t("club.ownership.transfer")
+  end
+
+  def cancel
+    club = Club.find(params[:club_id])
+
+    # Check access
+    redirect_to root_path, error: t("club.cancel.forbidden") and return unless club.is_owner(current_user)
+    redirect_to root_path, error: t("club.cancel.fail") and return if club.tournaments.nil?
+
+    number = Integer(params[:number])
+    canceledTournaments = club.tournaments.select{|tournament| tournament.number === number}
+    users = canceledTournaments.collect{|tournament| tournament.users}.flatten.uniq
+
+    # Send a mail to each user
+    users.each do |user|
+      NotificationMailer.cancelTournament(user, number).deliver
+    end
+
+    # Delete each tournament
+    canceledTournaments.each do |tournament|
+      tournament.destroy
+    end
+
+    redirect_to admin_dashboard_path(club_id: club.id), notice: t("club.cancel.success")
   end
 end

@@ -1,0 +1,43 @@
+:coffeescript
+  document.addEventListener( "DOMContentLoaded", () ->
+    paths = #{paths}
+    numberOfCalls = 0
+    activeClass = "page-active"
+    inactiveClass = "page-hidden"
+    calls = for path in paths
+      $.ajax(
+        url: path
+        beforeSend: () =>
+          $("[data-effeckt-page]").addClass(activeClass)
+        success: (data) =>
+          page = $(data).find("[data-effeckt-page]")
+          page.insertAfter($("[data-effeckt-page]").last())
+
+        error: (data) ->
+          console.log("Failed to load content, result was:")
+          console.log(data)
+        complete: () ->
+          $("[data-effeckt-page]:not(." + activeClass + ")").addClass(inactiveClass)
+          numberOfCalls++
+          if numberOfCalls == #{paths.length}
+            $("[data-effeckt-transition-page]").click( (e) ->
+              e.preventDefault()
+              navToPage = $(this).data("effecktTransitionPage")
+              $("[data-effeckt-page]." + activeClass).addClass(inactiveClass).removeClass(activeClass)
+              $("[data-effeckt-page='" + navToPage + "']").addClass(activeClass).removeClass(inactiveClass)
+            )
+      )
+
+    exchangeLinks = (callback, path) ->
+      callback.done((data) ->
+        pageName = $(data).find("[data-effeckt-page]").attr("data-effeckt-page")
+        links = $("a[href='" + path+ "']")
+
+        console.log("PageName: " + pageName)
+
+        for link in links
+          $(link).attr("data-effeckt-transition-page", pageName)
+          link.href = ""
+      )
+    exchangeLinks(calls[i], paths[i]) for i in #{(0..paths.length).to_a}
+  )
