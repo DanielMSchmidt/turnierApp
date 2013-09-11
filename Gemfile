@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails'
 
-
 gem 'puma' #faster webserver
 gem 'foreman'
 gem 'haml'
@@ -28,7 +27,7 @@ gem 'wicked_pdf'
 
 group :production do
   gem "newrelic_rpm", "~> 3.5.5.38"
-  gem 'pg'
+  gem 'mysql2'
   gem "wkhtmltopdf-heroku"
 end
 
@@ -92,17 +91,9 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
+gem 'capistrano'
+gem 'capistrano_colors'
+gem 'capistrano-ext'
+gem 'rvm-capistrano'

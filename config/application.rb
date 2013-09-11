@@ -47,7 +47,7 @@ module TurnierList
     config.active_support.escape_html_entities_in_json = true
 
     # Cache Store
-    config.cache_store = :redis_store, "redis://localhost:#{ENV['REDIS_PORT']}/0/cache"
+    config.cache_store = :redis_store, "redis://localhost:6379/3/cache"
 
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
