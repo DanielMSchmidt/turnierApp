@@ -395,6 +395,7 @@ DEPENDENCIES
   libv8 (~> 3.11.8)
   mechanize
   meta_request
+  modernizr-rails
   mysql2
   newrelic_rpm (~> 3.5.5.38)
   nokogiri
