@@ -3,7 +3,7 @@
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Ändere deinen Verein
   .modal-body
-    = ga_button_link_to('Verein hinzufügen', '#add_club_modal', {toggle: 'modal', dismiss: 'modal'}, 'Club', 'Add', 'btn btn-block')
+    = ga_button_link_to('Verein hinzufügen', '#add_club_modal', {}, 'Club', 'Add', 'btn btn-block')
     = ga_button_link_to('Verein verlassen', '#remove_club_modal', {toggle: 'modal', dismiss: 'modal'}, 'Club', 'Remove', 'btn btn-block')
 
   .modal-footer
