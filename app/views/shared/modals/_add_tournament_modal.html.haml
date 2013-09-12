@@ -2,14 +2,14 @@
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Neues Turnier hinzufügen
-  .modal-body.row-fluid.btn-group
+  .modal-body
     .well.span11
       = ga_button_link_to('zukünftiges Turnier', '#add_future_tournament_modal', {toggle: 'modal', dismiss: 'modal'}, 'Tournaments', 'Future', 'btn btn-block')
 
       = ga_button_link_to('vergangenes Turnier', '#add_past_tournament_modal', {toggle: 'modal', dismiss: 'modal'}, 'Tournaments', 'Past', 'btn btn-block')
 
   .modal-footer
-    %a.btn{:href => "#"} Schließen
+    %a.btn{:href => "#", "data-dismiss" => "modal"} Schließen
 
 
 
@@ -20,7 +20,7 @@
   .modal-body
     = render 'tournaments/future_form'
   .modal-footer
-    %a.btn{:href => "#"} Schließen
+    %a.btn{:href => "#", "data-dismiss" => "modal"} Schließen
 
 
 #add_past_tournament_modal.modal.hide.fade
@@ -30,4 +30,4 @@
   .modal-body
     = render 'tournaments/past_form'
   .modal-footer
-    %a.btn{:href => "#"} Schließen
+    %a.btn{:href => "#", "data-dismiss" => "modal"} Schließen

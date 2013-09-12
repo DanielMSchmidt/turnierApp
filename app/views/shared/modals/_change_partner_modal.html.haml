@@ -4,7 +4,7 @@
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Tanzpartner ändern
-  .modal-body.row-fluid
+  .modal-body
     = form_for active_couple, :html => {:class => 'form-horizontal span11'} do |f|
 
       .control-group
@@ -29,4 +29,4 @@
         = f.submit 'Jetzt ändern', :class => "btn btn-primary", onClick: "_gaq.push(['_trackEvent', 'Couple', 'Change']);"
 
   .modal-footer
-    %a.btn{:href => "#"} Schließen
+    %a.btn{:href => "#", "data-dismiss" => "modal"} Schließen
