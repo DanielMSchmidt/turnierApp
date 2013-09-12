@@ -48,6 +48,6 @@
           = link_to club.name, add_club_path(:club_id => club.id, :user_id => current_user.id, :trainer => true)
 
   .modal-footer
-    = ga_button_link_to('Neuen Verein erstellen', new_club_path, {toggle: 'modal', dismiss: 'modal'}, 'Club', 'Added', 'btn btn-primary')
+    = ga_button_link_to('Neuen Verein erstellen', new_club_path, {}, 'Club', 'Added', 'btn btn-primary')
     = ga_button_link_to('Ich bin kein Trainer', '#add_club_modal', {toggle: 'modal', dismiss: 'modal'}, 'Club', 'DontBeTrainer', 'btn btn-primary')
     %a.btn{:href => "#"} Schließen
