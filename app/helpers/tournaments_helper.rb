@@ -24,11 +24,19 @@ module TournamentsHelper
   end
 
   def getPlacingsData(couple)
-    [{ y: "Platzierungen" ,l: couple.latin.placings ,s: couple.standard.placings }]
+    [{
+      y: "Platzierungen",
+      l: couple.latin.placings,
+      s: couple.standard.placings
+    }]
   end
 
   def getPointsData(couple)
-    [{ y: "Punkte" ,l: couple.latin.points ,s: couple.standard.points }]
+    [{
+      y: "Punkte",
+      l: couple.latin.points,
+      s: couple.standard.points
+    }]
   end
 
   #               Line or Bar        Hash of keys
