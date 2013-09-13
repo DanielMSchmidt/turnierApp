@@ -9,10 +9,10 @@ module TournamentsHelper
       point_of_time = tournament.date
       hash = {
         y: point_of_time.strftime("%Y-%m-%d"),
-        latin_po: latin.pointsAtTime(point_of_time),
-        latin_pl: latin.placingsAtTime(point_of_time),
-        standard_po: standard.pointsAtTime(point_of_time),
-        standard_pl: standard.placingsAtTime(point_of_time)
+        latin_po: latin.pointsAtTime(point_of_time) + latin.start_points,
+        latin_pl: latin.placingsAtTime(point_of_time) + latin.start_placings,
+        standard_po: standard.pointsAtTime(point_of_time) + standard.start_points,
+        standard_pl: standard.placingsAtTime(point_of_time) + standard.start_placings
        }
       hash
     end
