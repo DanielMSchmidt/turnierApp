@@ -1,0 +1,52 @@
+/* Screensizes */
+$small: 360px
+$medium: 700px
+$large: 1200px
+$verylarge: 1700px
+
+/* More simple breakpoints */
+=breakpoint($point)
+  @if $point == small
+    @media (max-width: $small)
+      @content
+
+  @else if $point == medium
+    @media (max-width: $medium)
+      @content
+
+  @else if $point == large
+    @media (min-width: $large)
+      @content
+
+  @else if $point == verylarge
+    @media (min-width: $verylarge)
+      @content
+
+/* Advanced breakpoints */
+=breakpoint-lt($point)
+  @media (max-width: $point)
+    @content
+
+=breakpoint-btw($lower-border, $upper-border)
+  @media (min-width: $lower-border) and (max-width: $upper-border)
+    @content
+
+=breakpoint-gt($point)
+  @media (min-width: $point)
+    @content
+
+
++breakpoint-lt($large)
+  .btn-toolbar
+    width: 100%
+    .btn-group
+      float: left
+      padding-bottom: 10px
+
++breakpoint-btw($medium, $large)
+  .btn-toolbar
+    height: 60px
+
++breakpoint-lt($medium)
+  .btn-toolbar
+    height: 120px
