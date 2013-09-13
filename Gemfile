@@ -24,6 +24,9 @@ gem 'redis-rails'
 #PDF generation
 gem 'wicked_pdf'
 
+#Tasks
+gem 'whenever', :require => false
+
 
 group :production do
   gem "newrelic_rpm", "~> 3.5.5.38"
