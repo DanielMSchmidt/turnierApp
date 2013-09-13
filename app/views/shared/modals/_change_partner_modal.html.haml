@@ -23,7 +23,7 @@
         = f.label 'Startklasse (Lat / Std)', :class => 'control-label'
         .controls
           = f.text_field :latin_kind, placeholder: 'Latein', :class => 'input-small', value: active_couple.latin.start_class
-          = f.text_field :standard_kind, placeholder: 'Standard', :class => 'input-small', value: active_couple.latin.start_class
+          = f.text_field :standard_kind, placeholder: 'Standard', :class => 'input-small', value: active_couple.standard.start_class
 
       .form-actions.span11
         = f.submit 'Jetzt ändern', :class => "btn btn-primary", onClick: "_gaq.push(['_trackEvent', 'Couple', 'Change']);"
