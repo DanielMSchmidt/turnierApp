@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   # Hooks
 
-  def self.sendUserNotification(newUser)
+  def self.sendUserNotification(newUser="Niemand")
     user = User.all
     logger.info "start sending usercount notification about #{user.count} couples"
     NotificationMailer.userCount(user, newUser).deliver

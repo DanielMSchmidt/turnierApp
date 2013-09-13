@@ -7,7 +7,7 @@ class NotificationMailer < ActionMailer::Base
     mail to: user.email, subject: "Im #{@club.name} gibt es Paare zu melden"
   end
 
-  def userCount(user, newUser="Niemand")
+  def userCount(user, newUser)
     @count = user.count
     @user = user
     @newUser = newUser
