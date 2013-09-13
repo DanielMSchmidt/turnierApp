@@ -24,5 +24,5 @@
 
 
 - content_for :assets do
-  = render "shared/eagerloadPages", paths: [admin_dashboard_path, user_tournaments_path(current_user)]
+  = render "shared/eagerloadPages", paths: @paths
   = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club

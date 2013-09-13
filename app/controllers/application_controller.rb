@@ -18,4 +18,13 @@ class ApplicationController < ActionController::Base
     @couple = Couple.new
     @tournament = Tournament.new
   end
+
+  def setLazyloadPaths
+    @paths = [root_path]
+    if user_signed_in?
+      @paths << user_tournaments_path(current_user)
+      @paths << admin_dashboard_path if @user_clubs.any?
+    end
+    @paths.reject!{|p| p == request.path}
+  end
 end
