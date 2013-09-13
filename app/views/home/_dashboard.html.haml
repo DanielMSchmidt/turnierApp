@@ -13,5 +13,5 @@
 
   - content_for :assets do
     = render "shared/eagerloadPages", paths: paths
-    = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club if @user_clubs.any?
+    = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club if @admin
 

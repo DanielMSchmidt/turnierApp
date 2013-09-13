@@ -5,8 +5,11 @@ class HomeController < ApplicationController
     if user_signed_in?
       checkIfUserIsReadyToStart(current_user)
       if Club.ownedBy(current_user).any?
+        @admin = true
         setClubs(false)
         setCouplesAndTournaments
+      else
+        @admin = false
       end
     end
 
@@ -16,8 +19,10 @@ class HomeController < ApplicationController
   def admin
     setClubs
     if @user_clubs.empty?
+      @admin = false
       redirect_to root_path
     else
+      @admin = true
       setCouplesAndTournaments
     end
 
