@@ -48,7 +48,12 @@ class User < ActiveRecord::Base
   end
 
   def activeCouple
-    self.getCouples.select{|couple| couple.active}.first
+    couple = self.getCouples.select{|couple| couple.active}.first
+    if coulpe.nil?
+      Couple.create(man_id: self.id, active: true)
+      couple = Couple.where(man_id: self.id, active: true).first
+    end
+    couple
   end
 
   # find users
