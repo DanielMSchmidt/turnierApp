@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
   def activeCouple
     couple = self.getCouples.select{|couple| couple.active}.first
-    if coulpe.nil?
+    if couple.nil?
       Couple.create(man_id: self.id, active: true)
       couple = Couple.where(man_id: self.id, active: true).first
     end
