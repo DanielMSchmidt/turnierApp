@@ -26,6 +26,10 @@ class CouplesController < ApplicationController
     man_id = User.getIdByName(params[:couple][:man])
     woman_id = User.getIdByName(params[:couple][:woman])
 
+    if man_id.nil? || woman_id.nil?
+      redirect_to root_path, error: t('couple.update.fail') and return
+    end
+
     @couple = createNewCouple(man_id, woman_id)
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
