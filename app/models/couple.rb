@@ -30,6 +30,7 @@ class Couple < ActiveRecord::Base
   # Activation
   def deactivateOtherCouples
     Couple.containingIds(self.userIds).each do |couple|
+      #FIXME: Should include sth. to ensure each user has an acitve coulpe (maybe set to default)
       couple.deactivate unless couple == self
     end
   end
