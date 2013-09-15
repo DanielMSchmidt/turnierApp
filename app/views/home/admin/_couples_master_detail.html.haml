@@ -8,39 +8,36 @@
   .span8
     - verified_couples.each do |couple|
       .hidden{id: "couple-stats-#{couple.id}", data: {detail: couple.id}}
-        #accordion2.accordion
-          .accordion-group
-            .accordion-heading
-              %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "#collapseOne"}
-                Statistiken
-            #collapseOne.accordion-body.collapse.in
-              .accordion-inner
-                .row-fluid
-                  .span12
-                    = render "progress_panel", :active_couple => couple
-          .accordion-group
-            .accordion-heading
-              %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "#collapseTwo"}
-                Turniere
-            #collapseTwo.accordion-body.collapse
-              .accordion-inner
-                %table.tournament-list.table.table-striped
-                  %tr
-                    %th Datum
-                    %th Zeit
-                    %th Art
-                    %th Platz
-                    %th Turniernr.
-                    %th Status
-                    %th
-                    %th
-                  = render couple.tournaments, admin: true, withoutCouple: true, withoutUserControl:true
-:javascript
-  $(function() {
-    //FIXME: refactor as jQuery extension
-    $(".tabwiseNavigation li").removeClass("active");
-    $("#club-" + $("#activeTab").val()).addClass("active");
+        .row-fluid
+          %h4
+            = couple.to_s
+          %h5
+            Statistiken
+          .span12
+            = render "progress_panel", :active_couple => couple
 
-    var TA = window.TA || (window.TA = {});
-    new TA.MasterDetail("#master-detail");
-  });
+          %h5
+            Turniere
+          .span12
+            %table.tournament-list.table.table-striped
+              %tr
+                %th Datum
+                %th Zeit
+                %th Art
+                %th Platz
+                %th Turniernr.
+                %th Status
+                %th
+                %th
+              = render couple.tournaments, admin: true, withoutCouple: true, withoutUserControl:true
+
+
+- content_for :assets do
+  :javascript
+    $(function() {
+      $(".tabwiseNavigation li").removeClass("active");
+      $("#club-" + $("#activeTab").val()).addClass("active");
+
+      var TA = window.TA || (window.TA = {});
+      new TA.MasterDetail("#master-detail");
+    });
