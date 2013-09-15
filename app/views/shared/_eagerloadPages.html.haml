@@ -11,7 +11,9 @@
           $("[data-effeckt-page]").addClass(activeClass)
         success: (data) =>
           page = $(data).find("[data-effeckt-page]")
-          page.insertAfter($("[data-effeckt-page]").last())
+          newName = $(page).data("effecktPage")
+          if $("[data-effeckt-page=" + newName+ "]").length == 0
+            page.insertAfter($("[data-effeckt-page]").last())
 
         error: (data) ->
           console.log("Failed to load content, result was:")
