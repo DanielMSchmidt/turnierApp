@@ -25,6 +25,7 @@
               navToPage = $(this).data("effecktTransitionPage")
               $("[data-effeckt-page]." + activeClass).addClass(inactiveClass).removeClass(activeClass)
               $("[data-effeckt-page='" + navToPage + "']").addClass(activeClass).removeClass(inactiveClass)
+              $(window).resize()
             )
       )
 
