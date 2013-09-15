@@ -2,12 +2,16 @@ TA = window.TA ||= {}
 
 class TA.MasterDetail
   constructor: (@selector) ->
-    that = @
-    $(@selector).find("[data-master]").on('click', ->
-      that.changeViewTo($(@).data('master'))
-    )
-    $(@selector).find("[data-detail]:first").removeClass("hidden")
-    $(@selector).find("[data-master]:first").addClass("btn-primary")
+    unless @selector.data("masterDetail")
+      @selector.data("masterDetail", true)
+      that = @
+      $(@selector).find("[data-master]").on('click', ->
+        that.changeViewTo($(@).data('master'))
+      )
+      $(@selector).find("[data-detail]:first").removeClass("hidden")
+      $(@selector).find("[data-master]:first").addClass("btn-primary")
+    else
+      console.log("MasterDetail already defined")
 
   changeViewTo: (id) ->
     $(@selector).find("[data-detail]").addClass("hidden")

@@ -22,6 +22,9 @@
 
   %input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
 
+  :javascript
+    var TA = window.TA || (window.TA = {});
+    new TA.MasterDetail("#master-detail");
 
 - content_for :assets do
   = render "shared/eagerloadPages", paths: @paths
