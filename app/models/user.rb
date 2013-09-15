@@ -56,11 +56,7 @@ class User < ActiveRecord::Base
   def self.getIdByName(name)
     unless isntSet(name)
       user = User.where(name: name).first
-      if user.nil?
-        nil
-      else
-        user.id
-      end
+      user.nil? ? nil : user.id
     else
       nil
     end
