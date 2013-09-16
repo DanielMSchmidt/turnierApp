@@ -1,15 +1,11 @@
 # -*- encoding : utf-8 -*-
 class CouplesController < ApplicationController
 
-  #FIXME: Dry Post and Put up
+  before_filter :getRequestData, only: [:create, :update]
 
   # POST /couples
   # POST /couples.json
   def create
-    man_id = User.getIdByName(params[:couple][:man])
-    woman_id = User.getIdByName(params[:couple][:woman])
-
-    @couple = createNewCouple(man_id, woman_id)
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
@@ -23,18 +19,14 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    man_id = User.getIdByName(params[:couple][:man])
-    woman_id = User.getIdByName(params[:couple][:woman])
-    latin_class = params[:couple][:latin_kind]
-    standard_class = params[:couple][:standard_kind]
-    if man_id.nil? || woman_id.nil?
+    if (man_id.nil? || woman_id.nil?)
       redirect_to root_path, error: t('couple.update.fail') and return
     end
 
-    @couple = createNewCouple(man_id, woman_id)
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
+        # FIXME: Shouldn't be needed, investigate here!
         @couple.standard.start_class = standard_class
         @couple.standard.save!
         @couple.latin.start_class = latin_class
@@ -87,5 +79,18 @@ class CouplesController < ApplicationController
       couple.standard.reset
     end
     respond_to :js
+  end
+
+  def getRequestData
+    man_id = User.getIdByName(params[:couple][:man])
+    woman_id = User.getIdByName(params[:couple][:woman])
+    latin_class = params[:couple][:latin_kind]
+    standard_class = params[:couple][:standard_kind]
+
+    if (man_id == woman_id)
+      redirect_to root_path, error: t('couple.update.fail') and return
+    end
+
+     @couple = createNewCouple(man_id, woman_id)
   end
 end
