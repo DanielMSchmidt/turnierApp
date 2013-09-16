@@ -23,7 +23,6 @@ class ClubsController < ApplicationController
     @club = Club.new(params[:club])
     @club.user = current_user
 
-
     if @club.save
       @club.memberships.create!(couple_id: current_user.activeCouple.id, verified: true)
       redirect_to root_path, notice: t('club.create')
