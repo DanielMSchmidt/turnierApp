@@ -19,7 +19,7 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    if (man_id.nil? || woman_id.nil?)
+    if (@man_id.nil? || @woman_id.nil?)
       redirect_to root_path, error: t('couple.update.fail') and return
     end
 
@@ -82,15 +82,15 @@ class CouplesController < ApplicationController
   end
 
   def getRequestData
-    man_id = User.getIdByName(params[:couple][:man])
-    woman_id = User.getIdByName(params[:couple][:woman])
+    @man_id = User.getIdByName(params[:couple][:man])
+    @woman_id = User.getIdByName(params[:couple][:woman])
     latin_class = params[:couple][:latin_kind]
     standard_class = params[:couple][:standard_kind]
 
-    if (man_id == woman_id)
+    if (@man_id == @woman_id)
       redirect_to root_path, error: t('couple.update.fail') and return
     end
 
-     @couple = createNewCouple(man_id, woman_id)
+     @couple = createNewCouple(@man_id, @woman_id)
   end
 end
