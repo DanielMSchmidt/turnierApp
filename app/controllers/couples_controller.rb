@@ -1,11 +1,10 @@
 # -*- encoding : utf-8 -*-
 class CouplesController < ApplicationController
 
-  before_filter :getRequestData, only: [:create, :update]
-
   # POST /couples
   # POST /couples.json
   def create
+    @couple = Couple.createFromParams(params ,true)
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
@@ -19,11 +18,8 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    if (@man_id.nil? || @woman_id.nil?)
-      redirect_to root_path, error: t('couple.update.fail') and return
-    end
-
-    if @couple.consistsOfCurrentUser(current_user)
+    @couple = Couple.createFromParams( params,false)
+    if @couple && @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
         # FIXME: Shouldn't be needed, investigate here!
@@ -50,16 +46,6 @@ class CouplesController < ApplicationController
     end
   end
 
-  def createNewCouple(man_id, woman_id)
-    couple = Couple.new(man_id: man_id, woman_id: woman_id)
-
-    #Add Progresses
-    latin = couple.progresses.new(start_class: params[:couple][:latin_kind], kind: 'latin')
-    standard = couple.progresses.new(start_class: params[:couple][:standard_kind], kind: 'standard')
-
-    couple
-  end
-
   # TODO: Dry up
   def levelup
     couple = current_user.activeCouple
@@ -79,14 +65,5 @@ class CouplesController < ApplicationController
       couple.standard.reset
     end
     respond_to :js
-  end
-
-  def getRequestData
-    @man_id = User.getIdByName(params[:couple][:man])
-    @woman_id = User.getIdByName(params[:couple][:woman])
-    @latin_class = params[:couple][:latin_kind]
-    @standard_class = params[:couple][:standard_kind]
-
-     @couple = createNewCouple(@man_id, @woman_id)
   end
 end

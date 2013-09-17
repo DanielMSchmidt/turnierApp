@@ -16,6 +16,7 @@ class Couple < ActiveRecord::Base
 
   validate :dontDanceWithYourself
 
+  # Validators
   def dontDanceWithYourself
     if self.man_id == self.woman_id
       errors.add(:man_id, "Du kannst nicht mit dir selbst tanzen")
@@ -26,6 +27,27 @@ class Couple < ActiveRecord::Base
   # Finder
   def self.containingIds(ids)
     (Couple.where(man_id: ids) + Couple.where(woman_id: ids)).uniq
+  end
+
+  # Constructors
+
+  def self.createFromParams(params, nil_allowed)
+    manId = User.getIdByName(params[:couple][:man])
+    womanId = User.getIdByName(params[:couple][:woman])
+    latinClass = params[:couple][:latin_kind]
+    standardClass = params[:couple][:standard_kind]
+
+    couple = Couple.new(man_id: manId, woman_id: womanId)
+
+    unless nil_allowed
+      return false if (manId.nil? || womanId.nil?)
+    end
+
+    #Add Progresses
+    latin = couple.progresses.new(start_class: latinClass, kind: 'latin')
+    standard = couple.progresses.new(start_class: standardClass, kind: 'standard')
+
+    couple
   end
 
   # Initialize
