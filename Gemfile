@@ -29,7 +29,7 @@ gem 'whenever', :require => false
 
 
 group :production do
-  gem "newrelic_rpm", "~> 3.5.5.38"
+  gem 'newrelic_rpm'
   gem 'mysql2'
   gem "wkhtmltopdf-heroku"
 end
