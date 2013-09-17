@@ -2,8 +2,8 @@ TA = window.TA ||= {}
 
 class TA.MasterDetail
   constructor: (@selector) ->
-    unless @selector.data("masterDetail")
-      @selector.data("masterDetail", true)
+    unless $(@selector).data("masterDetail")
+      $(@selector).data("masterDetail", true)
       that = @
       $(@selector).find("[data-master]").on('click', ->
         that.changeViewTo($(@).data('master'))
@@ -19,3 +19,7 @@ class TA.MasterDetail
 
     $(@selector).find("[data-detail=#{id}]").removeClass("hidden")
     $(@selector).find("[data-master=#{id}]").addClass("btn-primary")
+
+
+if TA.MasterDetailSelector?
+  new TA.MasterDetail(TA.MasterDetailSelector)
