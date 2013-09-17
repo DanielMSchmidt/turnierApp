@@ -87,10 +87,6 @@ class CouplesController < ApplicationController
     latin_class = params[:couple][:latin_kind]
     standard_class = params[:couple][:standard_kind]
 
-    if (@man_id == @woman_id)
-      redirect_to root_path, error: t('couple.update.fail') and return
-    end
-
      @couple = createNewCouple(@man_id, @woman_id)
   end
 end

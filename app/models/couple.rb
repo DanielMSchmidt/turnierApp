@@ -14,8 +14,16 @@ class Couple < ActiveRecord::Base
   after_create :deactivateOtherCouples
   after_create :buildProgresses
 
-  # Finder
+  validate :dontDanceWithYourself
 
+  def dontDanceWithYourself
+    if self.man_id == self.woman_id
+      errors.add(:man_id, "Du kannst nicht mit dir selbst tanzen")
+      errors.add(:woman_id, "Du kannst nicht mit dir selbst tanzen")
+    end
+  end
+
+  # Finder
   def self.containingIds(ids)
     (Couple.where(man_id: ids) + Couple.where(woman_id: ids)).uniq
   end
