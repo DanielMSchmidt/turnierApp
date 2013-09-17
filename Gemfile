@@ -23,6 +23,7 @@ gem 'redis-rails'
 
 #PDF generation
 gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 #Tasks
 gem 'whenever', :require => false
@@ -31,7 +32,6 @@ gem 'whenever', :require => false
 group :production do
   gem 'newrelic_rpm'
   gem 'mysql2'
-  gem "wkhtmltopdf-heroku"
 end
 
 group :development do
