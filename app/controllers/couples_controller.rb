@@ -27,9 +27,9 @@ class CouplesController < ApplicationController
       if @couple.save
         @couple.activate
         # FIXME: Shouldn't be needed, investigate here!
-        @couple.standard.start_class = standard_class
+        @couple.standard.start_class = @standard_class
         @couple.standard.save!
-        @couple.latin.start_class = latin_class
+        @couple.latin.start_class = @latin_class
         @couple.latin.save!
         redirect_to root_path, notice: t('couple.update.success')
       end
@@ -84,8 +84,8 @@ class CouplesController < ApplicationController
   def getRequestData
     @man_id = User.getIdByName(params[:couple][:man])
     @woman_id = User.getIdByName(params[:couple][:woman])
-    latin_class = params[:couple][:latin_kind]
-    standard_class = params[:couple][:standard_kind]
+    @latin_class = params[:couple][:latin_kind]
+    @standard_class = params[:couple][:standard_kind]
 
      @couple = createNewCouple(@man_id, @woman_id)
   end
