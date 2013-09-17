@@ -1,4 +1,5 @@
 :coffeescript
+  TA = window.TA ||= {}
   document.addEventListener( "DOMContentLoaded", () ->
     paths = #{paths}
     numberOfCalls = 0
@@ -21,6 +22,7 @@
         complete: () ->
           $("[data-effeckt-page]:not(." + activeClass + ")").addClass(inactiveClass)
           numberOfCalls++
+          TA.graphs()
           if numberOfCalls == #{paths.length}
             $("[data-effeckt-transition-page]").click( (e) ->
               e.preventDefault()

@@ -45,14 +45,14 @@ module TournamentsHelper
     key_names = keys.keys.collect{|key| "'"+key.to_s+"'"}.join(", ")
     key_values = keys.values.collect{|value| "'"+value.to_s+"'"}.join(", ")
 
-    str =  raw("document.addEventListener( 'DOMContentLoaded', function(){")
+    str =  raw("(function(){")
     str += raw("Morris.#{type.capitalize}({")
     str += raw("element: '#{field}',")
     str += raw("data: #{data.to_json},")
     str += raw("xkey: 'y',")
     str += raw("ykeys: [#{key_names}],")
     str += raw("labels: [#{key_values}]});")
-    str += raw("});")
+    str += raw("})();")
   end
 
 

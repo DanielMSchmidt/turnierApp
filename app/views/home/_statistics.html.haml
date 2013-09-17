@@ -9,16 +9,12 @@
 #latin-standard-balance-points.bar-graph{style: "height: 250px; width: 33%;"}
 #latin-standard-balance-placings.bar-graph{style: "height: 250px; width: 33%;"}
 
-
-
-
-- content_for :assets do
-  - unless progressOverTimeData.empty?
-    %script
-      = printGraph('line', 'progress-over-time', progressOverTimeData, {latin_po: "Punkte in Latein", latin_pl: "Platzierungen in Latein", standard_po: "Punkte in Standard", standard_pl: "Platzierungen in Standard"} )
-
-
-  %script
-    = printGraph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
-    = printGraph('bar', 'latin-standard-balance-placings', getPlacingsData(active_couple), {l: "Latein", s: "Standard"} )
-    = printGraph('bar', 'latin-standard-balance-points', getPointsData(active_couple), {l: "Latein", s: "Standard"} )
+%script
+  var TA = window.TA || (window.TA = {});
+  TA.graphs = function(){
+  = printGraph('line', 'progress-over-time', progressOverTimeData, {latin_po: "Punkte in Latein", latin_pl: "Platzierungen in Latein", standard_po: "Punkte in Standard", standard_pl: "Platzierungen in Standard"} ) unless progressOverTimeData.empty?
+  = printGraph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
+  = printGraph('bar', 'latin-standard-balance-placings', getPlacingsData(active_couple), {l: "Latein", s: "Standard"} )
+  = printGraph('bar', 'latin-standard-balance-points', getPointsData(active_couple), {l: "Latein", s: "Standard"} )
+  };
+  document.addEventListener( 'DOMContentLoaded', function(){TA.graphs();});
