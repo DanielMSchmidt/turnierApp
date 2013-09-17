@@ -24,8 +24,13 @@
 
   :javascript
     var TA = window.TA || (window.TA = {});
-    new TA.MasterDetail("#master-detail");
+    if (TA.MasterDetail === undefined) {
+      TA.MasterDetailSelector = "#master-detail";
+    } else {
+      new TA.MasterDetail("#master-detail");
+    }
 
 - content_for :assets do
-  = render "shared/eagerloadPages", paths: @paths
-  = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club
+  .assets
+    = render "shared/eagerloadPages", paths: @paths
+    = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club

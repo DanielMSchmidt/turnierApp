@@ -39,5 +39,9 @@
       $("#club-" + $("#activeTab").val()).addClass("active");
 
       var TA = window.TA || (window.TA = {});
-      new TA.MasterDetail("#master-detail");
+      if (TA.MasterDetail === undefined) {
+        TA.MasterDetailSelector = "#master-detail";
+      } else {
+        new TA.MasterDetail("#master-detail");
+      }
     });
