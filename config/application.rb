@@ -57,7 +57,7 @@ module TurnierList
 
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.assets.precompile += ['pdf.css']
+    config.assets.precompile += ['pdf.css', 'bootstrap_and_overrides.css']
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
