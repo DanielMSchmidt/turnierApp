@@ -11,7 +11,11 @@
 
 %script
   var TA = window.TA || (window.TA = {});
+  TA.graphsCalled = false;
   TA.graphs = function(){
+  var TA = window.TA || (window.TA = {});
+  if (TA.graphsCalled){return ;}
+  TA.graphsCalled = true;
   = printGraph('line', 'progress-over-time', progressOverTimeData, {latin_po: "Punkte in Latein", latin_pl: "Platzierungen in Latein", standard_po: "Punkte in Standard", standard_pl: "Platzierungen in Standard"} ) unless progressOverTimeData.empty?
   = printGraph('bar', 'latin-standard-balance-tournaments', getTournamentsData(active_couple), {l: "Latein", s: "Standard"} )
   = printGraph('bar', 'latin-standard-balance-placings', getPlacingsData(active_couple), {l: "Latein", s: "Standard"} )
