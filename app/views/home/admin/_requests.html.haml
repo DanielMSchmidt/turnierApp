@@ -8,12 +8,13 @@
       = link_to "", verify_couple_path(club_id: @active_club, couple_id: couple.id), :class => "icon-ok"
       = link_to "",delete_couple_path(club_id: @active_club, couple_id: couple.id), :class => "icon-remove"
 
-:javascript
-  $(".trainer").tooltip({
-    animation: true,
-    title: 'Trainer'
-  });
-  $(".couple").tooltip({
-    animation: true,
-    title: 'Paar'
-  });
+- content_for :assets do
+  :javascript
+    $(".trainer").tooltip({
+      animation: true,
+      title: 'Trainer'
+    });
+    $(".couple").tooltip({
+      animation: true,
+      title: 'Paar'
+    });

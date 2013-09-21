@@ -1,28 +1,41 @@
 # -*- encoding : utf-8 -*-
 class HomeController < ApplicationController
+
   def index
     if user_signed_in?
       checkIfUserIsReadyToStart(current_user)
-      @paths = [user_tournaments_path(current_user)]
-      @paths << admin_dashboard_path if Club.ownedBy(current_user).any?
+      if Club.ownedBy(current_user).any?
+        @admin = true
+        setClubs(false)
+        setCouplesAndTournaments
+      else
+        @admin = false
+      end
     end
+
+    setLazyloadPaths
   end
 
   def admin
     setClubs
     if @user_clubs.empty?
+      @admin = false
       redirect_to root_path
     else
-      @verified_couples = @active_club.verifiedCouples
-      @unverified_couples = @active_club.unverifiedCouples
-      @unenrolled_tournaments = @verified_couples.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.getDate}
+      @admin = true
+      setCouplesAndTournaments
     end
 
+    setLazyloadPaths
+  end
+
+  def setCouplesAndTournaments
+    @verified_couples = @active_club.verifiedCouples
+    @unverified_couples = @active_club.unverifiedCouples
+    @unenrolled_tournaments = @verified_couples.collect{|x| x.tournaments.select{|x| !x.enrolled?}}.flatten.sort_by{|e| e.getDate}
     @verifiedUsers = @verified_couples.collect{|c| c.users}.flatten
     @unverifiedUsers = @verified_couples.collect{|c| c.users}.flatten
   end
-
-
 
   def checkIfUserIsReadyToStart(user)
     @has_couple = user.activeCouple.present? && user.activeCouple.isComplete?
@@ -35,7 +48,7 @@ class HomeController < ApplicationController
     end
   end
 
-  def setClubs
+  def setClubs(redirect=true)
     @user_clubs = Club.ownedBy(current_user)
     if @user_clubs.nil?
       @user_clubs = Club.trainedBy(current_user)
@@ -45,7 +58,7 @@ class HomeController < ApplicationController
     end
     if params[:club_id].nil?
       @active_club = @user_clubs.first
-      redirect_to admin_dashboard_path(club_id: @active_club.id)
+      redirect_to admin_dashboard_path(club_id: @active_club.id) if redirect
     else
       @active_club = @user_clubs.select{|x| x.id == params[:club_id].to_i}.first
     end

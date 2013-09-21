@@ -11,7 +11,7 @@ class NotificationMailer < ActionMailer::Base
     @count = user.count
     @user = user
     @newUser = newUser
-    mail to: "daniel.maximilian@gmx.net", subject: "Neuer Nutzer mit Namen #{newUser} | Total: #{@count}"
+    mail to: "dschmidt@weluse.de", subject: "Neuer Nutzer mit Namen #{newUser} | Total: #{@count}"
   end
 
   def enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament)

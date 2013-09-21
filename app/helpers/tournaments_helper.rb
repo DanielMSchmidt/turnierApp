@@ -9,10 +9,10 @@ module TournamentsHelper
       point_of_time = tournament.date
       hash = {
         y: point_of_time.strftime("%Y-%m-%d"),
-        latin_po: latin.pointsAtTime(point_of_time),
-        latin_pl: latin.placingsAtTime(point_of_time),
-        standard_po: standard.pointsAtTime(point_of_time),
-        standard_pl: standard.placingsAtTime(point_of_time)
+        latin_po: latin.pointsAtTime(point_of_time) + latin.start_points,
+        latin_pl: latin.placingsAtTime(point_of_time) + latin.start_placings,
+        standard_po: standard.pointsAtTime(point_of_time) + standard.start_points,
+        standard_pl: standard.placingsAtTime(point_of_time) + standard.start_placings
        }
       hash
     end
@@ -24,11 +24,19 @@ module TournamentsHelper
   end
 
   def getPlacingsData(couple)
-    [{ y: "Platzierungen" ,l: couple.latin.placings ,s: couple.standard.placings }]
+    [{
+      y: "Platzierungen",
+      l: couple.latin.placings,
+      s: couple.standard.placings
+    }]
   end
 
   def getPointsData(couple)
-    [{ y: "Punkte" ,l: couple.latin.points ,s: couple.standard.points }]
+    [{
+      y: "Punkte",
+      l: couple.latin.points,
+      s: couple.standard.points
+    }]
   end
 
   #               Line or Bar        Hash of keys
@@ -37,14 +45,14 @@ module TournamentsHelper
     key_names = keys.keys.collect{|key| "'"+key.to_s+"'"}.join(", ")
     key_values = keys.values.collect{|value| "'"+value.to_s+"'"}.join(", ")
 
-    str =  raw("document.addEventListener( 'DOMContentLoaded', function(){")
+    str =  raw("(function(){")
     str += raw("Morris.#{type.capitalize}({")
     str += raw("element: '#{field}',")
     str += raw("data: #{data.to_json},")
     str += raw("xkey: 'y',")
     str += raw("ykeys: [#{key_names}],")
     str += raw("labels: [#{key_values}]});")
-    str += raw("});")
+    str += raw("})();")
   end
 
 

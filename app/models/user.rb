@@ -11,11 +11,11 @@ class User < ActiveRecord::Base
 
   # Hooks
 
-  def self.sendUserNotification(newUser)
+  def self.sendUserNotification(newUser="Niemand")
     user = User.all
     logger.info "start sending usercount notification about #{user.count} couples"
-    NotificationMailer.userCount(user, newUser).deliver
-    logger.info "ended sending usercount notification"
+    result = NotificationMailer.userCount(user, newUser).deliver
+    logger.info "ended sending usercount notification: #{result}"
   end
 
   def notifyAboutNewUser
@@ -48,7 +48,12 @@ class User < ActiveRecord::Base
   end
 
   def activeCouple
-    self.getCouples.select{|couple| couple.active}.first
+    couple = self.getCouples.select{|couple| couple.active}.first
+    if couple.nil?
+      Couple.create(man_id: self.id, active: true)
+      couple = Couple.where(man_id: self.id, active: true).first
+    end
+    couple
   end
 
   # find users
@@ -56,11 +61,7 @@ class User < ActiveRecord::Base
   def self.getIdByName(name)
     unless isntSet(name)
       user = User.where(name: name).first
-      if user.nil?
-        nil
-      else
-        user.id
-      end
+      user.nil? ? nil : user.id
     else
       nil
     end

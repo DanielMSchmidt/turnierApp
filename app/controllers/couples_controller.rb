@@ -1,15 +1,10 @@
 # -*- encoding : utf-8 -*-
 class CouplesController < ApplicationController
 
-  #FIXME: Dry Post and Put up
-
   # POST /couples
   # POST /couples.json
   def create
-    man_id = User.getIdByName(params[:couple][:man])
-    woman_id = User.getIdByName(params[:couple][:woman])
-
-    @couple = createNewCouple(man_id, woman_id)
+    @couple = Couple.createFromParams(params ,true)
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
@@ -23,13 +18,15 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    man_id = User.getIdByName(params[:couple][:man])
-    woman_id = User.getIdByName(params[:couple][:woman])
-
-    @couple = createNewCouple(man_id, woman_id)
-    if @couple.consistsOfCurrentUser(current_user)
+    @couple = Couple.createFromParams( params,false)
+    if @couple && @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
+        # FIXME: Shouldn't be needed, investigate here!
+        @couple.standard.start_class = @standard_class
+        @couple.standard.save!
+        @couple.latin.start_class = @latin_class
+        @couple.latin.save!
         redirect_to root_path, notice: t('couple.update.success')
       end
     else
@@ -47,16 +44,6 @@ class CouplesController < ApplicationController
       format.html { redirect_to couples_url }
       format.json { head :no_content }
     end
-  end
-
-  def createNewCouple(man_id, woman_id)
-    couple = Couple.new(man_id: man_id, woman_id: woman_id)
-
-    #Add Progresses
-    latin = couple.progresses.new(start_class: params[:couple][:latin_kind], kind: 'latin')
-    standard = couple.progresses.new(start_class: params[:couple][:standard_kind], kind: 'standard')
-
-    couple
   end
 
   # TODO: Dry up

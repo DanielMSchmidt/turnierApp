@@ -2,12 +2,12 @@
   .modal-header
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Bitte wählen
-  .modal-body.row-fluid
+  .modal-body
     .well.span11
       = link_to 'Latein', '#change_latin_progress_modal', type: 'button', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn  btn-block "
       = link_to 'Standard', '#change_standard_progress_modal', type: 'button', role: 'button', data: {toggle: 'modal', dismiss: 'modal'}, :class => "btn btn-block "
   .modal-footer
-    %a.btn{:href => "#"} Schließen
+    %a.btn{:href => "#", "data-dismiss" => "modal"} Schließen
 
 
 
@@ -18,7 +18,7 @@
   .modal-body
     = render 'shared/progresses/latin'
   .modal-footer
-    %a.btn{:href => "#"} Schließen
+    %a.btn{:href => "#", "data-dismiss" => "modal"} Schließen
 
 
 #change_standard_progress_modal.modal.hide.fade
@@ -28,4 +28,4 @@
   .modal-body
     = render 'shared/progresses/standard'
   .modal-footer
-    %a.btn{:href => "#"} Schließen
+    %a.btn{:href => "#", "data-dismiss" => "modal"} Schließen
