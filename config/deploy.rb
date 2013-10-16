@@ -45,3 +45,4 @@ namespace :deploy do
 end
 
 before "deploy:assets:precompile", "deploy:copy_database_yml"
+after "deploy", "deploy:cleanup"
