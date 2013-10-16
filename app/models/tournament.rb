@@ -12,7 +12,7 @@ class Tournament < ActiveRecord::Base
 
   def self.newForUser(params)
     tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
-    tournament = Tournament.new(tournament_fetcher.get_tournament_data)
+    tournament = Tournament.new(tournament_fetcher.run)
     tournament.assignToUser(params[:tournament][:user_id])
     tournament.participants = params[:tournament][:participants]
     tournament.place        = params[:tournament][:place]

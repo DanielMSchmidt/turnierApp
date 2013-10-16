@@ -7,6 +7,10 @@ class TournamentFetcher
     @tournament_data = get_cached_tournament_data
   end
 
+  def run
+    @tournament_data
+  end
+
   def get_cached_tournament_data
     cache_string = "tf-#{@number}"
     cached_hash = Rails.cache.read(cache_string)
@@ -14,6 +18,8 @@ class TournamentFetcher
 
     uncached_hash = self.get_tournament_data
     Rails.cache.write(cache_string, uncached_hash)
+
+    uncached_hash
   end
 
   def get_tournament_data
