@@ -1,10 +1,5 @@
 #admin.page
   .row-fluid
-    %ul.nav.nav-tabs.span12.tabwiseNavigation
-      - @user_clubs.each do |club|
-        %li{:id => "club-#{club.id}"}
-          = link_to club.name, admin_dashboard_path(club_id: club.id)
-
     .span12
       %h2="Dashboard von #{@active_club.name}"
       .row-fluid
@@ -19,8 +14,6 @@
             = render 'home/admin/unenrolled_tournaments', unenrolled_tournaments: @unenrolled_tournaments
 
       = render 'home/admin/couples_master_detail', verified_couples: @verified_couples
-
-  %input{:id => "activeTab", :type => "hidden", :value => @active_club.id}
 
   :javascript
     var TA = window.TA || (window.TA = {});
