@@ -1,6 +1,6 @@
 - activeCouple = current_user.activeCouple
 
-%div{data: {effeckt: {page: "dashboard"}}}
+#dashboard.page
   %h1 Dashboard
   = render "action_required_alert", has_couple: has_couple, has_a_club: has_a_club, has_missing_data: has_missing_data
   = render "shared/user_controlls", has_couple: has_couple
@@ -14,4 +14,3 @@
   - content_for :assets do
     = render "shared/eagerloadPages", paths: paths
     = render 'shared/admin_modals', verifiedUsers: @verifiedUsers, activeClub: @active_club if @admin
-
