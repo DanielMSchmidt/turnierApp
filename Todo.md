@@ -9,3 +9,11 @@ Refactorings
 ---------------------
   - merge tournaments _form and _future_form
   - refactor views/shared/progresses
+
+#77 + #64
+-------------------
+
+  - Refactor couples controller
+    - Dry up
+    - move into model
+  - introduce [CanCan](https://github.com/ryanb/cancan)
