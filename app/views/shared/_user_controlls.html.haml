@@ -2,7 +2,7 @@
   - unless Club.ownedBy(current_user.id).empty?
     .btn-group
       .btn
-        = link_to 'Verwaltung', admin_dashboard_path
+        = link_to 'Verwaltung', '#admin'
 
   .btn-group
     .btn
@@ -21,4 +21,4 @@
 
   .btn-group
     .btn
-      = ga_button_link_to('Turniere bearbeiten | anschauen', user_tournaments_path(current_user), {toggle: 'modal'}, 'Tournaments', 'Show/Edit')
+      = ga_button_link_to('Turniere bearbeiten | anschauen', '#tournaments', {}, 'Tournaments', 'Show/Edit')

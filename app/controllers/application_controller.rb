@@ -23,7 +23,11 @@ class ApplicationController < ActionController::Base
     @paths = [root_path]
     if user_signed_in?
       @paths << user_tournaments_path(current_user)
-      @paths << admin_dashboard_path if @admin
+      if @admin
+        Club.ownedBy(current_user.id).each do |club|
+          @paths << admin_dashboard_path(club_id: club.id)
+        end
+      end
     end
     @paths.reject!{|p| p == request.path}
   end
