@@ -1,13 +1,15 @@
 - progressOverTimeData = getProgressOverTimeData(active_couple)
 
-- unless progressOverTimeData.empty?
-  #progress-over-time{style: "height: 250px"}
-- else
-  %img#line-placeholder{src: "http://www.placehold.it/500x250&text=Tanze+Turniere+für+einen+Verlauf"}
+.module.semisize.medium-fullsize
+  - unless progressOverTimeData.empty?
+    #progress-over-time{style: "height: 250px"}
+  - else
+    %img#line-placeholder{src: "http://www.placehold.it/500x250&text=Tanze+Turniere+für+einen+Verlauf"}
 
-#latin-standard-balance-tournaments.bar-graph{style: "height: 250px; width: 33%;"}
-#latin-standard-balance-points.bar-graph{style: "height: 250px; width: 33%;"}
-#latin-standard-balance-placings.bar-graph{style: "height: 250px; width: 33%;"}
+.module.semisize.medium-fullsize
+  #latin-standard-balance-tournaments.bar-graph.threeparted.module
+  #latin-standard-balance-points.bar-graph.threeparted.module
+  #latin-standard-balance-placings.bar-graph.threeparted.module
 
 %script
   var TA = window.TA || (window.TA = {});

@@ -5,11 +5,9 @@
   = render "action_required_alert", has_couple: has_couple, has_a_club: has_a_club, has_missing_data: has_missing_data
   = render "shared/user_controlls", has_couple: has_couple
   %br
-  .row-fluid
-    .span6
-      = render "progress_panel", :active_couple => activeCouple
-    .span6
-      = render "statistics", :active_couple => activeCouple
+  .moduls
+    = render "progress_panel", :active_couple => activeCouple
+    = render "statistics", :active_couple => activeCouple
 
   - content_for :assets do
     = render "shared/eagerloadPages", paths: paths

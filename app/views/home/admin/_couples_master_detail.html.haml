@@ -19,16 +19,17 @@
           %h5
             Turniere
           .span12
-            %table.tournament-list.table.table-striped
-              %tr
-                %th Datum
-                %th Zeit
-                %th Art
-                %th Platz
-                %th Turniernr.
-                %th Status
-                %th
-                %th
+            %table.tournament-list.table.table-striped.admin
+              %thead
+                %tr
+                  %th Datum
+                  %th Zeit
+                  %th Art
+                  %th Platz
+                  %th Turniernr.
+                  %th Status
+                  %th
+                  %th
               = render couple.tournaments, admin: true, withoutCouple: true, withoutUserControl:true
 
 

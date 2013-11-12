@@ -1,3 +1,5 @@
+- admin ||= false
+
 #tournaments.page
   .row-fluid
     .span12
@@ -6,17 +8,18 @@
         = @user.activeCouple.to_s
 
   %br/
-  %table.tournament-list.table.table-striped
-    %tr
-      %th Paar
-      %th Datum
-      %th Zeit
-      %th Art
-      %th Platz
-      %th Adresse
-      %th Turniernr.
-      %th Status
-      %th
-      %th
-      %th
+  %table.tournament-list.table.table-striped{:class => "#{'admin' if admin}"}
+    %thead
+      %tr
+        %th Paar
+        %th Datum
+        %th Zeit
+        %th Art
+        %th Platz
+        %th Adresse
+        %th Turniernr.
+        %th Status
+        %th
+        %th
+        %th
     = render @tournaments, admin: false
