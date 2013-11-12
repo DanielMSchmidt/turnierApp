@@ -3,7 +3,7 @@
     %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
     %h3 Turnier absagen
   .modal-body
-    .well.span11
+    .well
       = form_tag(tournament_cancel_path(activeClub), :html => {:class => "form-horizontal"}) do
         .control-group
           = label :number, "Turniernummer", :class =>"control-label"
