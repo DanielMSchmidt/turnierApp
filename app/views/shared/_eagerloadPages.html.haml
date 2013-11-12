@@ -8,29 +8,21 @@
     calls = for path in paths
       $.ajax(
         url: path
-        beforeSend: () =>
-          $("[data-effeckt-page]").addClass(activeClass)
         success: (data) =>
-          page = $(data).find("[data-effeckt-page]")
-          newName = $(page).data("effecktPage")
-          if $("[data-effeckt-page=" + newName+ "]").length == 0
-            page.insertAfter($("[data-effeckt-page]").last())
+          page = $(data).find(".page:first")
+          page.insertAfter($(".page").last())
 
         error: (data) ->
           console.log("Failed to load content, result was:")
           console.log(data)
+
         complete: () ->
-          $("[data-effeckt-page]:not(." + activeClass + ")").addClass(inactiveClass)
           numberOfCalls++
           TA.graphs()
+
           if numberOfCalls == #{paths.length}
-            $("[data-effeckt-transition-page]").click( (e) ->
-              e.preventDefault()
-              navToPage = $(this).data("effecktTransitionPage")
-              $("[data-effeckt-page]." + activeClass).addClass(inactiveClass).removeClass(activeClass)
-              $("[data-effeckt-page='" + navToPage + "']").addClass(activeClass).removeClass(inactiveClass)
-              $(window).resize()
-            )
+            # TODO: Exchage links
+            console.log('I has ready')
       )
 
     exchangeLinks = (callback, path) ->
@@ -44,5 +36,5 @@
           $(link).attr("data-effeckt-transition-page", pageName)
           link.href = ""
       )
-    exchangeLinks(calls[i], paths[i]) for i in #{(0..paths.length).to_a}
+    #exchangeLinks(calls[i], paths[i]) for i in #{(0..paths.length).to_a}
   )
