@@ -5,6 +5,7 @@ class CouplesController < ApplicationController
   # POST /couples.json
   def create
     @couple = Couple.createFromParams(params ,true)
+    # TODO: Use ability checking here
     if @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
@@ -19,6 +20,7 @@ class CouplesController < ApplicationController
   # PUT /couples/1.json
   def update
     @couple = Couple.createFromParams( params,false)
+    # TODO: Use ability checking here
     if @couple && @couple.consistsOfCurrentUser(current_user)
       if @couple.save
         @couple.activate
@@ -48,6 +50,7 @@ class CouplesController < ApplicationController
 
   # TODO: Dry up
   def levelup
+    # TODO: Use ability checking here
     couple = current_user.activeCouple
     if params[:kind] == 'latin'
       couple.latin.levelUp
@@ -58,6 +61,7 @@ class CouplesController < ApplicationController
   end
 
   def reset
+    # TODO: Use ability checking here
     couple = current_user.activeCouple
     if params[:kind] == 'latin'
       couple.latin.reset

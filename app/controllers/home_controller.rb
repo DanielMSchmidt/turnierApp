@@ -4,6 +4,8 @@ class HomeController < ApplicationController
   def index
     if user_signed_in?
       checkIfUserIsReadyToStart(current_user)
+
+      # TODO: Use ability checking here
       if Club.ownedBy(current_user).any?
         @admin = true
         setClubs(false)
@@ -18,6 +20,7 @@ class HomeController < ApplicationController
 
   def admin
     setClubs
+    # TODO: Use ability checking here
     if @user_clubs.empty?
       @admin = false
       redirect_to root_path
@@ -49,6 +52,7 @@ class HomeController < ApplicationController
   end
 
   def setClubs(redirect=true)
+    # TODO: Use ability checking here
     @user_clubs = Club.ownedBy(current_user)
     if @user_clubs.nil?
       @user_clubs = Club.trainedBy(current_user)

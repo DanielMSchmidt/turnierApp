@@ -56,8 +56,12 @@ class User < ActiveRecord::Base
     couple
   end
 
-  # find users
+  # ability check
+  def isAllowedTo(permission)
+    # TODO: Fill me [permission is hash {manage: club.id}] (manage club / edit couple / is trainer / is admin / can see his tournaments[has a couple])
+  end
 
+  # find users
   def self.getIdByName(name)
     unless isntSet(name)
       user = User.where(name: name).first

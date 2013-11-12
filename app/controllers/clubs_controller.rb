@@ -75,6 +75,7 @@ class ClubsController < ApplicationController
   end
 
   def transferOwnership
+    # TODO: Use ability checking here
     @club = Club.find(params[:club_id])
     new_user = User.find(params[:user_id])
     @club.transferTo(new_user)
@@ -85,6 +86,7 @@ class ClubsController < ApplicationController
   def cancel
     club = Club.find(params[:club_id])
 
+    # TODO: Use ability checking here
     # Check access
     redirect_to root_path, error: t("club.cancel.forbidden") and return unless club.is_owner(current_user)
     redirect_to root_path, error: t("club.cancel.fail") and return if club.tournaments.nil?

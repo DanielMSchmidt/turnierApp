@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   def setLazyloadPaths
     @paths = [root_path]
     if user_signed_in?
+      # TODO: Use ability checking here
       @paths << user_tournaments_path(current_user)
       if @admin
         Club.ownedBy(current_user.id).each do |club|

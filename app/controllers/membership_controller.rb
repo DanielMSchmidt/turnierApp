@@ -7,6 +7,7 @@ class MembershipController < ApplicationController
   end
 
   def verify
+    # TODO: Use ability checking here
     membership = Membership.where(couple_id: params[:couple_id], club_id: params[:club_id]).first
     if membership
       membership.verified = true

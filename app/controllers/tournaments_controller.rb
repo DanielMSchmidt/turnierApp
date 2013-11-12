@@ -12,6 +12,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   # POST /tournaments.json
   def create
+    # TODO: Use ability checking here
     @tournament = Tournament.newForUser(params)
 
     if @tournament.save
@@ -24,6 +25,7 @@ class TournamentsController < ApplicationController
   # PUT /tournaments/1
   # PUT /tournaments/1.json
   def update
+    # TODO: Use ability checking here
     @tournament = Tournament.find(params[:id])
 
     if @tournament.update_attributes(params[:tournament])
@@ -34,6 +36,7 @@ class TournamentsController < ApplicationController
   end
 
   def setAsEnrolled
+    # TODO: Use ability checking here
     tournament = Tournament.find(params[:id])
     if tournament.update_column(:enrolled, true)
       logger.debug "Tournament Number #{params[:id]} was set as enrolled."
@@ -46,6 +49,7 @@ class TournamentsController < ApplicationController
   # DELETE /tournaments/1
   # DELETE /tournaments/1.json
   def destroy
+    # TODO: Use ability checking here
     @tournament = Tournament.find(params[:id])
     @tournament.destroy
 
