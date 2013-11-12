@@ -26,3 +26,5 @@ Versions
   - v0.81     - performance stuff
   - v0.811    - improved UI and fixed bugs
   - v0.812    - made dashboard mobile friendly
+  - v0.813    - fixed bugs with modals
+
