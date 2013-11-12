@@ -17,3 +17,4 @@ Refactorings
     - Dry up
     - move into model
   - introduce [CanCan](https://github.com/ryanb/cancan)
+	- reinitialize the svgs on dashboard on orientation change (http://davidwalsh.name/orientation-change)
