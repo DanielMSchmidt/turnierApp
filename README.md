@@ -25,3 +25,4 @@ Versions
   - v0.8      - complete renewal of fundamental parts and UI
   - v0.81     - performance stuff
   - v0.811    - improved UI and fixed bugs
+	- v0.812    - fixed bugs with modals
