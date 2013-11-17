@@ -9,15 +9,21 @@ class Tournament < ActiveRecord::Base
   validate :noDoubleTournamentsAreAllowed, on: :create
 
   before_destroy :sendMailIfEnrolledTournamentIsDeleted
+  after_save :enhanceTournament
 
   def self.newForUser(params)
-    tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
-    tournament = Tournament.new(tournament_fetcher.run)
+    tournament = Tournament.new()
     tournament.assignToUser(params[:tournament][:user_id])
     tournament.participants = params[:tournament][:participants]
     tournament.place        = params[:tournament][:place]
+    tournament.number        = params[:tournament][:number]
     tournament.fillupMissingData
+
     tournament
+  end
+
+  def enhanceTournament
+    EnhancementWorker.perform_async(self.id, self.number)
   end
 
   def noDoubleTournamentsAreAllowed
@@ -58,7 +64,11 @@ class Tournament < ActiveRecord::Base
   end
 
   def getDate
-    self.date.to_datetime
+    if self.date.nil?
+      Date.today
+    else
+      self.date.to_datetime
+    end
   end
 
   #TODO: Refactor to service object
@@ -113,7 +123,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def latin?
-    return self.kind[-3..-1] == "LAT"
+    return self.kind.nil? || (self.kind[-3..-1] == "LAT")
   end
 
   def shouldSendANotificationMail?

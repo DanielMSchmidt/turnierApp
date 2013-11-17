@@ -14,7 +14,7 @@ FIXME
 ======
 
 - Post tournaments doesn't work anymore / right time to put fetching into a worker job
-- Add sidekiq
-- move enhancement to worker
+
+- fix autoload bug (Worker isn't loaded)
 - check if deployment will work
 - check if foreman export has to be renewed
