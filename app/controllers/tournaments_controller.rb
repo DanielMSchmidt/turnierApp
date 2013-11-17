@@ -40,7 +40,7 @@ class TournamentsController < ApplicationController
     else
       logger.debug "Tournament Number #{params[:id]} couldn't be set as enrolled."
     end
-    redirect_to :back
+    redirect_to root_path
   end
 
   # DELETE /tournaments/1
