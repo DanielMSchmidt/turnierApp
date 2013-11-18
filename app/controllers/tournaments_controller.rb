@@ -14,7 +14,7 @@ class TournamentsController < ApplicationController
   def create
     @tournament = Tournament.newForUser(params)
 
-    if @tournament.save
+    if @tournament.valid?
       redirect_to root_path, notice: t('tournament.create.success')
     else
       redirect_to root_path, error: t('tournament.create.fail')

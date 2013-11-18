@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
-  attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
+  attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about, :fetched
 
   belongs_to :progress
 
@@ -9,21 +9,20 @@ class Tournament < ActiveRecord::Base
   validate :noDoubleTournamentsAreAllowed, on: :create
 
   before_destroy :sendMailIfEnrolledTournamentIsDeleted
-  after_save :enhanceTournament
 
   def self.newForUser(params)
     tournament = Tournament.new()
-    tournament.assignToUser(params[:tournament][:user_id])
     tournament.participants = params[:tournament][:participants]
     tournament.place        = params[:tournament][:place]
     tournament.number        = params[:tournament][:number]
-    tournament.fillupMissingData
 
+    tournament.save
+    tournament.enhanceTournament(params[:tournament][:user_id])
     tournament
   end
 
-  def enhanceTournament
-    EnhancementWorker.perform_async(self.id, self.number)
+  def enhanceTournament(user_id)
+    TournamentEnhancementWorker.perform_async(id, number, user_id)
   end
 
   def noDoubleTournamentsAreAllowed
@@ -64,11 +63,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def getDate
-    if self.date.nil?
-      Date.today
-    else
-      self.date.to_datetime
-    end
+    self.date.to_datetime
   end
 
   #TODO: Refactor to service object
@@ -123,7 +118,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def latin?
-    return self.kind.nil? || (self.kind[-3..-1] == "LAT")
+    return (self.kind[-3..-1] == "LAT")
   end
 
   def shouldSendANotificationMail?

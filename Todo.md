@@ -15,6 +15,6 @@ FIXME
 
 - Post tournaments doesn't work anymore / right time to put fetching into a worker job
 
-- fix autoload bug (Worker isn't loaded)
 - check if deployment will work
 - check if foreman export has to be renewed
+- check why address fetching doesn't work anymore

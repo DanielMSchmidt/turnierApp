@@ -1,7 +1,10 @@
 # -*- encoding : utf-8 -*-
 TurnierList::Application.routes.draw do
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  # Todo: Solve nicer
+  authenticate :user, lambda { |u| u.email == 'daniel.maximilian@gmx.net' } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   resources :progresses, only: [:create, :update, :destroy]
   resources :couples, only: [:create, :update, :destroy]
