@@ -11,15 +11,15 @@ class TournamentFetcher
     @tournament_data
   end
 
+  def rerun
+    Rails.cache.delete("tf-#{@number}")
+    get_cached_tournament_data
+  end
+
   def get_cached_tournament_data
-    cache_string = "tf-#{@number}"
-    cached_hash = Rails.cache.read(cache_string)
-    return cached_hash if cached_hash
-
-    uncached_hash = self.get_tournament_data
-    Rails.cache.write(cache_string, uncached_hash)
-
-    uncached_hash
+    return Rails.cache.fetch("tf-#{@number}") do
+      self.get_tournament_data
+    end
   end
 
   def get_tournament_data
@@ -71,7 +71,7 @@ class TournamentFetcher
   end
 
   def extract_address(content)
-    convert_to_text(content).split("\t").join("").split("\n").join(" ").strip
+    convert_to_text(content).split("\t").join("").split("\n").delete_if{|x| x.blank? }.join(" ")
   end
 
   def convert_to_text(content)
