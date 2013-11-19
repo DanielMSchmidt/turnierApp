@@ -36,6 +36,7 @@ class TournamentFetcher
     search_form.nr = number
     search_form.submit
 
+    # TODO: Maybe let it wait a sec before getting the data
     @mechanize.page
   end
 
