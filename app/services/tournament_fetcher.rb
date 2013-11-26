@@ -3,7 +3,9 @@ class TournamentFetcher
   attr_accessor :kind, :time, :date, :notes, :address
   def initialize(number)
     @number = number
-    @mechanize = Mechanize.new
+    @mechanize = Mechanize.new { |agent|
+      agent.read_timeout = 3
+    }
     @tournament_data = get_cached_tournament_data
   end
 
@@ -36,7 +38,6 @@ class TournamentFetcher
     search_form.nr = number
     search_form.submit
 
-    # TODO: Maybe let it wait a sec before getting the data
     @mechanize.page
   end
 
