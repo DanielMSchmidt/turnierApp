@@ -350,7 +350,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.8)
     temple (0.6.7)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
@@ -441,7 +440,6 @@ DEPENDENCIES
   simple_form
   simplecov
   sinatra (>= 1.3.0)
-  sqlite3 (~> 1.3.8)
   therubyracer
   uglifier (>= 1.0.3)
   whenever
