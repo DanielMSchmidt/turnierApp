@@ -10,7 +10,7 @@ gem 'haml'
 gem 'simple_form'
 gem 'devise'
 gem 'will_paginate', '~> 3.0'
-gem 'bootstrap-sass', '~> 3.0.2.0'
+gem 'bootstrap-sass', '~> 2.3.2.0'
 gem 'bootstrap-datepicker-rails'
 
 #Data fetching
@@ -53,7 +53,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'sqlite3', "~> 1.3.8"
   gem 'bullet'
   gem 'brakeman'
 
