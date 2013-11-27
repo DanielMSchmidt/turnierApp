@@ -27,12 +27,15 @@ role :db, "hosting.bnck.de", :primary => true         # This is where Rails migr
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
     run "sudo supervisorctl start #{application}"
+    run "sudo supervisorctl start #{application}-sidekiq"
   end
   task :stop, :roles => :app, :except => { :no_release => true } do
     run "sudo supervisorctl stop #{application}"
+    run "sudo supervisorctl stop #{application}-sidekiq"
   end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "sudo supervisorctl restart #{application}"
+    run "sudo supervisorctl restart #{application}-sidekiq"
   end
 
   task :copy_database_yml do
