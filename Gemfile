@@ -10,7 +10,7 @@ gem 'haml'
 gem 'simple_form'
 gem 'devise'
 gem 'will_paginate', '~> 3.0'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.0.2.0'
 gem 'bootstrap-datepicker-rails'
 
 #Data fetching

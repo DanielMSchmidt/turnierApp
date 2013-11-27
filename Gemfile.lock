@@ -396,7 +396,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-datepicker-rails
-  bootstrap-sass
+  bootstrap-sass (~> 3.0.2.0)
   brakeman
   bullet
   capistrano
