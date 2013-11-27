@@ -50,7 +50,7 @@ class TournamentsController < ApplicationController
     @tournament.destroy
 
     respond_to do |format|
-      format.html { redirect_to user_tournaments_path(current_user), success: t('tournament.destroy') }
+      format.html { redirect_to root_path, success: t('tournament.destroy') }
       format.json { head :no_content }
     end
   end
