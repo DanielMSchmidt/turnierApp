@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '~> 3.2.15'
 
 gem 'puma' #faster webserver
 gem 'foreman'
@@ -16,7 +16,6 @@ gem 'bootstrap-datepicker-rails'
 #Data fetching
 gem 'mechanize'
 gem 'nokogiri'
-gem 'libv8', '~> 3.11.8'
 
 #Caching
 gem 'redis-rails'
@@ -72,7 +71,6 @@ group :test do
 
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
-  gem "capybara"
   gem 'shoulda-matchers'
   gem 'shoulda-context'
   gem 'factory_girl_rails'
@@ -88,8 +86,8 @@ group :assets do
 
   gem 'modernizr-rails'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
+  gem 'libv8'
+  gem 'therubyracer', :platforms => :ruby, :require => 'v8'
   gem 'compass-rails'
   gem 'uglifier', '>= 1.0.3'
 end
