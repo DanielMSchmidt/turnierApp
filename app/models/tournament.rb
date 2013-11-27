@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
-  attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about
+  attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about, :fetched
 
   belongs_to :progress
 
@@ -11,13 +11,18 @@ class Tournament < ActiveRecord::Base
   before_destroy :sendMailIfEnrolledTournamentIsDeleted
 
   def self.newForUser(params)
-    tournament_fetcher = TournamentFetcher.new(params[:tournament][:number])
-    tournament = Tournament.new(tournament_fetcher.run)
-    tournament.assignToUser(params[:tournament][:user_id])
+    tournament = Tournament.new()
     tournament.participants = params[:tournament][:participants]
     tournament.place        = params[:tournament][:place]
-    tournament.fillupMissingData
+    tournament.number        = params[:tournament][:number]
+
+    tournament.save
+    tournament.enhanceTournament(params[:tournament][:user_id])
     tournament
+  end
+
+  def enhanceTournament(user_id)
+    TournamentEnhancementWorker.perform_async(id, number, user_id)
   end
 
   def noDoubleTournamentsAreAllowed
@@ -113,7 +118,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def latin?
-    return self.kind[-3..-1] == "LAT"
+    return (self.kind[-3..-1] == "LAT")
   end
 
   def shouldSendANotificationMail?

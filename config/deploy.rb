@@ -1,6 +1,7 @@
 require "rvm/capistrano"
 require 'bundler/capistrano'
-
+require "capistrano/setup"
+require "capistrano/deploy"
 
 set :deploy_to, "/home/www/dschmidt/turnierapp"
 set :deploy_via, :remote_cache

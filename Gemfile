@@ -27,6 +27,8 @@ gem 'wkhtmltopdf-binary'
 
 #Tasks
 gem 'whenever', :require => false
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
 
 
 group :production do
