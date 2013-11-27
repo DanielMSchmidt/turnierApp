@@ -33,7 +33,6 @@ TurnierList::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-
   # Care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
 
@@ -42,13 +41,4 @@ TurnierList::Application.configure do
   config.action_mailer.smtp_settings = { :address => "127.0.0.1", :port => 1025 }
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
-
-  #Bullet gem configurations
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.alert = true
-    Bullet.bullet_logger = true
-    Bullet.console = true
-    Bullet.rails_logger = true
-  end
 end

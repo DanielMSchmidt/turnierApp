@@ -10,7 +10,7 @@ gem 'haml'
 gem 'simple_form'
 gem 'devise'
 gem 'will_paginate', '~> 3.0'
-gem 'bootstrap-sass', '~> 3.0.2.0'
+gem 'bootstrap-sass', '~> 2.3.2.0'
 gem 'bootstrap-datepicker-rails'
 
 #Data fetching
@@ -29,10 +29,11 @@ gem 'whenever', :require => false
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 
+gem 'mysql2'
 
 group :production do
   gem 'newrelic_rpm'
-  gem 'mysql2'
+
 end
 
 group :development do
@@ -53,7 +54,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'bullet'
   gem 'brakeman'
 
