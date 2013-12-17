@@ -31,6 +31,9 @@ gem 'sinatra', '>= 1.3.0', :require => nil
 
 gem 'mysql2'
 
+#App configuration
+gem 'figaro'
+
 group :production do
   gem 'newrelic_rpm'
 
@@ -66,8 +69,6 @@ end
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
-
-  gem 'dotenv-rails'
 
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
