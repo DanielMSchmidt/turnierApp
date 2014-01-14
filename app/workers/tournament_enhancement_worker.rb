@@ -9,7 +9,7 @@ class TournamentEnhancementWorker
 
     if [:kind, :address, :date].map{|x| tournament_infos[x].blank? }.include?(true)
       logger.debug "Worker abords"
-      raise "There was something blank fetched"
+      raise "There was something blank fetched: #{tournament_infos}"
       return false
     end
 
