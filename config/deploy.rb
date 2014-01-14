@@ -48,7 +48,6 @@ namespace :deploy do
   end
 
   task :copy_application_yml do
-    run "rm #{release_path}/config/application.yml"
     run "cp #{shared_path}/application.yml #{release_path}/config/application.yml"
   end
 end
