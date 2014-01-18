@@ -46,8 +46,8 @@
       - if Rails.env.production?
         :javascript
           var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', "#{ENV['GA_ACCOUNT']}"]);
-          _gaq.push(['_setDomainName', "#{ENV['GA_DOMAIN_NAME']}"]);
+          _gaq.push(['_setAccount', "#{Figaro.env.GA_ACCOUNT}"]);
+          _gaq.push(['_setDomainName', "#{Figaro.env.GA_DOMAIN_NAME}"]);
           _gaq.push(['_setSiteSpeedSampleRate', 100]);
           _gaq.push(['_trackPageview']);
 

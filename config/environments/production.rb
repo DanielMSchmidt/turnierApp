@@ -51,8 +51,8 @@ TurnierList::Application.configure do
 
   # Mailer
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { :address => "smtp.mandrillapp.com", :port => 587, :authentication => :plain , :user_name => ENV['MAILER_NAME'], :password => ENV['MAILER_PWD'] }
-  config.action_mailer.default_url_options = { :host => ENV['MAILER_URL'] }
+  config.action_mailer.smtp_settings = { :address => "smtp.mandrillapp.com", :port => 587, :authentication => :plain , :user_name => Figaro.env.MAILER_NAME, :password => Figaro.env.MAILER_PWD }
+  config.action_mailer.default_url_options = { :host => Figaro.env.MAILER_URL }
   config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode

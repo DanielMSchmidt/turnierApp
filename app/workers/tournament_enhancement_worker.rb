@@ -7,11 +7,13 @@ class TournamentEnhancementWorker
     tournament_infos = TournamentFetcher.new(tournament_number).run
     tournament = Tournament.find(tournament_id)
 
-    if [:kind, :address, :date].map{|x| tournament_infos[x].blank? }.include?(true)
-      logger.debug "Worker abords"
-      raise "There was something blank fetched"
-      return false
-    end
+
+    # TODO: Fix data fetching and make worker robust, so it doesn't abort in the 5th time, but keeps the result
+    # if [:kind, :address, :date].map{|x| tournament_infos[x].blank? }.include?(true)
+    #   logger.debug "Worker abords"
+    #   raise "There was something blank fetched: #{tournament_infos}"
+    #   return false
+    # end
 
     [:kind, :address, :date, :notes].each do |key|
       tournament[key] = tournament_infos[key]

@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class NotificationMailer < ActionMailer::Base
-  default from: "#{ENV['MAILER_ADDRESS']}"
+  default from: Figaro.env.mailer_address
 
   def enrollCouples(user, club)
     @club = club

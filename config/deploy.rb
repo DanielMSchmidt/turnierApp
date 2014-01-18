@@ -46,7 +46,12 @@ namespace :deploy do
     run "rm #{release_path}/.env"
     run "cp #{shared_path}/env #{release_path}/.env"
   end
+
+  task :copy_application_yml do
+    run "cp #{shared_path}/application.yml #{release_path}/config/application.yml"
+  end
 end
 
 before "deploy:assets:precompile", "deploy:copy_database_yml"
+before "deploy:assets:precompile", "deploy:copy_application_yml"
 after "deploy", "deploy:cleanup"
