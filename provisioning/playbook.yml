@@ -1,0 +1,103 @@
+---
+- hosts: server
+  vars:
+    http_port: 80
+    max_clients: 200
+  vars:
+    user: vagrant
+    home_directory: /home/${user}
+    app_directory: /vagrant
+
+    ruby_version: 2.0.0-p353
+    rails_env: production
+
+    pg_user: ${user}
+    pg_password: eI48mgNzPERB8LxAXkPj2XWjoVlA
+    pg_db: seenex-${rails_env}
+
+    application_host: fashionmag.dev
+    schema: http
+    schema_port: 80
+
+  sudo: True
+
+  tasks:
+  - name: General | install required packages.
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - supervisor
+      - nginx-full
+      - redis-server
+      - python-software-properties
+      - python
+      - g++
+      - make
+      - openjdk-7-jre-headless
+
+  - name: General | add node.js PPA
+    apt_repository: repo='ppa:chris-lea/node.js'
+
+  - name: General | install node
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - nodejs
+
+  - name: Application | copy supervisor configuration
+    template: src=templates/supervisord/backend.conf dest=/etc/supervisor/conf.d/backend.conf
+
+  - name: General | make sure supervisor runs
+    service: name=supervisor state=started
+
+  - name: General | install ansible dependencies
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - libpq-dev
+      - python-psycopg2
+
+  - name: General | install programmer tools
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - vim
+
+  - name: General | install rbenv dependencies
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - curl
+      - git-core
+
+  - name: General | install rbenv
+    action: curl https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
+
+  - name: put rbenv part in bashrc
+    lineinfile: dest=~.bashrc state=present line=export RBENV_ROOT="${HOME}/.rbenv" \n if [ -d "${RBENV_ROOT}" ]; then \n export PATH="${RBENV_ROOT}/bin:${PATH}" \n eval "$(rbenv init -)" \n fi
+
+  - name: source bashrc
+    action: source ~/.bashrc
+
+  - name: install dependencies for rbenv
+    action: rbenv bootstrap-ubuntu-12-04
+
+  - name: install gems
+    gem: name=$item
+    with_items:
+      - bundler
+      - rdoc
+      - rake
+      - rails
+
+  - name: rehash rbenv
+    action: rbenv rehash
+
+  - name: install application gems
+    command: bundle install --no-deployment chdir=/vagrant
+
+  # Nginx setup
+  - name: Nginx | copy site configuration
+    template: src=templates/nginx/seenex.js dest=/etc/nginx/sites-enabled/seenex owner=root group=root
+
+  - name: Nginx | remove default configuration
+    file: path=/etc/nginx/sites-enabled/default state=absent
+
+  # Restart services
+  - name: Restart Nginx
+    action: service name=nginx state=restarted
