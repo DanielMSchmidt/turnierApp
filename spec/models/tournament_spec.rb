@@ -113,4 +113,22 @@ describe "Tournament" do
       tournament.statusClasses.should eq('icons-ok')
     end
   end
+  describe "startclass should calculate right" do
+    it "should be D for HGR D STD" do
+      tournament.stub(:kind).and_return('HGR D STD')
+      tournament.start_class.should eq('D')
+    end
+    it "should be C for Sen IV C LAT" do
+      tournament.stub(:kind).and_return('Sen IV C LAT')
+      tournament.start_class.should eq('C')
+    end
+    it "should be B for JUN II B LAT" do
+      tournament.stub(:kind).and_return('JUN II B LAT')
+      tournament.start_class.should eq('B')
+    end
+    it "should be A for HGR II A ST" do
+      tournament.stub(:kind).and_return('HGR II A ST')
+      tournament.start_class.should eq('A')
+    end
+  end
 end
