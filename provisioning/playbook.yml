@@ -8,12 +8,8 @@
     home_directory: /home/${user}
     app_directory: /vagrant
 
-    ruby_version: 2.0.0-p353
-    rails_env: production
-
-    pg_user: ${user}
-    pg_password: eI48mgNzPERB8LxAXkPj2XWjoVlA
-    pg_db: seenex-${rails_env}
+    ruby_version: 1.9.3-p448
+    rails_env: development
 
     application_host: fashionmag.dev
     schema: http
@@ -46,7 +42,7 @@
     template: src=templates/supervisord/backend.conf dest=/etc/supervisor/conf.d/backend.conf
 
   - name: General | make sure supervisor runs
-    service: name=supervisor state=started
+    service: name=supervisor state=started enabled=yes
 
   - name: General | install ansible dependencies
     action: apt pkg=$item state=installed update-cache=yes
@@ -63,19 +59,35 @@
     action: apt pkg=$item state=installed update-cache=yes
     with_items:
       - curl
-      - git-core
+      - build-essential
+      - git
+      - libcurl4-openssl-dev
+      - libreadline-dev
+      - libssl-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - zlib1g-dev
 
-  - name: General | install rbenv
-    action: curl https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
+  - name: Rbenv | clone repository
+    git: repo=https://github.com/sstephenson/rbenv.git dest=/.rbenv
 
-  - name: put rbenv part in bashrc
-    lineinfile: dest=~.bashrc state=present line=export RBENV_ROOT="${HOME}/.rbenv" \n if [ -d "${RBENV_ROOT}" ]; then \n export PATH="${RBENV_ROOT}/bin:${PATH}" \n eval "$(rbenv init -)" \n fi
+  - name: Rbenv | add plugins directory
+    file: state=directory path=~/.rbenv/plugins
 
-  - name: source bashrc
-    action: source ~/.bashrc
+  - name: install plugins
+    git: repo=https://github.com/sstephenson/ruby-build.git dest=~/.rbenv/plugins/ruby-build
 
-  - name: install dependencies for rbenv
-    action: rbenv bootstrap-ubuntu-12-04
+  - name: update PATH in ~/.bashrc for rb-env
+    action: lineinfile dest=/home/$user/.bashrc line=export\ PATH="$HOME/.rbenv/bin:$PATH" regexp=PATH.*rbenv
+
+  - name: add rb-env init to ~/.bashrc
+    action: lineinfile dest=/home/$user/.bashrc line='eval "$(rbenv init -)"' regexp=eval.*rbenv
+
+  - name: install ruby
+    action: shell rbenv install $ruby_version creates=/home/$user/.rbenv/shims/ruby
+
+  - name: make ruby global
+    action: shell /home/$user/.rbenv/bin/rbenv global $ruby_version
 
   - name: install gems
     gem: name=$item
@@ -86,7 +98,7 @@
       - rails
 
   - name: rehash rbenv
-    action: rbenv rehash
+    shell: source ~/.bashrc && rbenv rehash executable=/bin/bash
 
   - name: install application gems
     command: bundle install --no-deployment chdir=/vagrant
@@ -100,4 +112,4 @@
 
   # Restart services
   - name: Restart Nginx
-    action: service name=nginx state=restarted
+    action: service name=nginx state=restarted enabled=yes
