@@ -18,17 +18,15 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    @couple = Couple.createFromParams( params,false)
-    if @couple && @couple.consistsOfCurrentUser(current_user)
-      if @couple.save
-        @couple.activate
-        # FIXME: Shouldn't be needed, investigate here!
-        @couple.standard.start_class = @standard_class
-        @couple.standard.save!
-        @couple.latin.start_class = @latin_class
-        @couple.latin.save!
-        redirect_to root_path, notice: t('couple.update.success')
-      end
+    @couple = Couple.createFromParams(params, false)
+    if @couple && @couple.consistsOfCurrentUser(current_user) && @couple.save
+      @couple.activate
+      # FIXME: Shouldn't be needed, investigate here!
+      @couple.standard.start_class = @standard_class
+      @couple.standard.save!
+      @couple.latin.start_class = @latin_class
+      @couple.latin.save!
+      redirect_to root_path, notice: t('couple.update.success')
     else
       redirect_to root_path, error: t('couple.create.fail')
     end

@@ -15,12 +15,20 @@ class Couple < ActiveRecord::Base
   after_create :buildProgresses
 
   validate :dontDanceWithYourself
+  validate :dontDanceWithOtherPeoplesPartner
 
   # Validators
   def dontDanceWithYourself
     if self.man_id == self.woman_id
       errors.add(:man_id, "Du kannst nicht mit dir selbst tanzen")
       errors.add(:woman_id, "Du kannst nicht mit dir selbst tanzen")
+    end
+  end
+
+  def dontDanceWithOtherPeoplesPartner
+    unless Couple.containingIds(self.userIds).empty?
+      errors.add(:man_id, "Diese Person hat schon einen Partner")
+      errors.add(:woman_id, "Diese Person hat schon einen Partner")
     end
   end
 
