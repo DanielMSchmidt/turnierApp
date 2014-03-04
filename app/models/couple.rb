@@ -52,10 +52,14 @@ class Couple < ActiveRecord::Base
     end
 
     #Add Progresses
-    latin = couple.progresses.new(start_class: latinClass, kind: 'latin')
-    standard = couple.progresses.new(start_class: standardClass, kind: 'standard')
+    couple.progresses.new(start_class: latinClass, kind: 'latin')
+    couple.progresses.new(start_class: standardClass, kind: 'standard')
 
     couple
+  end
+
+  def self.createDummyCoupleFor(user)
+    Couple.create(man_id: user.id, active: true)
   end
 
   # Initialize
@@ -152,5 +156,9 @@ class Couple < ActiveRecord::Base
 
   def to_s_two_lines
     "#{self.getWoman.name} <br> #{self.getMan.name}"
+  end
+
+  def belongsTo(user)
+    self.userIds.include? user.id
   end
 end
