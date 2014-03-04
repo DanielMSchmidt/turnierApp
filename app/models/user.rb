@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   end
 
   def buildEmptyCouple
-    Couple.create(man_id: self.id, active: true)
+    Couple.createDummyCoupleFor(self)
   end
 
   # Accessors

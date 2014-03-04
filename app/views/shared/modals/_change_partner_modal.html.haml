@@ -18,6 +18,10 @@
           .controls
             = f.text_field :woman, data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, value: active_couple.getWoman.name, autocomplete: "off"
 
+        .control-group
+          .controls
+            = link_to 'Zurücksetzen', remove_active_couple_path(id: current_user.activeCouple), :class => "btn btn-danger"
+
         %hr
 
         .control-group

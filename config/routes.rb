@@ -12,6 +12,7 @@ TurnierList::Application.routes.draw do
   get "/couple/levelup/:kind" => "couples#levelup", as: :couple_level_up
   get "/couple/reset/:kind" => "couples#reset", as: :couple_reset
   match "/couple/change" => "couples#change", as: :change_active_couple
+  get "/couple/remove/:id" => "couples#destroy", as: :remove_active_couple
 
   match "/tournament/:id/enroll" => "tournaments#setAsEnrolled", as: :just_enrolled
   match "/user/:id/tournaments" => "tournaments#ofUser", as: :user_tournaments

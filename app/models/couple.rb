@@ -15,12 +15,20 @@ class Couple < ActiveRecord::Base
   after_create :buildProgresses
 
   validate :dontDanceWithYourself
+  validate :dontDanceWithOtherPeoplesPartner
 
   # Validators
   def dontDanceWithYourself
     if self.man_id == self.woman_id
       errors.add(:man_id, "Du kannst nicht mit dir selbst tanzen")
       errors.add(:woman_id, "Du kannst nicht mit dir selbst tanzen")
+    end
+  end
+
+  def dontDanceWithOtherPeoplesPartner
+    unless Couple.containingIds(self.userIds).empty?
+      errors.add(:man_id, "Diese Person hat schon einen Partner")
+      errors.add(:woman_id, "Diese Person hat schon einen Partner")
     end
   end
 
@@ -44,10 +52,14 @@ class Couple < ActiveRecord::Base
     end
 
     #Add Progresses
-    latin = couple.progresses.new(start_class: latinClass, kind: 'latin')
-    standard = couple.progresses.new(start_class: standardClass, kind: 'standard')
+    couple.progresses.new(start_class: latinClass, kind: 'latin')
+    couple.progresses.new(start_class: standardClass, kind: 'standard')
 
     couple
+  end
+
+  def self.createDummyCoupleFor(user)
+    Couple.create(man_id: user.id, active: true)
   end
 
   # Initialize
@@ -144,5 +156,9 @@ class Couple < ActiveRecord::Base
 
   def to_s_two_lines
     "#{self.getWoman.name} <br> #{self.getMan.name}"
+  end
+
+  def belongsTo(user)
+    self.userIds.include? user.id
   end
 end

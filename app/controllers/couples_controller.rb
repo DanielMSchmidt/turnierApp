@@ -18,17 +18,15 @@ class CouplesController < ApplicationController
   # PUT /couples/1
   # PUT /couples/1.json
   def update
-    @couple = Couple.createFromParams( params,false)
-    if @couple && @couple.consistsOfCurrentUser(current_user)
-      if @couple.save
-        @couple.activate
-        # FIXME: Shouldn't be needed, investigate here!
-        @couple.standard.start_class = @standard_class
-        @couple.standard.save!
-        @couple.latin.start_class = @latin_class
-        @couple.latin.save!
-        redirect_to root_path, notice: t('couple.update.success')
-      end
+    @couple = Couple.createFromParams(params, false)
+    if @couple && @couple.consistsOfCurrentUser(current_user) && @couple.save
+      @couple.activate
+      # FIXME: Shouldn't be needed, investigate here!
+      @couple.standard.start_class = @standard_class
+      @couple.standard.save!
+      @couple.latin.start_class = @latin_class
+      @couple.latin.save!
+      redirect_to root_path, notice: t('couple.update.success')
     else
       redirect_to root_path, error: t('couple.create.fail')
     end
@@ -38,11 +36,13 @@ class CouplesController < ApplicationController
   # DELETE /couples/1.json
   def destroy
     @couple = Couple.find(params[:id])
-    @couple.destroy
 
-    respond_to do |format|
-      format.html { redirect_to couples_url }
-      format.json { head :no_content }
+    if @couple.belongsTo(current_user)
+      @couple.deactivate # We don't destroy, we just deactivate
+      Couple.createDummyCoupleFor(current_user)
+      redirect_to root_path, notice: t('couple.destroy.success')
+    else
+      redirect_to root_path, notice: t('couple.destroy.fail')
     end
   end
 
