@@ -20,10 +20,10 @@ class CouplesController < ApplicationController
     if @couple && @couple.consistsOfCurrentUser(current_user) && @couple.save
       @couple.activate
       # FIXME: Shouldn't be needed, investigate here!
-      self.standard.start_class = @standard_class
-      self.standard.save!
-      self.latin.start_class = @latin_class
-      self.latin.save!
+      @couple.standard.start_class = @standard_class
+      @couple.standard.save!
+      @couple.latin.start_class = @latin_class
+      @couple.latin.save!
       redirect_to root_path, notice: t('couple.update.success')
     else
       redirect_to root_path, error: t('couple.update.fail')
