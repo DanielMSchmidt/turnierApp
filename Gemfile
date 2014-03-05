@@ -25,9 +25,9 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 #Tasks
-gem 'whenever', :require => false
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'sidetiq'
 
 gem 'mysql2'
 

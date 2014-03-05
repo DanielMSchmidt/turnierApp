@@ -14,7 +14,7 @@ class Tournament < ActiveRecord::Base
     tournament = Tournament.new()
     tournament.participants = params[:tournament][:participants]
     tournament.place        = params[:tournament][:place]
-    tournament.number        = params[:tournament][:number]
+    tournament.number       = params[:tournament][:number]
 
     tournament.save
     tournament.enhanceTournament(params[:tournament][:user_id])
@@ -26,7 +26,6 @@ class Tournament < ActiveRecord::Base
   end
 
   def noDoubleTournamentsAreAllowed
-    Tournament.where(number: number, progress_id: progress_id).size == 0
     errors.add(:double, "was allready added") unless Tournament.where(:number => number, :progress_id => progress_id).size == 0
   end
 
