@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 TurnierList::Application.routes.draw do
   require 'sidekiq/web'
+  require 'sidetiq/web'
+
   # Todo: Solve nicer
   authenticate :user, lambda { |u| u.email == 'daniel.maximilian@gmx.net' } do
     mount Sidekiq::Web => '/sidekiq'

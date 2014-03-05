@@ -50,9 +50,20 @@ class Club < ActiveRecord::Base
     end
   end
 
+  def unenrolledTournaments
+    self.tournaments.select{|t| !t.enrolled?}
+  end
+
   def unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified
     return false if self.tournaments.nil?
     self.tournaments.collect{|x| x.shouldSendANotificationMail?}.include?(true)
+  end
+
+  def resultsForTime(from, to)
+    tournaments = self.tournaments
+    points = tournaments.collect{|t| t.points || 0}.push(0).inject(:+)
+    placings = tournaments.collect{|t| t.placing || 0}.push(0).inject(:+)
+    {points: points, placings: placings}
   end
 
   # Verified couples & users

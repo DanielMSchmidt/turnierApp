@@ -26,6 +26,8 @@ de:
       invalid_token: 'Der Anmelde-Token ist ungueltig.'
       timeout: 'Deine Sitzung ist abgelaufen, bitte melde Dich erneut an.'
       inactive: 'Dein Account ist nicht aktiv.'
+      user:
+        not_found_in_database: 'Diese E-Mailadresse ist uns nicht bekannt.'
     sessions:
       signed_in: 'Erfolgreich angemeldet.'
       signed_out: 'Erfolgreich abgemeldet.'

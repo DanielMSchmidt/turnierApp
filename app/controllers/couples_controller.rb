@@ -4,12 +4,10 @@ class CouplesController < ApplicationController
   # POST /couples
   # POST /couples.json
   def create
-    @couple = Couple.createFromParams(params ,true)
-    if @couple.consistsOfCurrentUser(current_user)
-      if @couple.save
-        @couple.activate
-        redirect_to root_path, notice: t('couple.create.success')
-      end
+    @couple = Couple.createFromParams(params, true)
+    if @couple && @couple.consistsOfCurrentUser(current_user) && @couple.save
+      @couple.activate
+      redirect_to root_path, notice: t('couple.create.success')
     else
       redirect_to root_path, error: t('couple.create.fail')
     end
@@ -22,13 +20,10 @@ class CouplesController < ApplicationController
     if @couple && @couple.consistsOfCurrentUser(current_user) && @couple.save
       @couple.activate
       # FIXME: Shouldn't be needed, investigate here!
-      @couple.standard.start_class = @standard_class
-      @couple.standard.save!
-      @couple.latin.start_class = @latin_class
-      @couple.latin.save!
+      @couple.buildProgresses
       redirect_to root_path, notice: t('couple.update.success')
     else
-      redirect_to root_path, error: t('couple.create.fail')
+      redirect_to root_path, error: t('couple.update.fail')
     end
   end
 
