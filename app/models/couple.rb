@@ -26,7 +26,7 @@ class Couple < ActiveRecord::Base
   end
 
   def dontDanceWithOtherPeoplesPartner
-    unless Couple.containingIds(self.userIds).empty?
+    unless Couple.otherRealCouplesWithIds(self.userIds).empty?
       errors.add(:man_id, "Diese Person hat schon einen Partner")
       errors.add(:woman_id, "Diese Person hat schon einen Partner")
     end
@@ -35,6 +35,10 @@ class Couple < ActiveRecord::Base
   # Finder
   def self.containingIds(ids)
     (Couple.where(man_id: ids) + Couple.where(woman_id: ids)).uniq
+  end
+
+  def self.otherRealCouplesWithIds(ids)
+    Couple.containingIds.select{|c| c.isComplete? && c.active}
   end
 
   # Constructors
