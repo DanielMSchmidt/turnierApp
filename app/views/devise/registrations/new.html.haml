@@ -11,6 +11,8 @@
     = f.input :password_confirmation, :required => true
   = f.button :submit, "Registrieren", class: "btn btn-primary"
 = render "devise/shared/links"
-:javascript
-  $("li").removeClass("active");
-  $(".signup").addClass("active");
+
+- content_for :assets do
+  :javascript
+    $("li").removeClass("active");
+    $(".signup").addClass("active");
