@@ -69,6 +69,13 @@ class Couple < ActiveRecord::Base
     self.active = true if self.active.nil?
   end
 
+  def buildProgresses
+    self.standard.start_class = @standard_class
+    self.standard.save!
+    self.latin.start_class = @latin_class
+    self.latin.save!
+  end
+
   # Activation
   def deactivateOtherCouples
     Couple.containingIds(self.userIds).each do |couple|
