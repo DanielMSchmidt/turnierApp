@@ -38,7 +38,7 @@ class Couple < ActiveRecord::Base
   end
 
   def self.otherRealCouplesWithIds(ids)
-    Couple.containingIds.select{|c| c.isComplete? && c.active}
+    Couple.containingIds(ids).select{|c| c.isComplete? && c.active}
   end
 
   # Constructors
