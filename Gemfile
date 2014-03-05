@@ -74,7 +74,6 @@ group :test do
   gem "factory_girl_rails"
   gem 'shoulda-matchers'
   gem 'shoulda-context'
-  gem 'factory_girl_rails'
   gem "nyan-cat-formatter"
   gem 'simplecov', :require => false
 end

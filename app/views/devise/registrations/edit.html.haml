@@ -26,6 +26,8 @@
     %br/
     %br/
     = link_to "zurück", :back
-:javascript
-  $("li").removeClass("active");
-  $(".profil").addClass("active");
+
+- content_for :assets do
+  :javascript
+    $("li").removeClass("active");
+    $(".profil").addClass("active");
