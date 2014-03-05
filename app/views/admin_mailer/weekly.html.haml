@@ -4,24 +4,30 @@
 
 Es gibt folgende Neuigkeiten zu deinem Verein:
 
+%br
+%br
+
 %table
   %tr
     %td{style: "width: 20%"}
       %h3 Zu meldene Turniere
     %td
-      %ul
-        - @unenrolledTournaments.sort.reverse.each do |tournament|
-          %li
-            = "#{tournament.number} am #{tournament.date.strftime('%d.%m.%Y')} (#{tournament.couple.to_s})"
+      - if @unenrolledTournaments.empty?
+        Diese Woche liegt nichts an
+      - else
+        %ul
+          - @unenrolledTournaments.sort.reverse.each do |tournament|
+            %li
+              = "#{tournament.number} am #{tournament.date.strftime('%d.%m.%Y')} (#{tournament.couple.to_s})"
 
   %tr
     %td{style: "width: 20%"}
       %h3 Punkte diese Woche
     %td
-      = @results.points
+      = "#{@results[:points]} Punkte"
 
   %tr
     %td{style: "width: 20%"}
       %h3 Platzierungen diese Woche
     %td
-      = @results.placings
+      = "#{@results[:placings]} Platzierungen"

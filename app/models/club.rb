@@ -61,8 +61,8 @@ class Club < ActiveRecord::Base
 
   def resultsForTime(from, to)
     tournaments = self.tournaments
-    points = tournaments.collect{|t| t.points}.inject(:+)
-    placings = tournaments.collect{|t| t.placing}.inject(:+)
+    points = tournaments.collect{|t| t.points || 0}.push(0).inject(:+)
+    placings = tournaments.collect{|t| t.placing || 0}.push(0).inject(:+)
     {points: points, placings: placings}
   end
 
