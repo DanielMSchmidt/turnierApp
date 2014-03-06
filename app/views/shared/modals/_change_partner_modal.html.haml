@@ -6,7 +6,7 @@
     %h3 Tanzpartner ändern
   .modal-body
     .row.overflow-hidden
-      = form_for active_couple, :html => {:class => 'form-horizontal span11'} do |f|
+      = form_for current_user.activeCouple, url: change_active_couple_path(current_user.activeCouple) , :html => {:class => 'form-horizontal span11'} do |f|
 
         .control-group
           = f.label 'Herr', :class => 'control-label'
@@ -20,7 +20,7 @@
 
         .control-group
           .controls
-            = link_to 'Zurücksetzen', remove_active_couple_path(id: current_user.activeCouple), :class => "btn btn-danger"
+            = link_to 'Zurücksetzen', change_active_couple_path(id: current_user.activeCouple, remove: true), method: :put, :class => "btn btn-danger"
 
         %hr
 

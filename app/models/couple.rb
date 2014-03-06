@@ -27,7 +27,7 @@ class Couple < ActiveRecord::Base
 
   def dontDanceWithOtherPeoplesPartner
     # TODO: Refactor
-    if self.otherRealCouplesWithIds.length != 1
+    if self.otherRealCouplesWithIds.length > 1
       errors.add(:man_id, "Diese Person hat schon einen Partner")
       errors.add(:woman_id, "Diese Person hat schon einen Partner")
     end
