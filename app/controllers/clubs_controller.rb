@@ -60,15 +60,15 @@ class ClubsController < ApplicationController
     @from = params[:from].to_date
     @to = params[:to].to_date
 
-    all_tournaments = Tournament.where(date: (@from..@to)).select{|t| t.belongsToClub(@club.id)}
-    @upcoming = (params[:tournament_type] == "upcoming")
+    # Filter
+    kind = params[:kind]
+    ofUser = User.findByName(params[:ofUser]) unless params[:ofUser].nil?
 
+    @tournaments = Tournament.where(date: (@from..@to)).select {|t| t.belongsToClub(@club.id)}
+    @tournaments = @tournaments.reject { |t| t.incomplete? } if @from < Time.now.to_date
 
-    if @upcoming
-      @tournaments = all_tournaments.select{|t| t.upcoming?}
-    else
-      @tournaments = all_tournaments.reject{|t| t.upcoming?}
-    end
+    @tournaments.select { |t| t.kind === kind } unless kind.nil?
+    @tournaments.select { |t| t.belongsToUser(ofUser) } unless params[:ofUser].nil?
 
     render :pdf => "Turniere des #{@club.name}, #{@from} - #{@to}",
            :show_as_html => false

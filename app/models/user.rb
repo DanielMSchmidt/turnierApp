@@ -64,6 +64,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.findByName(name)
+    id = User.getIdByName(name)
+    return id unless id.nil?
+
+    User.find(id)
+  end
+
   def self.isntSet(parameter)
     parameter.nil? || parameter == 'Noch nicht eingetragen' || parameter == ''
   end
