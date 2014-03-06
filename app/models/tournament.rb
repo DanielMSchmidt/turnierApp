@@ -55,12 +55,10 @@ class Tournament < ActiveRecord::Base
     user = User.find(user_id)
 
     if self.latin?
-      id = user.activeCouple.latin.id
+      self.progress_id = user.activeCouple.latin.id
     else
-      id = user.activeCouple.standard.id
+      self.progress_id = user.activeCouple.standard.id
     end
-
-    self.progress_id = id
   end
 
   def belongsToClub(id)
