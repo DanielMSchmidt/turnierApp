@@ -127,6 +127,10 @@ class Tournament < ActiveRecord::Base
     (self.kind[-3..-1] == "LAT")
   end
 
+  def standard?
+    !latin?
+  end
+
   def shouldSendANotificationMail?
     logger.debug "test if a notification mail should be sended about #{self.to_s}"
     return false if self.enrolled? || !(Date.today..(Date.today + 5.weeks)).include?(self.date.to_date)
