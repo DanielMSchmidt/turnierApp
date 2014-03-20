@@ -61,4 +61,10 @@ class CouplesController < ApplicationController
     end
     respond_to :js
   end
+
+  def printPlanning
+    asd
+    render :pdf => "planung",
+           :show_as_html => false
+  end
 end
