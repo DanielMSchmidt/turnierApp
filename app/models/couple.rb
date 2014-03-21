@@ -156,6 +156,10 @@ class Couple < ActiveRecord::Base
     self.latin.tournaments + self.standard.tournaments
   end
 
+  def tournamentsForYear(year)
+    self.latin.tournaments.forYear(year) + self.standard.tournaments.forYear(year)
+  end
+
   def to_s
     "#{self.getWoman.name} & #{self.getMan.name}"
   end

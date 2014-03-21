@@ -27,4 +27,5 @@ Versions
   - v0.811    - improved UI and fixed bugs
   - v0.812    - made dashboard mobile friendly
   - v0.813    - fixed bugs with modals
+  - v0.82     - added printable planning sheet
 
