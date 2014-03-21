@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 class Tournament < ActiveRecord::Base
   default_scope order("date DESC")
+  scope :forYear, lambda {|year| where("date >= ? and date <= ?", "#{year}-01-01", "#{year}-12-31")}
   attr_accessible :number, :participants, :place, :progress_id, :address, :date, :kind, :notes, :enrolled, :notificated_about, :fetched
 
   belongs_to :progress
@@ -118,6 +119,10 @@ class Tournament < ActiveRecord::Base
 
   def latin?
     return (self.kind[-3..-1] == "LAT")
+  end
+
+  def standard?
+    return !latin?
   end
 
   def shouldSendANotificationMail?

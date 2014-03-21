@@ -63,7 +63,16 @@ class CouplesController < ApplicationController
   end
 
   def printPlanning
-    asd
+    type = (params[:tournament_type] == 'standard') ? ->(x){ x.standard? } : ->(x){ x.latin? }
+    @year = params[:date][:year]
+    @aims = params[:aims]
+    @progression = params[:progression]
+    @training = params[:training]
+    @period = params[:period]
+    couple = Couple.find(params[:couple_id])
+
+    @plannedTournaments = couple.tournamentsForYear(@year).select(&type).select{|x| x.upcoming? }
+
     render :pdf => "planung",
            :show_as_html => false
   end

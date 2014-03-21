@@ -1,1 +1,35 @@
-%h1 FOO
+!!!
+%html{:lang => "de", "xml:lang" => "de", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    = wicked_pdf_stylesheet_link_tag "pdf"
+    = wicked_pdf_stylesheet_link_tag "bootstrap_and_overrides"
+  %body
+    #header
+      %h1
+        = "Planung für das Jahr #{@year}"
+    #content
+      %h2 Ziele
+      %p
+        = @aims
+
+      %h2 Grad der Zielerreichung
+      %p
+        = @progression
+
+      %h2 Trainingszeitraum
+      %p
+        = @period
+
+      %h2 Trainingsmaßnahmen
+      %p
+        = @training
+
+      %h2 geplante Turniere
+      %table.table.table-striped.outerbordered
+        %tr
+          %th Datum
+          %th Zeit
+          %th Art
+          %th Turniernr.
+        = render @plannedTournaments, pdf: true, withoutCouple: true, withoutAddress: true
