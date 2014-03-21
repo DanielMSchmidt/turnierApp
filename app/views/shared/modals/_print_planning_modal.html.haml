@@ -1,0 +1,62 @@
+#print_planning_modal.modal.hide.fade
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Drucke deine Planung aus!
+  .modal-body
+    = form_tag print_planning_path(couple_id: couple.id), :html => {:class => 'form-horizontal'} do
+      .row-fluid
+        .span6
+          .control-group
+            .controls
+              %label.radio.inline
+                %input#tournamentType{:checked => "", :name => "tournament_type", :type => "radio", :value => "standard"}/
+                Standard
+              %label.radio.inline
+                %input#tournamentType{:name => "tournament_type", :type => "radio", :value => "latein"}/
+                Latein
+
+        .span6
+          .control-group
+            %label.control-label
+              Bitte wähle das Jahr
+            .controls
+              = select_year(Date.today, :start_year => Time.now.year + 5, :end_year => Time.now.year - 5, :field_name => 'year')
+
+      .row-fluid
+        .span6
+          .control-group
+            %label.control-label
+              Ziele
+            .controls
+              = text_area_tag(:aims, '', size: 3)
+
+        .span6
+          .control-group
+            %label.control-label
+              Grad der Zielerreichung
+            .controls
+              = text_area_tag(:progression, '', size: 3)
+
+      .row-fluid
+        .span6
+          .control-group
+            %label.control-label
+              Trainingsmaßnahmen
+            .controls
+              = text_area_tag(:training, '', size: 3)
+
+        .span6
+          .control-group
+            %label.control-label
+              Trainingszeitram
+            .controls
+              = text_area_tag(:period, '', size: 3)
+
+
+
+      = submit_tag "PDF generieren", :class => "btn btn-primary"
+
+:javascript
+  $('[data-behaviour~=datepicker]').datepicker({
+      format: 'dd.mm.yyyy'
+  });

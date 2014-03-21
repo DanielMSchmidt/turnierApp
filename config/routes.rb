@@ -15,6 +15,7 @@ TurnierList::Application.routes.draw do
   get "/couple/reset/:kind" => "couples#reset", as: :couple_reset
   match "/couple/change" => "couples#change", as: :change_active_couple
   get "/couple/remove/:id" => "couples#destroy", as: :remove_active_couple
+  post "/couple/:couple_id/print/planning" => "couples#printPlanning", as: :print_planning
 
   match "/tournament/:id/enroll" => "tournaments#setAsEnrolled", as: :just_enrolled
   match "/user/:id/tournaments" => "tournaments#ofUser", as: :user_tournaments

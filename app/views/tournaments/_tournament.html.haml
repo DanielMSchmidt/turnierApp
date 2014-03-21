@@ -2,6 +2,7 @@
 - admin ||= false
 - withoutCouple ||= false
 - withoutUserControl ||= false
+- withoutAddress ||= false
 
 %tr
   - unless withoutCouple
@@ -20,7 +21,7 @@
         ? von ??
       - else
         = "#{tournament.place } von #{tournament.participants || '??'}"
-  - unless admin
+  - unless admin || withoutAddress
     %td
       = tournamentAddress(tournament)
   %td

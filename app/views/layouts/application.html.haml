@@ -40,7 +40,7 @@
         });
 
       - if user_signed_in?
-        = render "shared/user_modals", own_clubs: @own_clubs, clubs: @clubs
+        = render "shared/user_modals", own_clubs: @own_clubs, clubs: @clubs, couple: current_user.activeCouple
         = render "shared/modals/add_tournament_modal"
 
       - if Rails.env.production?
