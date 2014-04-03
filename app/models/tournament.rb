@@ -22,6 +22,16 @@ class Tournament < ActiveRecord::Base
     tournament
   end
 
+  def self.startClassPlacingMapping
+    {
+      'S' => 3,
+      'A' => 3,
+      'B' => 3,
+      'C' => 5,
+      'D' => 6
+    }
+  end
+
   def enhanceTournament(user_id)
     TournamentEnhancementWorker.perform_async(id, number, user_id)
   end
@@ -46,12 +56,10 @@ class Tournament < ActiveRecord::Base
     user = User.find(user_id)
 
     if self.latin?
-      id = user.activeCouple.latin.id
+      self.progress_id = user.activeCouple.latin.id
     else
-      id = user.activeCouple.standard.id
+      self.progress_id = user.activeCouple.standard.id
     end
-
-    self.progress_id = id
   end
 
   def belongsToClub(id)
@@ -89,7 +97,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def upcoming?
-    self.getDate.future? && self.incomplete?
+    self.getDate.future?
   end
 
   def behindTime?
@@ -100,10 +108,7 @@ class Tournament < ActiveRecord::Base
   def gotPlacing?
     return false if self.incomplete?
 
-    placeForPlacing = 3
-    placeForPlacing = 5 if self.start_class == 'C'
-    placeForPlacing = 6 if self.start_class == 'D'
-
+    placeForPlacing = Tournament.startClassPlacingMapping[self.start_class] || 0
     return (self.place <= placeForPlacing) && (self.points >= 2)
   end
 
@@ -114,11 +119,15 @@ class Tournament < ActiveRecord::Base
   end
 
   def start_class
-    return self.kind[0..-4].chop
+    self.kind.split(' ').select{|k| Tournament.startClassPlacingMapping.keys.include?(k)}.first
   end
 
   def latin?
-    return (self.kind[-3..-1] == "LAT")
+    (self.kind[-3..-1] == "LAT")
+  end
+
+  def standard?
+    !latin?
   end
 
   def standard?
@@ -145,12 +154,11 @@ class Tournament < ActiveRecord::Base
   end
 
   def sendMailIfEnrolledTournamentIsDeleted
-    # FIXME: NameError at /tournaments/5 undefined local variable or method `tournament' for #<Tournament:0x007fcfd0d0cbe8>
     logger.debug "sendMailIfEnrolledTournamentIsDeleted for #{self.to_s}"
     if self.isEnrolledAndNotDanced?
       club_owners_mailaddresses = self.users.first.clubs.collect{|x| x.owner}.compact.collect{|x| x.email}
       logger.debug "enrolled tournamentDeleted Mail was send to #{club_owners_mailaddresses.join(', ')}"
-      NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, tournament).deliver
+      NotificationMailer.enrolledTournamentWasDeleted(club_owners_mailaddresses, self).deliver
     end
     logger.debug "deleted tournament #{self.to_s}"
   end

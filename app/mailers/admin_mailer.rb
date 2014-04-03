@@ -6,7 +6,7 @@ class AdminMailer < ActionMailer::Base
     @club = club
     @owner = club.owner
     @unenrolledTournaments = @club.unenrolledTournaments
-    @results = @club.resultsForTime(Time.now - 1.week, Time.now)
+    @results = @club.results(Time.now - 1.week, Time.now)
 
     mail to: @owner.email, subject: "Wöchentliche Aktualisierung für #{@club.to_s}"
   end

@@ -59,8 +59,12 @@ class Club < ActiveRecord::Base
     self.tournaments.collect{|x| x.shouldSendANotificationMail?}.include?(true)
   end
 
-  def resultsForTime(from, to)
+  def results(from, to)
     tournaments = self.tournaments
+
+    tournaments.select{|x| x.date >= from} unless from.nil?
+    tournaments.select{|x| x.date <= to} unless to.nil?
+
     points = tournaments.collect{|t| t.points || 0}.push(0).inject(:+)
     placings = tournaments.collect{|t| t.placing || 0}.push(0).inject(:+)
     {points: points, placings: placings}

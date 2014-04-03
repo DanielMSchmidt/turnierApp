@@ -1,0 +1,115 @@
+---
+- hosts: server
+  vars:
+    http_port: 80
+    max_clients: 200
+  vars:
+    user: vagrant
+    home_directory: /home/${user}
+    app_directory: /vagrant
+
+    ruby_version: 1.9.3-p448
+    rails_env: development
+
+    application_host: fashionmag.dev
+    schema: http
+    schema_port: 80
+
+  sudo: True
+
+  tasks:
+  - name: General | install required packages.
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - supervisor
+      - nginx-full
+      - redis-server
+      - python-software-properties
+      - python
+      - g++
+      - make
+      - openjdk-7-jre-headless
+
+  - name: General | add node.js PPA
+    apt_repository: repo='ppa:chris-lea/node.js'
+
+  - name: General | install node
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - nodejs
+
+  - name: Application | copy supervisor configuration
+    template: src=templates/supervisord/backend.conf dest=/etc/supervisor/conf.d/backend.conf
+
+  - name: General | make sure supervisor runs
+    service: name=supervisor state=started enabled=yes
+
+  - name: General | install ansible dependencies
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - libpq-dev
+      - python-psycopg2
+
+  - name: General | install programmer tools
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - vim
+
+  - name: General | install rbenv dependencies
+    action: apt pkg=$item state=installed update-cache=yes
+    with_items:
+      - curl
+      - build-essential
+      - git
+      - libcurl4-openssl-dev
+      - libreadline-dev
+      - libssl-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - zlib1g-dev
+
+  - name: Rbenv | clone repository
+    git: repo=https://github.com/sstephenson/rbenv.git dest=/.rbenv
+
+  - name: Rbenv | add plugins directory
+    file: state=directory path=~/.rbenv/plugins
+
+  - name: install plugins
+    git: repo=https://github.com/sstephenson/ruby-build.git dest=~/.rbenv/plugins/ruby-build
+
+  - name: update PATH in ~/.bashrc for rb-env
+    action: lineinfile dest=/home/$user/.bashrc line=export\ PATH="$HOME/.rbenv/bin:$PATH" regexp=PATH.*rbenv
+
+  - name: add rb-env init to ~/.bashrc
+    action: lineinfile dest=/home/$user/.bashrc line='eval "$(rbenv init -)"' regexp=eval.*rbenv
+
+  - name: install ruby
+    action: shell rbenv install $ruby_version creates=/home/$user/.rbenv/shims/ruby
+
+  - name: make ruby global
+    action: shell /home/$user/.rbenv/bin/rbenv global $ruby_version
+
+  - name: install gems
+    gem: name=$item
+    with_items:
+      - bundler
+      - rdoc
+      - rake
+      - rails
+
+  - name: rehash rbenv
+    shell: source ~/.bashrc && rbenv rehash executable=/bin/bash
+
+  - name: install application gems
+    command: bundle install --no-deployment chdir=/vagrant
+
+  # Nginx setup
+  - name: Nginx | copy site configuration
+    template: src=templates/nginx/seenex.js dest=/etc/nginx/sites-enabled/seenex owner=root group=root
+
+  - name: Nginx | remove default configuration
+    file: path=/etc/nginx/sites-enabled/default state=absent
+
+  # Restart services
+  - name: Restart Nginx
+    action: service name=nginx state=restarted enabled=yes

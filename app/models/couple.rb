@@ -26,7 +26,8 @@ class Couple < ActiveRecord::Base
   end
 
   def dontDanceWithOtherPeoplesPartner
-    unless Couple.otherRealCouplesWithIds(self.userIds).empty?
+    # TODO: Refactor
+    if self.otherRealCouplesWithIds.length > 1
       errors.add(:man_id, "Diese Person hat schon einen Partner")
       errors.add(:woman_id, "Diese Person hat schon einen Partner")
     end
@@ -37,8 +38,8 @@ class Couple < ActiveRecord::Base
     (Couple.where(man_id: ids) + Couple.where(woman_id: ids)).uniq
   end
 
-  def self.otherRealCouplesWithIds(ids)
-    Couple.containingIds.select{|c| c.isComplete? && c.active}
+  def otherRealCouplesWithIds
+    Couple.containingIds(self.userIds).select{|c| c.isComplete? && c.active && c != self}
   end
 
   # Constructors
@@ -73,12 +74,6 @@ class Couple < ActiveRecord::Base
     self.active = true if self.active.nil?
   end
 
-  def buildProgresses
-    self.standard.start_class = @standard_class
-    self.standard.save!
-    self.latin.start_class = @latin_class
-    self.latin.save!
-  end
 
   # Activation
   def deactivateOtherCouples

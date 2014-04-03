@@ -10,3 +10,13 @@
   border-bottom: 1px solid #dddddd;
   border-left: 1px solid #dddddd;
   border-right: 1px solid #dddddd; }
+
+
+.with-top-border {
+  border-top: 1px solid #dddddd;
+}
+
+.table-spacing td, .table-spacing tr {
+  text-align: center;
+  width: 100px;
+}

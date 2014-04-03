@@ -4,14 +4,6 @@
     %h3 Bitte wähle einen Zeitraum
   .modal-body
     = form_tag print_tournaments_path(club_id: activeClub.id), :html => {:class => 'form-horizontal'} do
-      .control-group
-        .controls
-          %label.radio.inline
-            %input#tournamentType{:checked => "", :name => "tournament_type", :type => "radio", :value => "upcoming"}/
-            zukünftige Turniere
-          %label.radio.inline
-            %input#tournamentType{:name => "tournament_type", :type => "radio", :value => "danced"}/
-            getanzte Turniere
 
       .control-group
         %label.control-label Von
@@ -22,9 +14,32 @@
         %label.control-label Bis
         .controls
           %input{"data-behaviour" => "datepicker", :type => "text", :name => "to", :value => Date.today.strftime("%d.%m.%Y")}
+
+      .control-group
+        %label.control-label Nur von Paar (optional)
+        .controls
+          %input{data: {provide: 'typeahead', source: getUserNamesAndPlaceholder}, autocomplete: "off"}
+
+      .control-group
+        %label.control-label Nur von
+        .controls
+          .btn.kind-changer{data: {kind: 'standard'}}
+            Standard
+          .btn.kind-changer{data: {kind: 'latin'}}
+            Latein
+          .btn.btn-primary.kind-changer{data: {kind: ''}}
+            Alle
+          %input#kind{name: "kind", type: "hidden"}
+
       = submit_tag "Drucken", :class => "btn btn-primary"
 
 :javascript
   $('[data-behaviour~=datepicker]').datepicker({
       format: 'dd.mm.yyyy'
   });
+
+  $('.kind-changer').on('click', function (){
+    $('.kind-changer').removeClass('btn-primary');
+    $(this).addClass('btn-primary');
+    $('#kind').value($(this).data('kind'));
+  })

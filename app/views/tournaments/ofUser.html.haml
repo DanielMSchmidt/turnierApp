@@ -8,10 +8,10 @@
         = @user.activeCouple.to_s
 
   %br/
+  %h2 Latein
   %table.tournament-list.table.table-striped{:class => "#{'admin' if admin}"}
     %thead
       %tr
-        %th Paar
         %th Datum
         %th Zeit
         %th Art
@@ -22,4 +22,20 @@
         %th
         %th
         %th
-    = render @tournaments, admin: false
+    = render @tournaments.select{|x| x.latin?}.sort{|a,b| b.date <=> a.date} , admin: false, withoutCouple: true
+
+  %h2 Standard
+  %table.tournament-list.table.table-striped{:class => "#{'admin' if admin}"}
+    %thead
+      %tr
+        %th Datum
+        %th Zeit
+        %th Art
+        %th Platz
+        %th Adresse
+        %th Turniernr.
+        %th Status
+        %th
+        %th
+        %th
+    = render @tournaments.select{|x| x.standard?}.sort{|a,b| b.date <=> a.date} , admin: false, withoutCouple: true
