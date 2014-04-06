@@ -65,26 +65,6 @@ describe "Tournament" do
     end
   end
 
-  describe "#newForUser" do
-    it "should be able to create a simple tournament", slow: true do
-      tournament = Tournament.newForUser({tournament: {number: 31193, user_id: 1}})
-      tournament.number.should eq(31193)
-      tournament.date.should eq("2013-05-19 18:30:00")
-      tournament.kind.should eq("HGR B ST")
-      tournament.notes.should eq("Startgebühr für HGR je 5,- €/Paar")
-      tournament.enrolled.should be_false
-    end
-
-    it "should be able to create an advanced tournament", slow: true do
-      tournament = Tournament.newForUser({tournament: {number: 28948, user_id: 1}})
-      tournament.number.should eq(28948)
-      tournament.date.should eq("Sun, 10 Mar 2013 11:00:00 UTC +00:00")
-      tournament.kind.should eq("HGR C LAT")
-      tournament.notes.should eq("Startgebühr je 5,- €/Paar")
-      tournament.enrolled.should be_true
-    end
-  end
-
   describe "#statusClasses" do
     it "should have the behind time class if its behind time" do
       tournament.stub(:behindTime?).and_return(true)

@@ -10,14 +10,6 @@ describe Club do
   let!(:tournament){ FactoryGirl.create(:tournament) }
   let(:stubbed_tournament){ double('stubbed tournament') }
 
-  describe "#mailOwnerOfUnenrolledTournaments" do
-    it "should send the unenrolled tournaments to the owner", slow: true do
-      NotificationMailer.should_receive(:enrollCouples).and_return(double('mail', deliver: true))
-      club.should_receive(:unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified).and_return(true)
-      club.mailOwnerOfUnenrolledTournaments
-    end
-  end
-
   describe "sending of unenrollment mails" do
     describe "method unenrolled_and_enrollable_tournaments_left" do
       it "should be true if the tournament is in the near future and unenrolled" do
