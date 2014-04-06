@@ -1,5 +1,6 @@
 TurnierApp
 ====================
+[![Build Status](https://drone.io/github.com/DanielMSchmidt/turnierApp/status.png)](https://drone.io/github.com/DanielMSchmidt/turnierApp/latest)
 
 This app is build for Dancesport Couples to manage their results at competitions and to see all results of their club
 
@@ -28,4 +29,3 @@ Versions
   - v0.812    - made dashboard mobile friendly
   - v0.813    - fixed bugs with modals
   - v0.82     - added printable planning sheet
-
