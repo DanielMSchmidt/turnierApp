@@ -42,16 +42,6 @@ describe Club do
     end
   end
 
-  describe "#transferTo" do
-    it "it should change the owner" do
-      club.user_id = 10
-      club.owner.should be_nil
-
-      club.transferTo(user)
-      club.owner.id.should eq(user.id)
-    end
-  end
-
   describe "#isVerifiedUser" do
     it "should be false if the user is not verified" do
       club.should_receive(:verifiedCouples).and_return([])
