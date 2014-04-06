@@ -62,17 +62,6 @@ describe User do
 
   describe "functions" do
     describe "#activeCouple" do
-      it "should return nil if no couple is assigned" do
-        user.stub(:getCouples).and_return([])
-        user.activeCouple.should be_nil
-      end
-
-      it "should return nil if no active couple is assigned" do
-        couple = double('couple', active: false)
-        user.stub(:getCouples).and_return([couple])
-        user.activeCouple.should be_nil
-      end
-
       it "should return a couple if an active couple is assigned" do
         couple = double('couple', active: true)
         user.stub(:getCouples).and_return([couple])
