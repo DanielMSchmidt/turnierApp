@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
-require 'capybara/rails'
 
 describe User do
   let(:user) { FactoryGirl.create(:user) }
