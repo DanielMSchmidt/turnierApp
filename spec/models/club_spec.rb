@@ -53,4 +53,24 @@ describe Club do
       club.isVerifiedUser(user).should be_true
     end
   end
+
+  describe "#results" do
+    before(:each) do
+      @t1 = Time.now - 1.week
+      @t2 = Time.now + 1.week
+      @t3 = Time.now - 1.day
+      @tmnt1 = double('tmnt1', points: 15, placing: 1, date: @t1)
+      @tmnt2 = double('tmnt2', points: 5, placing: 0, date: @t2)
+
+      club.stub(:tournaments).and_return([@tmnt1, @tmnt2])
+    end
+
+    it "should return right results if all tournaments are in range" do
+      club.results(@t1, @t2).should eq({points: 20, placings: 1})
+    end
+
+    it "should return right results if not all tournaments are in range" do
+      club.results(@t1, @t3).should eq({points: 15, placings: 1})
+    end
+  end
 end
