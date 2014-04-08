@@ -5,6 +5,26 @@ TurnierApp
 
 This app is build for Dancesport Couples to manage their results at competitions and to see all results of their club
 
+Installation
+------------
+
+You need to have Redis and Ruby 1.9.3 installed. Than run
+
+```
+$ bundle install
+$ vi config/database.yml
+$ vi config/application.yml
+```
+
+Development
+-----------
+
+To run the tests use
+
+```
+$ rspec spec
+```
+
 Versions
 ---------------------
   - v0.1-beta - Only last competitions & different clubs
