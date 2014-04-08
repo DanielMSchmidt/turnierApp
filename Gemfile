@@ -75,6 +75,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'shoulda-context'
   gem 'simplecov', :require => false
+  gem "codeclimate-test-reporter", :require => nil
 end
 
 # Gems used only for assets and not required

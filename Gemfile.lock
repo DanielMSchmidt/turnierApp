@@ -79,6 +79,8 @@ GEM
     chunky_png (1.2.9)
     code_analyzer (0.4.4)
       sexp_processor
+    codeclimate-test-reporter (0.3.0)
+      simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -402,6 +404,7 @@ DEPENDENCIES
   capistrano
   capistrano-ext
   capistrano_colors
+  codeclimate-test-reporter
   coffee-rails (~> 3.2.1)
   compass-rails
   cucumber-rails
