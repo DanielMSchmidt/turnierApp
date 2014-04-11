@@ -9,16 +9,12 @@ class CouplesController < ApplicationController
       @couple.destroy
       redirect_to root_path, notice: t('couple.destroy.success')
     else
-      @couple = Couple.createFromParams(params, false)
-      if @couple && @couple.consistsOfCurrentUser(current_user) && @couple.save
+      begin
+        @couple = Couple.createFromParams(params, current_user, false)
         @couple.activate
-        # FIXME: Shouldn't be needed, investigate here!
-        @couple.standard.start_class = @standard_class
-        @couple.standard.save!
-        @couple.latin.start_class = @latin_class
-        @couple.latin.save!
         redirect_to root_path, notice: t('couple.update.success')
-      else
+      rescue PartnersNotSet, DoesntConsistOfUser, InvalidCouple => e
+        logger.error "Couldn't change the couple #{e.message}"
         redirect_to root_path, error: t('couple.update.fail')
       end
     end
@@ -27,6 +23,7 @@ class CouplesController < ApplicationController
   # TODO: Dry up
   def levelup
     couple = current_user.activeCouple
+    puts current_user.activeCouple
     if params[:kind] == 'latin'
       couple.latin.levelUp
     else
