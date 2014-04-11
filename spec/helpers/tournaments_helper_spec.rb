@@ -23,38 +23,6 @@ describe TournamentsHelper, :type => :helper do
       @progress = double("progress", tournaments: [@tournament1, @tournament2], pointsAtTime: 42, placingsAtTime: 23)
       @result = helper.getProgressOverTime(@progress, @progress)
     end
-
-    it "should return an array of hashes" do
-      @result.should be_an Array
-      @result.first.should be_a Hash
-    end
-
-    it "should have an element in the array for each day of tournament" do
-      @result.size.should eq(@progress.tournaments.size * 2)
-    end
-
-    it "should have right formatted hashes as elements" do
-      hash = @result.first
-      hash.should have_key(:y)
-      hash.should have_key(:latin_po)
-      hash.should have_key(:latin_pl)
-      hash.should have_key(:standard_po)
-      hash.should have_key(:standard_pl)
-    end
-
-    it "should filter upcoming tournaments" do
-      tournament3 =  double("tournament1", upcoming?: true, date: @time_now + 3.weeks)
-      progress2 = double("progress", tournaments: [@tournament1, @tournament2, tournament3], pointsAtTime: 42, placingsAtTime: 23)
-
-      helper.getProgressOverTime(progress2, progress2).size.should eq(4)
-    end
-
-    it "should include all tournaments" do
-      tournament3 =  double("tournament1", upcoming?: false, date: @time_now - 3.weeks)
-      progress2 = double("progress", tournaments: [tournament3], pointsAtTime: 42, placingsAtTime: 23)
-
-      helper.getProgressOverTime(@progress, progress2).size.should eq(3)
-    end
   end
 
   describe "#getTournamentsData" do

@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
-require 'capybara/rails'
 
 describe "Tournament" do
   let(:user) { FactoryGirl.create(:user) }
@@ -62,26 +61,6 @@ describe "Tournament" do
     it "should be true if the tournament is near and unenrolled" do
       next_tournament = Tournament.create(number: 28288, progress_id: 1, address: "testadress", date: (DateTime.now.beginning_of_day.to_date + 2.weeks), kind: 'HGR C LAT', enrolled: false)
       next_tournament.shouldSendANotificationMail?.should be_true
-    end
-  end
-
-  describe "#newForUser" do
-    it "should be able to create a simple tournament", slow: true do
-      tournament = Tournament.newForUser({tournament: {number: 31193, user_id: 1}})
-      tournament.number.should eq(31193)
-      tournament.date.should eq("2013-05-19 18:30:00")
-      tournament.kind.should eq("HGR B ST")
-      tournament.notes.should eq("Startgebühr für HGR je 5,- €/Paar")
-      tournament.enrolled.should be_false
-    end
-
-    it "should be able to create an advanced tournament", slow: true do
-      tournament = Tournament.newForUser({tournament: {number: 28948, user_id: 1}})
-      tournament.number.should eq(28948)
-      tournament.date.should eq("Sun, 10 Mar 2013 11:00:00 UTC +00:00")
-      tournament.kind.should eq("HGR C LAT")
-      tournament.notes.should eq("Startgebühr je 5,- €/Paar")
-      tournament.enrolled.should be_true
     end
   end
 

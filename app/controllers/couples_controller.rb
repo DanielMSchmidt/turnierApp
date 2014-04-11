@@ -6,7 +6,7 @@ class CouplesController < ApplicationController
   def change
     if !params[:remove].nil?
       @couple = Couple.find(params[:id])
-      @couple.destroy
+      @couple.destroy if @couple.consistsOfCurrentUser(current_user)
       redirect_to root_path, notice: t('couple.destroy.success')
     else
       begin

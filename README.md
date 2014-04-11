@@ -1,7 +1,29 @@
 TurnierApp
 ====================
+[![Build Status](https://drone.io/github.com/DanielMSchmidt/turnierApp/status.png)](https://drone.io/github.com/DanielMSchmidt/turnierApp/latest)
+[![Code Climate](https://codeclimate.com/github/DanielMSchmidt/turnierApp.png)](https://codeclimate.com/github/DanielMSchmidt/turnierApp)
 
 This app is build for Dancesport Couples to manage their results at competitions and to see all results of their club
+
+Installation
+------------
+
+You need to have Redis and Ruby 1.9.3 installed. Than run
+
+```
+$ bundle install
+$ vi config/database.yml
+$ vi config/application.yml
+```
+
+Development
+-----------
+
+To run the tests use
+
+```
+$ rspec spec
+```
 
 Versions
 ---------------------
@@ -28,4 +50,3 @@ Versions
   - v0.812    - made dashboard mobile friendly
   - v0.813    - fixed bugs with modals
   - v0.82     - added printable planning sheet
-

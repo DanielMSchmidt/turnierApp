@@ -63,19 +63,17 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-spork'
-  gem 'guard-cucumber'
 end
 
 group :test do
-  gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
   gem 'shoulda-matchers'
   gem 'shoulda-context'
-  gem "nyan-cat-formatter"
   gem 'simplecov', :require => false
+  gem "codeclimate-test-reporter", :require => nil
 end
 
 # Gems used only for assets and not required

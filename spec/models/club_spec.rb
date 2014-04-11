@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'spec_helper'
-require 'capybara/rails'
 
 describe Club do
   let!(:user){ FactoryGirl.create(:user) }
@@ -9,14 +8,6 @@ describe Club do
   let!(:club){ FactoryGirl.create(:club) }
   let!(:tournament){ FactoryGirl.create(:tournament) }
   let(:stubbed_tournament){ double('stubbed tournament') }
-
-  describe "#mailOwnerOfUnenrolledTournaments" do
-    it "should send the unenrolled tournaments to the owner", slow: true do
-      NotificationMailer.should_receive(:enrollCouples).and_return(double('mail', deliver: true))
-      club.should_receive(:unenrolledAndEnrollableTournamentsLeftWhichShouldBeNotified).and_return(true)
-      club.mailOwnerOfUnenrolledTournaments
-    end
-  end
 
   describe "sending of unenrollment mails" do
     describe "method unenrolled_and_enrollable_tournaments_left" do
@@ -50,16 +41,6 @@ describe Club do
     end
   end
 
-  describe "#transferTo" do
-    it "it should change the owner" do
-      club.user_id = 10
-      club.owner.should be_nil
-
-      club.transferTo(user)
-      club.owner.id.should eq(user.id)
-    end
-  end
-
   describe "#isVerifiedUser" do
     it "should be false if the user is not verified" do
       club.should_receive(:verifiedCouples).and_return([])
@@ -70,6 +51,26 @@ describe Club do
       couple = double('couple', users: [user], active: true)
       club.should_receive(:verifiedCouples).and_return([couple])
       club.isVerifiedUser(user).should be_true
+    end
+  end
+
+  describe "#results" do
+    before(:each) do
+      @t1 = Time.now - 1.week
+      @t2 = Time.now + 1.week
+      @t3 = Time.now - 1.day
+      @tmnt1 = double('tmnt1', points: 15, placing: 1, date: @t1)
+      @tmnt2 = double('tmnt2', points: 5, placing: 0, date: @t2)
+
+      club.stub(:tournaments).and_return([@tmnt1, @tmnt2])
+    end
+
+    it "should return right results if all tournaments are in range" do
+      club.results(@t1, @t2).should eq({points: 20, placings: 1})
+    end
+
+    it "should return right results if not all tournaments are in range" do
+      club.results(@t1, @t3).should eq({points: 15, placings: 1})
     end
   end
 end

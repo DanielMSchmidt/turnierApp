@@ -19,19 +19,6 @@ describe ClubsController do
       club.stub(:tournaments).and_return([tournament])
     end
 
-    it "should send a mail to each user" do
-      NotificationMailer.should_receive(:cancelTournament).with(user, 28288)
-    end
-
-    it "should delete each tournament with that nr" do
-      tournament.should_receive(:delete)
-    end
-
-    it "shouldn't delete tournaments with another number" do
-      tournament.number = 28289
-      tournament.should_not_receive(:delete)
-    end
-
     after(:each) do
       post :cancel, :club_id => 1
     end
