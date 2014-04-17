@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+  # -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Couple do
@@ -9,8 +9,6 @@ describe Couple do
     c.save!
     c
   }
-
-
 
   describe "structure" do
     it "should have a man assigned" do
