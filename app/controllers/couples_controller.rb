@@ -23,7 +23,6 @@ class CouplesController < ApplicationController
   # TODO: Dry up
   def levelup
     couple = current_user.activeCouple
-    puts current_user.activeCouple
     if params[:kind] == 'latin'
       couple.latin.levelUp
     else

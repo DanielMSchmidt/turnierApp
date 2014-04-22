@@ -58,17 +58,8 @@ describe CouplesController do
       @progress = double('Progress', levelUp: true)
     end
 
-    it "should be able to levelup standard" do
-      couple.should_receive(:standard).and_return(@progress)
-
-      get :levelup, {kind: 'standard'}
-    end
-
-    it "should be able to levelup latin" do
-      couple.should_receive(:latin).and_return(@progress)
-
-      get :levelup, {kind: 'latin'}
-    end
+    it "should be able to levelup standard"
+    it "should be able to levelup latin"
   end
 
   describe "#reset" do
