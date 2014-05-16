@@ -17,7 +17,8 @@ class Tournament < ActiveRecord::Base
     tournament.place        = params[:tournament][:place]
     tournament.number       = params[:tournament][:number]
 
-    tournament.save
+    success = tournament.save
+    puts "Current id: #{tournament.id} | status #{success}"
     tournament.enhanceTournament(params[:tournament][:user_id])
     tournament
   end
@@ -33,7 +34,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def enhanceTournament(user_id)
-    TournamentEnhancementWorker.perform_async(id, number, user_id)
+    TournamentEnhancementWorker.perform_async(self.id, self.number, user_id)
   end
 
   def noDoubleTournamentsAreAllowed
