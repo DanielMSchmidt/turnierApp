@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+require_relative '../exceptions'
 class Couple < ActiveRecord::Base
   attr_accessible :active, :man_id, :woman_id
   default_scope includes(:man, :woman)
@@ -8,11 +9,10 @@ class Couple < ActiveRecord::Base
 
   has_many :memberships, :dependent => :destroy
   has_many :clubs, :through => :memberships
-  has_many :progresses
+  has_many :progresses, :autosave => true
 
   before_save :setInitialValues
   after_create :deactivateOtherCouples
-  after_create :buildProgresses
 
   validate :dontDanceWithYourself
   validate :dontDanceWithOtherPeoplesPartner
@@ -43,8 +43,7 @@ class Couple < ActiveRecord::Base
   end
 
   # Constructors
-
-  def self.createFromParams(params, nil_allowed)
+  def self.createFromParams(params, user, nil_allowed=false)
     manId = User.getIdByName(params[:couple][:man])
     womanId = User.getIdByName(params[:couple][:woman])
     latinClass = params[:couple][:latin_kind]
@@ -53,18 +52,23 @@ class Couple < ActiveRecord::Base
     couple = Couple.new(man_id: manId, woman_id: womanId)
 
     unless nil_allowed
-      return false if (manId.nil? || womanId.nil?)
+      raise PartnersNotSet if (manId.nil? || womanId.nil?)
     end
 
     #Add Progresses
     couple.progresses.new(start_class: latinClass, kind: 'latin')
     couple.progresses.new(start_class: standardClass, kind: 'standard')
 
+    # Save
+    raise DoesntConsistOfUser unless couple.consistsOfCurrentUser(user)
+    raise InvalidCouple unless couple.save
     couple
   end
 
   def self.createDummyCoupleFor(user)
-    Couple.create(man_id: user.id, active: true)
+    couple = Couple.create(man_id: user.id, active: true)
+    couple.buildProgresses
+    couple
   end
 
   # Initialize

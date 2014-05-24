@@ -13,9 +13,8 @@ gem 'will_paginate', '~> 3.0'
 gem 'bootstrap-sass', '~> 2.3.2.0'
 gem 'bootstrap-datepicker-rails'
 
-#Data fetching
-gem 'mechanize'
-gem 'nokogiri'
+#Tournament fetching
+gem 'dtv_tournaments'
 
 #Caching
 gem 'redis-rails'

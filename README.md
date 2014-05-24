@@ -50,3 +50,4 @@ Versions
   - v0.812    - made dashboard mobile friendly
   - v0.813    - fixed bugs with modals
   - v0.82     - added printable planning sheet
+  - v0.821    - added [dtv_tournaments](https://github.com/DanielMSchmidt/dtv_tournaments) gem

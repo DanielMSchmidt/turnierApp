@@ -9,6 +9,13 @@ FactoryGirl.define do
     initialize_with { User.find_or_create_by_email('test@testuser.de') }
   end
 
+  factory :woman, class: User do
+    name 'Test Userin'
+    email 'test@testuser2.de'
+    password 'testtest123456'
+    initialize_with { User.find_or_create_by_email('test@testuser2.de') }
+  end
+
   factory :club do
     name 'Example Club'
     user_id 1
