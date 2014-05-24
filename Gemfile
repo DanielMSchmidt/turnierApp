@@ -14,7 +14,7 @@ gem 'bootstrap-sass', '~> 2.3.2.0'
 gem 'bootstrap-datepicker-rails'
 
 #Tournament fetching
-gem 'dtv_tournaments'
+gem 'dtv_tournaments', '~> 0.1.0'
 
 #Caching
 gem 'redis-rails'
