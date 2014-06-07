@@ -56,6 +56,7 @@ class HomeController < ApplicationController
     else
       @trainer = false
     end
+
     if params[:club_id].nil?
       @active_club = @user_clubs.first
       redirect_to admin_dashboard_path(club_id: @active_club.id) if redirect
