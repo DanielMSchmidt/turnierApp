@@ -36,6 +36,8 @@ TurnierList::Application.routes.draw do
   namespace :api do
     namespace :v1 do
       post '/login' => "sessions#login"
+
+      get '/user' => "users#information"
     end
   end
 
