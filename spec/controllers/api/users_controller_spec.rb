@@ -51,6 +51,7 @@ describe Api::V1::UsersController do
 
       post :setPassword, {password: 'Test'}
 
+      should respond_with 200
     end
   end
 

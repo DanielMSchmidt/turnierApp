@@ -38,6 +38,7 @@ TurnierList::Application.routes.draw do
       post '/login' => "sessions#login"
 
       get '/user' => "users#information"
+      post '/user/password' => "users#setPassword"
     end
   end
 
