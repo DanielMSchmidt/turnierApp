@@ -33,6 +33,13 @@ TurnierList::Application.routes.draw do
   match "/faq" => "home#faq"
   match "/impressum" => "home#impressum"
 
+  namespace :api, :contraints => {:format => /json/} do
+    namespace :v1 do
+      get '/login' => "sessions#login"
+      get '/logout' => "sessions#logout"
+    end
+  end
+
 
   resources :clubs, except: [:show, :index]
   resources :tournaments, except: [:show, :new, :index]
