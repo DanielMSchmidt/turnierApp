@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   default_scope order('name ASC')
   after_create :notifyAboutNewUser
   after_create :buildEmptyCouple
+  before_save :ensure_authentication_token
 
   # Hooks
 
@@ -25,6 +26,12 @@ class User < ActiveRecord::Base
 
   def buildEmptyCouple
     Couple.createDummyCoupleFor(self)
+  end
+
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
   end
 
   # Accessors
@@ -81,5 +88,14 @@ class User < ActiveRecord::Base
 
   def to_s
     "User: #{self.id} - #{self.email}"
+  end
+
+  private
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
   end
 end
