@@ -36,7 +36,6 @@ TurnierList::Application.routes.draw do
   namespace :api do
     namespace :v1 do
       post '/login' => "sessions#login"
-      post '/logout' => "sessions#logout"
     end
   end
 

@@ -7,21 +7,18 @@ describe Api::V1::SessionsController do
   describe 'access' do
     describe '#login' do
       it 'should return the right api token if given right credentials' do
-        post :login, {}, {email: 'test@testuser.de', password: 'testtest12345'}
+        post :login, {email: 'test@testuser.de', password: 'testtest12345'}
 
-        expect(json).to have_key('token')
-        expect(json.token).to equal(user.authentication_token)
         should respond_with 200
+        expect(json).to have_key('token')
+        expect(json['token']).to eq(user.authentication_token)
       end
 
       it 'should return an not authorized response if given wrong credentials' do
-        pending
-      end
-    end
+        post :login, {email: 'test@testuser.de', password: 'wrong password'}
 
-    describe '#logout' do
-      it 'should return success and logout the user' do
-        pending
+        should respond_with 403
+        expect(json).not_to have_key('token')
       end
     end
   end
