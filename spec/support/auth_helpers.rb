@@ -1,11 +1,11 @@
 module AuthHelpers
   def authWithUser (user)
-    request.headers['X-ACCESS-EMAIL'] = "#{user.email}"
-    request.headers['X-ACCESS-TOKEN'] = "#{user.authentication_token}"
+    request.env['HTTP_X_ACCESS_EMAIL'] = "#{user.email}"
+    request.env['HTTP_X_ACCESS_TOKEN'] = "#{user.authentication_token}"
   end
 
   def clearToken
-    request.headers['X-ACCESS-EMAIL'] = nil
-    request.headers['X-ACCESS-TOKEN'] = nil
+    request.env['HTTP_X_ACCESS_EMAIL'] = nil
+    request.env['HTTP_X_ACCESS_TOKEN'] = nil
   end
 end
