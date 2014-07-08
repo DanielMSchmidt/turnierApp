@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   after_create :buildEmptyCouple
   before_save :ensure_authentication_token
 
+  delegate :startclass, to: :activeCouple
+
   # Hooks
 
   def self.sendUserNotification(newUser="Niemand")
@@ -55,9 +57,13 @@ class User < ActiveRecord::Base
   end
 
   def activeCouple
-    couple = self.getCouples.select{|couple| couple.active}.first
+    couple = self.getCouples.select{|c| c.active}.first
     couple ||= buildEmptyCouple
     couple
+  end
+
+  def partner
+    self.activeCouple.users.find { |u| u.id != self.id } || false
   end
 
   # find users
@@ -88,6 +94,12 @@ class User < ActiveRecord::Base
 
   def to_s
     "User: #{self.id} - #{self.email}"
+  end
+
+  def to_builder
+    Jbuilder.new do |person|
+      person.(self, :id, :name, :email)
+    end
   end
 
   private

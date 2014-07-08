@@ -122,6 +122,13 @@ class Couple < ActiveRecord::Base
     self.progresses.create(kind: 'standard') if self.standard.nil?
   end
 
+  def startclass
+    {
+      latin: self.latin.start_class,
+      standard: self.standard.start_class
+    }
+  end
+
   # Accessors
 
   def trainer?(club_id)
