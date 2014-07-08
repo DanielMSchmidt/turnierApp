@@ -1,10 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.17'
+gem 'mysql2'
 
 gem 'puma' #faster webserver
 gem 'foreman'
 gem 'haml'
+
+# API
+gem 'jbuilder', '~> 2.1.2'
 
 # UI
 gem 'simple_form'
@@ -28,21 +32,18 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'sidetiq'
 
-gem 'mysql2'
-
 #App configuration
 gem 'figaro'
 
 group :production do
   gem 'newrelic_rpm'
-
 end
 
 group :development do
-  gem "rails_best_practices"
+  gem 'rails_best_practices'
   gem 'i18n-tasks', '~> 0.0.8'
 
-  gem "wkhtmltopdf", "~> 0.1.2"
+  gem 'wkhtmltopdf', '~> 0.1.2'
 
   #improving errorhandling
   gem 'better_errors'
@@ -67,12 +68,12 @@ end
 group :test do
   gem 'database_cleaner'
 
-  gem "rspec-rails", "~> 2.0"
-  gem "factory_girl_rails"
+  gem 'rspec-rails', '~> 2.0'
+  gem 'factory_girl_rails'
   gem 'shoulda-matchers'
   gem 'shoulda-context'
   gem 'simplecov', :require => false
-  gem "codeclimate-test-reporter", :require => nil
+  gem 'codeclimate-test-reporter', :require => nil
 end
 
 # Gems used only for assets and not required
