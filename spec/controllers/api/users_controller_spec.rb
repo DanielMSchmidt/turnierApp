@@ -1,7 +1,7 @@
 require 'spec_helper'
 include Devise::TestHelpers
 
-describe Api::V1::UsersController do
+describe Api::V1::UsersController, :type => :controller do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:woman) { FactoryGirl.create(:woman) }
   let!(:couple) { FactoryGirl.create(:couple) }
@@ -19,9 +19,12 @@ describe Api::V1::UsersController do
 
   describe '#information' do
     before(:each) do
+      allow(controller).to receive(:sign_in)
+      allow(controller).to receive(:current_user).and_return(user)
+
       authWithUser(user)
 
-      get :information, {}
+      get :information, :format => :json
 
       should respond_with 200
     end
