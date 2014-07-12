@@ -56,8 +56,18 @@ describe Api::V1::UsersController, :type => :controller do
   end
 
   describe '#setPartner' do
-    it 'should check if the partner can be changed'
-    it 'should change the partner'
+    it 'should change the partner' do
+      pending
+      allow(controller).to receive(:sign_in)
+      allow(controller).to receive(:current_user).and_return(user)
+      allow(user).to receive(:partner).and_return(woman)
+      expect(user).to receive(:setPartner)
+      authWithUser(user)
+
+      post :setPartner, { woman: 42 }, :format => :json
+
+      should respond_with 200
+    end
   end
 
   describe '#setStartClass' do

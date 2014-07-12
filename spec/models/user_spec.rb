@@ -118,5 +118,11 @@ describe User do
         User.sendUserNotification(newUser)
       end
     end
+
+    describe "#setPartner" do
+      it "should check if you are allowed to change the user"
+      it "should be able to change the man"
+      it "should be able to change the woman"
+    end
   end
 end

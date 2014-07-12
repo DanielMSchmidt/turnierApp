@@ -12,6 +12,16 @@ module Api
           standard: { points: standard_obj.maxPointsOfClass, placings: standard_obj.maxPlacingsOfClass }
         }
       end
+
+      def setPartner
+        if params['man'].present?
+          current_user.setPartner(params['man'], current_user.id)
+        end
+
+        if params['woman'].present?
+          current_user.setPartner(current_user.id, params['woman'])
+        end
+      end
     end
   end
 end

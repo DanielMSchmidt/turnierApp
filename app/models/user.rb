@@ -62,6 +62,19 @@ class User < ActiveRecord::Base
     couple
   end
 
+  def setPartner(man_id, woman_id)
+    # TODO: Write tests
+    # TODO: Check if allowed
+    old_couple = self.activeCouple
+    new_couple = old_couple.dup
+
+    old_couple.deactivate
+    new_couple.man_id = man_id
+    new_couple.woman_id = woman_id
+    new_couple.save
+    new_couple.activate
+  end
+
   def partner
     self.activeCouple.users.find { |u| u.id != self.id } || false
   end
