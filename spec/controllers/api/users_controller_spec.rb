@@ -55,18 +55,6 @@ describe Api::V1::UsersController, :type => :controller do
     end
   end
 
-  describe '#setPassword' do
-    it 'should set the password accordingly' do
-      pending
-      user.should_receive(:password=).with('Test')
-      user.should_receive(:save).and_return(true)
-
-      post :setPassword, {password: 'Test'}
-
-      should respond_with 200
-    end
-  end
-
   describe '#setPartner' do
     it 'should check if the partner can be changed'
     it 'should change the partner'
