@@ -18,9 +18,12 @@ describe Api::V1::UsersController, :type => :controller do
   end
 
   describe '#information' do
+    render_views
+
     before(:each) do
       allow(controller).to receive(:sign_in)
       allow(controller).to receive(:current_user).and_return(user)
+      allow(user).to receive(:partner).and_return(woman)
 
       authWithUser(user)
 
@@ -54,6 +57,7 @@ describe Api::V1::UsersController, :type => :controller do
 
   describe '#setPassword' do
     it 'should set the password accordingly' do
+      pending
       user.should_receive(:password=).with('Test')
       user.should_receive(:save).and_return(true)
 

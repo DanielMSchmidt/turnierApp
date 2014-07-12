@@ -8,16 +8,10 @@ module Api
       private
 
       def authenticate_user_from_token!
-        logger.debug "================================================================"
-        logger.debug "Request: #{request.headers}"
         token = request.headers['HTTP_X_ACCESS_TOKEN']
         email = request.headers['HTTP_X_ACCESS_EMAIL']
         user = User.find_by_email(email) if email.present?
 
-        logger.debug "Mail is #{email}"
-        logger.debug "token is #{token}"
-        logger.debug "User is #{user}"
-        logger.debug "Secure compare result is #{Devise.secure_compare(user.authentication_token, token)}"
         # Notice how we use Devise.secure_compare to compare the token
         # in the database with the token given in the params, mitigating
         # timing attacks.
