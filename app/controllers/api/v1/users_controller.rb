@@ -15,12 +15,14 @@ module Api
 
       def setPartner
         if params['man'].present?
-          current_user.setPartner(params['man'], current_user.id)
+          current_user.setPartner(params['man'].to_i, current_user.id)
         end
 
         if params['woman'].present?
-          current_user.setPartner(current_user.id, params['woman'])
+          current_user.setPartner(current_user.id, params['woman'].to_i)
         end
+
+        head(200)
       end
     end
   end
