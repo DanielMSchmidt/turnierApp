@@ -179,6 +179,16 @@ class Couple < ActiveRecord::Base
     "#{self.getWoman.name} <br> #{self.getMan.name}"
   end
 
+  def to_h
+    {
+      man_id: self.man_id,
+      woman_id: self.woman_id,
+      active: self.active,
+      latin: self.latin.id,
+      standard: self.standard.id
+    }
+  end
+
   def belongsTo(user)
     self.userIds.include? user.id
   end

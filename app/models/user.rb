@@ -63,16 +63,23 @@ class User < ActiveRecord::Base
   end
 
   def setPartner(man_id, woman_id)
-    # TODO: Write tests
-    # TODO: Check if allowed
-    old_couple = self.activeCouple
-    new_couple = old_couple.dup
+    # Guards for authentication
+    raise 'Not Authorized' and return unless (self.id == man_id) || (self.id == woman_id)
 
+    old_couple = self.activeCouple
     old_couple.deactivate
-    new_couple.man_id = man_id
-    new_couple.woman_id = woman_id
+
+    latin = old_couple.latin
+    standard = old_couple.standard
+    latin_class    = latin ? latin.start_class : 'D'
+    standard_class = standard ? standard.start_class : 'D'
+    new_couple     = Couple.new({man_id: man_id, woman_id: woman_id})
+
+    #Add Progresses
+    new_couple.progresses.new(start_class: latin_class, kind: 'latin')
+    new_couple.progresses.new(start_class: standard_class, kind: 'standard')
+
     new_couple.save
-    new_couple.activate
   end
 
   def partner

@@ -3,6 +3,7 @@ require 'spec_helper'
 
 describe User do
   let(:user) { FactoryGirl.create(:user) }
+  let(:woman) { FactoryGirl.create(:woman) }
 
   it "should hava a working factory" do
     user.should be_valid
@@ -120,9 +121,27 @@ describe User do
     end
 
     describe "#setPartner" do
-      it "should check if you are allowed to change the user"
-      it "should be able to change the man"
-      it "should be able to change the woman"
+      before(:each) do
+        a = Couple.create(man_id: user.id, woman_id: woman.id, active: true)
+        a.save
+      end
+
+      it "should check if you are allowed to change the user" do
+        not_the_user_id = user.id + 1
+        expect{ user.setPartner(not_the_user_id, 42) }.to raise_exception
+      end
+
+      it "should be able to change the man" do
+        second_user = User.create(email: "tester12345@test.de", name: "tester124", password: "123456789012345")
+        second_user.save
+        expect{ woman.setPartner(second_user.id, woman.id) }.to change{ woman.partner }.from(user).to(second_user)
+      end
+
+      it "should be able to change the woman" do
+        second_woman = User.create(email: "tester12345@test.de", name: "tester124", password: "123456789012345")
+        second_woman.save
+        expect{ user.setPartner(user.id, second_woman.id) }.to change{ user.partner }.from(woman).to(second_woman)
+      end
     end
   end
 end
