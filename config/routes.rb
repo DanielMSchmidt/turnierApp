@@ -39,6 +39,7 @@ TurnierList::Application.routes.draw do
 
       get '/user' => "users#information"
       post '/user/set-partner' => "users#setPartner"
+      post '/user/set-startclass' => "users#setStartclass"
     end
   end
 

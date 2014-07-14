@@ -143,5 +143,19 @@ describe User do
         expect{ user.setPartner(user.id, second_woman.id) }.to change{ user.partner }.from(woman).to(second_woman)
       end
     end
+
+    describe "#setClass" do
+      it "should set latin correct" do
+        expect{ user.setClass(:latin, 'B') }.to change{ user.activeCouple.latin.start_class }.to('B')
+      end
+
+      it "should set standard correct" do
+        expect{ user.setClass(:standard, 'B') }.to change{ user.activeCouple.standard.start_class }.to('B')
+      end
+
+      it "should raise an exception" do
+        expect{ user.setClass(:standard, 'X') }.to raise_exception
+      end
+    end
   end
 end

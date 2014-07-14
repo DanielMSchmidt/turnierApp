@@ -70,6 +70,28 @@ describe Api::V1::UsersController, :type => :controller do
   end
 
   describe '#setStartClass' do
-    it 'should set the right start class'
+    before(:each) do
+      allow(controller).to receive(:sign_in)
+      allow(controller).to receive(:current_user).and_return(user)
+      authWithUser(user)
+    end
+
+    it 'should set the right start class if its standard' do
+      expect {
+        post :setStartclass, { standard: 'A' }, :format => :json
+      }.to change{ user.activeCouple.standard.start_class }.to('A')
+    end
+
+    it 'should set the right start class if its standard' do
+      expect {
+        post :setStartclass, { standard: 'A' }, :format => :json
+      }.to change{ user.activeCouple.standard.start_class }.to('A')
+    end
+
+    it 'should set nothing if the value is wrong' do
+      post :setStartclass, { standard: 'X' }, :format => :json
+
+      should respond_with :bad_request
+    end
   end
 end

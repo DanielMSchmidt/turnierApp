@@ -86,6 +86,14 @@ class User < ActiveRecord::Base
     self.activeCouple.users.find { |u| u.id != self.id } || false
   end
 
+  def setClass(kind, value)
+    raise 'Invalid value' unless ['S', 'A', 'B', 'C', 'D'].include? value
+
+    progress = self.activeCouple.send(kind)
+    progress.start_class = value
+    progress.save
+  end
+
   # find users
 
   def self.getIdByName(name)

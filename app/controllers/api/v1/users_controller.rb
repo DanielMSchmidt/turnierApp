@@ -24,6 +24,28 @@ module Api
 
         head(200)
       end
+
+      def setStartclass
+        begin
+          if params['standard'].present?
+            current_user.setClass(:standard, params['standard'])
+          end
+
+          if params['latin'].present?
+            current_user.setClass(:latin, params['latin'])
+          end
+        rescue
+          head(:bad_request) and return
+        end
+
+        head(200)
+      end
+
+
+      protected
+
+      def getParamIfPresent
+      end
     end
   end
 end
