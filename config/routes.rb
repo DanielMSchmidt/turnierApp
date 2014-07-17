@@ -40,6 +40,8 @@ TurnierList::Application.routes.draw do
       get '/user' => "users#information"
       post '/user/set-partner' => "users#setPartner"
       post '/user/set-startclass' => "users#setStartclass"
+
+      resources :tournaments, except: [:show, :new, :edit]
     end
   end
 
