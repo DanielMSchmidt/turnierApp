@@ -6,10 +6,6 @@ describe Api::V1::UsersController, :type => :controller do
   let!(:woman) { FactoryGirl.create(:woman) }
   let!(:couple) { FactoryGirl.create(:couple) }
 
-  before(:each) do
-    @userHeader = { 'HTTP_X_ACCESS_EMAIL' => user.email, 'HTTP_X_ACCESS_TOKEN' => user.authentication_token }
-  end
-
   it 'should get an unauthorized if approached without token' do
     clearToken
     get :information, {token: 'NoValidToken'}
