@@ -110,4 +110,11 @@ describe "Tournament" do
       tournament.start_class.should eq('A')
     end
   end
+
+  describe "#status" do
+    it "should be fetching if wasnt fetched yet"
+    it "should be unenrolled if not enrolled and not done"
+    it "should be enrolled if enrolled and not done"
+    it "should be done if it has happened"
+  end
 end
