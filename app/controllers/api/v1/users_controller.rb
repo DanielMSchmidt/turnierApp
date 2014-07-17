@@ -40,12 +40,6 @@ module Api
 
         head(200)
       end
-
-
-      protected
-
-      def getParamIfPresent
-      end
     end
   end
 end
