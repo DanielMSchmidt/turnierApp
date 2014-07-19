@@ -112,9 +112,45 @@ describe "Tournament" do
   end
 
   describe "#status" do
-    it "should be fetching if wasnt fetched yet"
-    it "should be unenrolled if not enrolled and not done"
-    it "should be enrolled if enrolled and not done"
-    it "should be done if it has happened"
+    it "should be fetching if wasnt fetched yet" do
+      tournament.stub(:fetched).and_return(false)
+
+      expect(tournament.status).to eq(:fetching)
+    end
+
+    it "should be unenrolled if not enrolled and not done" do
+      tournament.stub(:fetched).and_return(true)
+      tournament.stub(:enrolled).and_return(false)
+      tournament.stub(:date).and_return(Date.today + 1.week)
+
+      expect(tournament.status).to eq(:unenrolled)
+    end
+
+    it "should be enrolled if enrolled and not done" do
+      tournament.stub(:fetched).and_return(true)
+      tournament.stub(:enrolled?).and_return(true)
+      tournament.stub(:date).and_return(Date.today + 1.week)
+
+      expect(tournament.status).to eq(:enrolled)
+    end
+
+
+    it "should be incomplete if it has happened and there is information" do
+      tournament.stub(:fetched).and_return(true)
+      tournament.stub(:date).and_return(Date.today - 1.week)
+      tournament.stub(:place).and_return(nil)
+      tournament.stub(:participants).and_return(nil)
+
+      expect(tournament.status).to eq(:incomplete)
+    end
+
+    it "should be done if it has happened and there is information" do
+      tournament.stub(:fetched).and_return(true)
+      tournament.stub(:date).and_return(Date.today - 1.week)
+      tournament.stub(:place).and_return(1)
+      tournament.stub(:participants).and_return(3)
+
+      expect(tournament.status).to eq(:done)
+    end
   end
 end

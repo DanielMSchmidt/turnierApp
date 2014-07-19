@@ -186,4 +186,21 @@ class Tournament < ActiveRecord::Base
     classes
   end
 
+  def status
+    return :fetching unless self.fetched
+    if self.upcoming?
+      if self.enrolled?
+        :enrolled
+      else
+        :unenrolled
+      end
+    else
+      if self.incomplete?
+        :incomplete
+      else
+        :done
+      end
+    end
+  end
+
 end
