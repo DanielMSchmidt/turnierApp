@@ -4,7 +4,6 @@ include Devise::TestHelpers
 describe Api::V1::TournamentsController do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:woman) { FactoryGirl.create(:woman) }
-  let!(:tournament) { FactoryGirl.create(:tournament) }
   render_views
 
 
@@ -14,32 +13,42 @@ describe Api::V1::TournamentsController do
     allow(user).to receive(:partner).and_return(woman)
 
     authWithUser(user)
+
+    values = {placing: 1, points: 12, address: 'test', date: Time.now, kind: 'Lat', place: 3, participants: 23, status: 'OK'}
+    @tournament = double('Tournament', values.merge({number: 23}))
+    @tournaments = [@tournament, double('Tournament', values.merge({number: 42}))]
   end
 
   describe "#index" do
     it "should give back all user tournaments" do
-      user.should_receive(:torunament).and_return([])
 
-      get :index
+      user.should_receive(:tournaments).and_return(@tournaments)
+
+      get :index, :format => :json
+
+      should respond_with 200
+      expect(json[0]['number']).to eq(23)
+      expect(json[1]['number']).to eq(42)
     end
 
     it "every tournament should containt number, status, points and placings" do
-      user.stub(:tournament).and_return([tournament])
-      get :index
+      user.stub(:tournaments).and_return(@tournaments)
+      get :index, :format => :json
 
-      expect(json[0]['number']).to eq(tournament.number)
-      expect(json[0]['placings']).to eq(tournament.placings)
-      expect(json[0]['points']).to eq(tournament.points)
-      expect(json[0]['status']).to eq(tournament.status)
+      expect(json[0]['number']).to eq(@tournament.number)
+      expect(json[0]['placing']).to eq(@tournament.placing)
+      expect(json[0]['points']).to eq(@tournament.points)
+      expect(json[0]['status']).to eq(@tournament.status)
+      expect(json[0]['participants']).to eq(@tournament.participants)
+      expect(json[0]['place']).to eq(@tournament.place)
     end
 
     it "every tournament should containt address and time" do
-      user.stub(:tournament).and_return([tournament])
-      get :index
+      user.stub(:tournaments).and_return(@tournaments)
+      get :index, :format => :json
 
-      expect(json[0]['address']).to eq(tournament.address)
-      expect(json[0]['date']).to eq(tournament.date)
-      expect(json[0]['kind']).to eq(tournament.kind)
+      expect(json[0]['address']).to eq(@tournament.address)
+      expect(json[0]['kind']).to eq(@tournament.kind)
     end
   end
 

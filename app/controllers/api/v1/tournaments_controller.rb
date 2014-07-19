@@ -2,8 +2,10 @@
 module Api
   module V1
     class TournamentsController < Api::V1::ApiController
-      def index
+      respond_to :json
 
+      def index
+        @tournaments = current_user.tournaments
       end
 
       def create

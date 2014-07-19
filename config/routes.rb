@@ -34,7 +34,7 @@ TurnierList::Application.routes.draw do
   match "/impressum" => "home#impressum"
 
   namespace :api do
-    namespace :v1 do
+    namespace :v1, defaults: {format: 'json'}  do
       post '/login' => "sessions#login"
 
       get '/user' => "users#information"
