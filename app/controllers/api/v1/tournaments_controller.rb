@@ -9,6 +9,12 @@ module Api
       end
 
       def create
+        tournament = Tournament.newForUser({tournament: params.merge({user_id: current_user.id})})
+        if tournament.valid?
+          head(:created)
+        else
+          head(:not_acceptable)
+        end
 
       end
 

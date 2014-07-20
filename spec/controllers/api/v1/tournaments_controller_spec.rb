@@ -4,6 +4,7 @@ include Devise::TestHelpers
 describe Api::V1::TournamentsController do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:woman) { FactoryGirl.create(:woman) }
+  let!(:tournament) { FactoryGirl.create(:tournament) }
   render_views
 
 
@@ -21,7 +22,6 @@ describe Api::V1::TournamentsController do
 
   describe "#index" do
     it "should give back all user tournaments" do
-
       user.should_receive(:tournaments).and_return(@tournaments)
 
       get :index, :format => :json
@@ -53,8 +53,24 @@ describe Api::V1::TournamentsController do
   end
 
   describe "#create" do
-    it "should create a torunament with right params"
-    it "should not create a tournament with missing information"
+    it "should create a future tournament with right params" do
+      expect{ post :create, {number: 123456}}.to change{ Tournament.count }.by(1)
+
+      should respond_with :created
+    end
+
+    it "should create a done tournament with right params" do
+      expect{ post :create, {number: 123456, place: 3, participants: 20 }}.to change{ Tournament.count }.by(1)
+
+      should respond_with :created
+    end
+
+    it "should not create a tournament if one exists with this number" do
+      Tournament.stub(:where).and_return([tournament])
+      expect{ post :create, {number: 123456, place: 3, participants: 20 }}.to change{ Tournament.count }.by(0)
+
+      should respond_with :not_acceptable
+    end
   end
 
   describe "#update" do
