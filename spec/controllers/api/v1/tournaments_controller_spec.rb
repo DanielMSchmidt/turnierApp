@@ -15,9 +15,9 @@ describe Api::V1::TournamentsController do
 
     authWithUser(user)
 
-    values = {placing: 1, points: 12, address: 'test', date: Time.now, kind: 'Lat', place: 3, participants: 23, status: 'OK'}
-    @tournament = double('Tournament', values.merge({number: 23}))
-    @tournaments = [@tournament, double('Tournament', values.merge({number: 42}))]
+    values = { placing: 1, points: 12, address: 'test', date: Time.now, kind: 'Lat', place: 3, participants: 23, status: 'OK' }
+    @tournament = double('Tournament', values.merge({ number: 23 }))
+    @tournaments = [@tournament, double('Tournament', values.merge({ number: 42 }))]
   end
 
   describe "#index" do
