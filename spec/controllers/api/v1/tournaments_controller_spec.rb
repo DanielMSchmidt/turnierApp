@@ -54,30 +54,48 @@ describe Api::V1::TournamentsController do
 
   describe "#create" do
     it "should create a future tournament with right params" do
-      expect{ post :create, {number: 123456}}.to change{ Tournament.count }.by(1)
+      expect{ post :create, { number: 123456 }}.to change{ Tournament.count }.by(1)
 
       should respond_with :created
     end
 
     it "should create a done tournament with right params" do
-      expect{ post :create, {number: 123456, place: 3, participants: 20 }}.to change{ Tournament.count }.by(1)
+      expect{ post :create, { number: 123456, place: 3, participants: 20 }}.to change{ Tournament.count }.by(1)
 
       should respond_with :created
     end
 
     it "should not create a tournament if one exists with this number" do
       Tournament.stub(:where).and_return([tournament])
-      expect{ post :create, {number: 123456, place: 3, participants: 20 }}.to change{ Tournament.count }.by(0)
+      expect{ post :create, { number: 123456, place: 3, participants: 20 }}.to change{ Tournament.count }.by(0)
 
       should respond_with :not_acceptable
     end
   end
 
   describe "#update" do
-    it "should update the right tournament"
+    it "should update the right tournament" do
+      tournament.number = 123456
+      tournament.save!
+
+      user.stub(:tournaments).and_return([tournament])
+      expect{ put :update, { number: 123456, place: 3, participants: 12 } }.to change{ tournament.place }.to(3)
+
+      should respond_with :ok
+    end
+
+    it "should error if no tournament found" do
+      tournament.number = 123456
+      tournament.save!
+
+      user.stub(:tournaments).and_return([tournament])
+      expect{ put :update, { number: 123456789, place: 3, participants: 12 } }.not_to change{ tournament.place }.to(3)
+
+      should respond_with :not_found
+    end
   end
 
   describe "#destroy" do
-    it "should destroy the right torunament"
+    it "should destroy the right tournament"
   end
 end
