@@ -95,6 +95,15 @@ describe Api::V1::TournamentsController do
     end
   end
 
+  describe "#change status" do
+    # TODO: Should work by id and not by number
+    it "should give a not authorized if the current_user is not an admin of this tournament"
+    it "should give a not found if tournament was not found"
+    # TODO: Use symbols here (.to_sym)
+    it "should give an invalid request if status is not one of enrolled, unenrolled or cancelled"
+    it "should change the tournaments status"
+  end
+
   describe "#destroy" do
     it "should destroy the right tournament" do
       tournament.number = 123456
