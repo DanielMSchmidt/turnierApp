@@ -96,6 +96,27 @@ describe Api::V1::TournamentsController do
   end
 
   describe "#destroy" do
-    it "should destroy the right tournament"
+    it "should destroy the right tournament" do
+      tournament.number = 123456
+      tournament.save!
+
+      user.stub(:tournaments).and_return([tournament])
+      tournament.should_receive(:destroy)
+      delete :destroy, { number: 123456 }
+
+      should respond_with :ok
+
+    end
+
+    it "should error if no tournament found" do
+      tournament.number = 123456
+      tournament.save!
+
+      user.stub(:tournaments).and_return([tournament])
+      tournament.should_not_receive(:destroy)
+      delete :destroy, { number: 123456789 }
+
+      should respond_with :not_found
+    end
   end
 end

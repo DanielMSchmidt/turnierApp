@@ -44,6 +44,7 @@ TurnierList::Application.routes.draw do
       resources :tournaments, except: [:show, :new, :edit, :update] do
         collection do
           put '/:number/update' => "tournaments#update"
+          delete '/:number/destroy' => "tournaments#destroy"
         end
       end
     end
