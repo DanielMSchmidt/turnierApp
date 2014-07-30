@@ -1,11 +1,11 @@
 # -*- encoding : utf-8 -*-
 TurnierList::Application.routes.draw do
-  require 'sidekiq/web'
-  require 'sidetiq/web'
+  require "sidekiq/web"
+  require "sidetiq/web"
 
   # Todo: Solve nicer
-  authenticate :user, lambda { |u| u.email == 'daniel.maximilian@gmx.net' } do
-    mount Sidekiq::Web => '/sidekiq'
+  authenticate :user, lambda { |u| u.email == "daniel.maximilian@gmx.net" } do
+    mount Sidekiq::Web => "/sidekiq"
   end
 
   resources :progresses, only: [:create, :update, :destroy]
@@ -34,17 +34,21 @@ TurnierList::Application.routes.draw do
   match "/impressum" => "home#impressum"
 
   namespace :api do
-    namespace :v1, defaults: {format: 'json'}  do
-      post '/login' => "sessions#login"
+    namespace :v1, defaults: {format: "json"}  do
+      post "/login" => "sessions#login"
 
-      get '/user' => "users#information"
-      post '/user/set-partner' => "users#setPartner"
-      post '/user/set-startclass' => "users#setStartclass"
+      get "/user" => "users#information"
+      post "/user/set-partner" => "users#setPartner"
+      post "/user/set-startclass" => "users#setStartclass"
 
       resources :tournaments, except: [:show, :new, :edit, :update] do
         collection do
-          put '/:number/update' => "tournaments#update"
-          delete '/:number/destroy' => "tournaments#destroy"
+          put "/:number/update" => "tournaments#update"
+          delete "/:number/destroy" => "tournaments#destroy"
+        end
+
+        member do
+          put "/status" => "tournaments#changeStatus", as: :change_status
         end
       end
     end

@@ -5,6 +5,7 @@ describe Api::V1::TournamentsController do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:woman) { FactoryGirl.create(:woman) }
   let!(:tournament) { FactoryGirl.create(:tournament) }
+  let!(:club) { FactoryGirl.create(:club) }
   render_views
 
 
@@ -95,15 +96,6 @@ describe Api::V1::TournamentsController do
     end
   end
 
-  describe "#change status" do
-    # TODO: Should work by id and not by number
-    it "should give a not authorized if the current_user is not an admin of this tournament"
-    it "should give a not found if tournament was not found"
-    # TODO: Use symbols here (.to_sym)
-    it "should give an invalid request if status is not one of enrolled, unenrolled or cancelled"
-    it "should change the tournaments status"
-  end
-
   describe "#destroy" do
     it "should destroy the right tournament" do
       tournament.number = 123456
@@ -126,6 +118,49 @@ describe Api::V1::TournamentsController do
       delete :destroy, { number: 123456789 }
 
       should respond_with :not_found
+    end
+
+    describe "admin only" do
+      describe "#change status" do
+        it "should give a not authorized if the current_user is not an admin of this tournament" do
+          Club.stub(:ownedBy).and_return([club])
+          tournament.stub(:belongsToClub).with([club.id]).and_return(false)
+
+          put :changeStatus, tournament, { status: 'enrolled', format: :json }
+
+          should respond_with :unauthorized
+        end
+
+        it "should give a not found if tournament was not found" do
+          Club.stub(:ownedBy).and_return([club])
+          tournament.stub(:belongsToClub).with([club.id]).and_return(true)
+          Tournament.stub(:where).with(id: tournament.id).and_return([])
+
+          put :changeStatus, tournament, { status: 'enrolled', format: :json }
+
+          should respond_with :not_found
+        end
+
+        it "should give an invalid request if status is not one of enrolled, unenrolled or cancelled" do
+          Club.stub(:ownedBy).and_return([club])
+          tournament.stub(:belongsToClub).with([club.id]).and_return(true)
+
+          put :changeStatus, tournament, { status: 'unknown status', format: :json }
+
+          should respond_with :bad_request
+        end
+
+        it "should change the tournaments status" do
+          Club.stub(:ownedBy).and_return([club])
+          tournament.stub(:belongsToClub).with([club.id]).and_return(true)
+
+         # TODO: Check what tournament.status was before and manipulate it maybe
+
+          expect { put :changeStatus, tournament, { status: 'enrolled', format: :json } }.to change{ tournament.status }.to(:enrolled)
+
+          should respond_with :ok
+        end
+      end
     end
   end
 end

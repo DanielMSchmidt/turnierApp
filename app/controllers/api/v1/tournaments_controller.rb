@@ -32,6 +32,10 @@ module Api
         end
       end
 
+      def changeStatus
+
+      end
+
       def destroy
         tournament = current_user.tournaments.find{ |t| t.number == params[:number].to_i }
         head(:not_found) and return if tournament.nil?
