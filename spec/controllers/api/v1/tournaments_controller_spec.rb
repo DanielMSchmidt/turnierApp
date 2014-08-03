@@ -126,7 +126,7 @@ describe Api::V1::TournamentsController do
           Club.stub(:ownedBy).and_return([club])
           tournament.stub(:belongsToClub).with([club.id]).and_return(false)
 
-          put :changeStatus, tournament, { status: 'enrolled', format: :json }
+          put :changeStatus, {id: tournament.id, status: 'enrolled', format: :json }
 
           should respond_with :unauthorized
         end
@@ -136,7 +136,7 @@ describe Api::V1::TournamentsController do
           tournament.stub(:belongsToClub).with([club.id]).and_return(true)
           Tournament.stub(:where).with(id: tournament.id).and_return([])
 
-          put :changeStatus, tournament, { status: 'enrolled', format: :json }
+          put :changeStatus, {id: tournament.id, status: 'enrolled', format: :json }
 
           should respond_with :not_found
         end
@@ -145,7 +145,7 @@ describe Api::V1::TournamentsController do
           Club.stub(:ownedBy).and_return([club])
           tournament.stub(:belongsToClub).with([club.id]).and_return(true)
 
-          put :changeStatus, tournament, { status: 'unknown status', format: :json }
+          put :changeStatus, {id: tournament.id, status: 'unknown status', format: :json }
 
           should respond_with :bad_request
         end
@@ -156,7 +156,7 @@ describe Api::V1::TournamentsController do
 
          # TODO: Check what tournament.status was before and manipulate it maybe
 
-          expect { put :changeStatus, tournament, { status: 'enrolled', format: :json } }.to change{ tournament.status }.to(:enrolled)
+          expect { put :changeStatus, {id: tournament.id, status: 'enrolled', format: :json } }.to change{ tournament.status }.to(:enrolled)
 
           should respond_with :ok
         end
