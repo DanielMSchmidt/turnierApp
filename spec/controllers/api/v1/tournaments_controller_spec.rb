@@ -123,8 +123,7 @@ describe Api::V1::TournamentsController do
     describe "admin only" do
       describe "#change status" do
         it "should give a not authorized if the current_user is not an admin of this tournament" do
-          Club.stub(:ownedBy).and_return([club])
-          tournament.stub(:belongsToClub).with([club.id]).and_return(false)
+          tournament.stub(:canBeAdministratedBy).and_return(false)
 
           put :changeStatus, {id: tournament.id, status: 'enrolled', format: :json }
 
@@ -132,9 +131,8 @@ describe Api::V1::TournamentsController do
         end
 
         it "should give a not found if tournament was not found" do
-          Club.stub(:ownedBy).and_return([club])
-          tournament.stub(:belongsToClub).with([club.id]).and_return(true)
-          Tournament.stub(:where).with(id: tournament.id).and_return([])
+          tournament.stub(:canBeAdministratedBy).and_return(true)
+          Tournament.stub(:find).with(tournament.id).and_return(nil)
 
           put :changeStatus, {id: tournament.id, status: 'enrolled', format: :json }
 
@@ -142,8 +140,8 @@ describe Api::V1::TournamentsController do
         end
 
         it "should give an invalid request if status is not one of enrolled, unenrolled or cancelled" do
-          Club.stub(:ownedBy).and_return([club])
-          tournament.stub(:belongsToClub).with([club.id]).and_return(true)
+          tournament.stub(:canBeAdministratedBy).and_return(true)
+          Tournament.stub(:find).with(tournament.id).and_return(tournament)
 
           put :changeStatus, {id: tournament.id, status: 'unknown status', format: :json }
 
@@ -151,8 +149,8 @@ describe Api::V1::TournamentsController do
         end
 
         it "should change the tournaments status" do
-          Club.stub(:ownedBy).and_return([club])
-          tournament.stub(:belongsToClub).with([club.id]).and_return(true)
+          tournament.stub(:canBeAdministratedBy).and_return(true)
+          Tournament.stub(:find).with(tournament.id).and_return(tournament)
 
          # TODO: Check what tournament.status was before and manipulate it maybe
 

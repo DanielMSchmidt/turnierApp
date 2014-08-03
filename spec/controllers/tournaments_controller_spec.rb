@@ -54,4 +54,9 @@ describe TournamentsController do
       assert_response :redirect
     end
   end
+
+  describe "#canBeAdministratedBy" do
+    it "should return true if the club of this tournament is owned by the user"
+    it "should return false if not"
+  end
 end

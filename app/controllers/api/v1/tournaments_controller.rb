@@ -33,7 +33,17 @@ module Api
       end
 
       def changeStatus
+        tournament = Tournament.find(params[:id].to_i)
+        newStatus = params[:status].to_sym
 
+        head(:not_found) and return unless tournament
+        head(:unauthorized) and return unless tournament.canBeAdministratedBy current_user
+        head(:bad_request) and return unless Tournament.validStati.include? newStatus
+
+        #TODO: Alter status
+        tournament.save
+
+        head(:ok)
       end
 
       def destroy

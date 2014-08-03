@@ -36,6 +36,14 @@ class Tournament < ActiveRecord::Base
     }
   end
 
+  def self.validStati
+    [:enrolled, :unenrolled, :cancelled, :fetching]
+  end
+
+  def canBeAdministratedBy(user)
+    # TODO: Implement
+  end
+
   def enhanceTournament(user_id)
     TournamentEnhancementWorker.perform_async(self.id, self.number, user_id)
   end
