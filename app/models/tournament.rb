@@ -18,7 +18,7 @@ class Tournament < ActiveRecord::Base
     tournament.number       = params[:tournament][:number]
 
     success = tournament.save
-    puts "Current id: #{tournament.id} | status #{success}"
+    logger.debug "Current id: #{tournament.id} | status #{success}"
     tournament.enhanceTournament(params[:tournament][:user_id])
     tournament
   end
