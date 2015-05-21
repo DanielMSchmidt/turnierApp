@@ -3,6 +3,8 @@ TurnierApp
 [![Build Status](https://drone.io/github.com/DanielMSchmidt/turnierApp/status.png)](https://drone.io/github.com/DanielMSchmidt/turnierApp/latest)
 [![Code Climate](https://codeclimate.com/github/DanielMSchmidt/turnierApp.png)](https://codeclimate.com/github/DanielMSchmidt/turnierApp)
 
+**NO LONGER MAINTAINED**
+
 This app is build for Dancesport Couples to manage their results at competitions and to see all results of their club
 
 Installation
